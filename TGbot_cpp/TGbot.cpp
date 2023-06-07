@@ -269,6 +269,156 @@ TGBOT::CLEAR_EVENT TGBOT::EVENT::clear(){
 }
 // EVENT
 
+// ***************** ENTITIES MESSAGE ******************* //
+TGBOT::OFFSET_ENTITIES_MESSAGE::OFFSET_ENTITIES_MESSAGE(){}
+TGBOT::OFFSET_ENTITIES_MESSAGE::OFFSET_ENTITIES_MESSAGE(VARIABLE &var, METHOD &met){
+    this->var = &var;
+    this->method = &met;
+    this->index = 0;
+}
+
+bool TGBOT::OFFSET_ENTITIES_MESSAGE::GetOffset(long &data, long index, bool isStatus){
+    if ((this->method->getIsStatusBot() && this->method->getSizeResult() && (index +1)) && isStatus){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][index]["message"]["entities"].count("offset")){
+            data = js["result"][index]["message"]["entities"]["offset"].get<long>();
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    return false;
+}
+
+void TGBOT::OFFSET_ENTITIES_MESSAGE::getIndex(long isIndex){
+    this->index = isIndex;
+}
+
+bool TGBOT::OFFSET_ENTITIES_MESSAGE::First(long &data){
+    return GetOffset(data, 0, true);
+}
+
+bool TGBOT::OFFSET_ENTITIES_MESSAGE::Last(long &data){
+    return GetOffset(data, this->method->getSizeResult() -1, true);
+}
+
+bool TGBOT::OFFSET_ENTITIES_MESSAGE::Index(long &data, long index){
+    return GetOffset(data, index, (this->method->getSizeResult() > index));
+}
+
+TGBOT::LENGTH_ENTITIES_MESSAGE::LENGTH_ENTITIES_MESSAGE(){}
+TGBOT::LENGTH_ENTITIES_MESSAGE::LENGTH_ENTITIES_MESSAGE(VARIABLE &var, METHOD &met){
+    this->var = &var;
+    this->method = &met;
+    this->index = 0;
+}
+
+bool TGBOT::LENGTH_ENTITIES_MESSAGE::GetLength(long &data, long index, bool isStatus){
+    if ((this->method->getIsStatusBot() && this->method->getSizeResult() && (index +1)) && isStatus){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][index]["message"]["entities"].count("length")){
+            data = js["result"][index]["message"]["entities"]["length"].get<long>();
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    return false;
+}
+
+void TGBOT::LENGTH_ENTITIES_MESSAGE::getIndex(long isIndex){
+    this->index = isIndex;
+}
+
+bool TGBOT::LENGTH_ENTITIES_MESSAGE::First(long &data){
+    return GetLength(data, 0, true);
+}
+
+bool TGBOT::LENGTH_ENTITIES_MESSAGE::Last(long &data){
+    return GetLength(data, this->method->getSizeResult() -1, true);
+}
+
+bool TGBOT::LENGTH_ENTITIES_MESSAGE::Index(long &data, long index){
+    return GetLength(data, index, (this->method->getSizeResult() > index));
+}
+
+TGBOT::TYPE_ENTITIES_MESSAGE::TYPE_ENTITIES_MESSAGE(){}
+TGBOT::TYPE_ENTITIES_MESSAGE::TYPE_ENTITIES_MESSAGE(VARIABLE &var, METHOD &met){
+    this->var = &var;
+    this->method = &met;
+    this->index = 0;
+}
+
+bool TGBOT::TYPE_ENTITIES_MESSAGE::GetType(std::string &str, long index, long index_type, bool isStatus){
+    this->method->strClear(str);
+    if ((this->method->getIsStatusBot() && this->method->getSizeResult() && (index +1)) && isStatus){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][index]["message"]["entities"][index_type].count("type")){
+            str = js["result"][index]["message"]["entities"][index_type]["type"].get<std::string>();
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    return false;
+}
+
+void TGBOT::TYPE_ENTITIES_MESSAGE::getIndex(long isIndex){
+    this->index = isIndex;
+}
+
+bool TGBOT::TYPE_ENTITIES_MESSAGE::First(std::string &str){
+    return GetType(str, 0, this->index, true);
+}
+
+bool TGBOT::TYPE_ENTITIES_MESSAGE::Last(std::string &str){
+    return GetType(str, this->method->getSizeResult() -1, this->index, true);
+}
+
+bool TGBOT::TYPE_ENTITIES_MESSAGE::Index(std::string &str, long index){
+    return GetType(str, index, this->index, (this->method->getSizeResult() > index));
+}
+
+TGBOT::GET_ENTITIES_MESSAGE::GET_ENTITIES_MESSAGE(){};
+TGBOT::GET_ENTITIES_MESSAGE::GET_ENTITIES_MESSAGE(VARIABLE &var, METHOD &met) :
+offset_entities(var, met),
+length_entities(var, met),
+type_entities(var, met){
+    this->var = &var;
+    this->met = &met;
+}
+
+TGBOT::OFFSET_ENTITIES_MESSAGE TGBOT::GET_ENTITIES_MESSAGE::offset(long index){
+    this->offset_entities.getIndex(index);
+    return this->offset_entities;
+}
+
+TGBOT::LENGTH_ENTITIES_MESSAGE TGBOT::GET_ENTITIES_MESSAGE::length(long index){
+    this->length_entities.getIndex(index);
+    return this->length_entities;
+}
+
+TGBOT::TYPE_ENTITIES_MESSAGE TGBOT::GET_ENTITIES_MESSAGE::type(long index){
+    this->type_entities.getIndex(index);
+    return type_entities;
+}
+
+
+TGBOT::ENTITIES_MESSAGE::ENTITIES_MESSAGE(){}
+TGBOT::ENTITIES_MESSAGE::ENTITIES_MESSAGE(VARIABLE &var, METHOD &met) : get_entities_mess(var, met){
+    this->var = &var;
+    this->method = &met;
+}
+
+TGBOT::GET_ENTITIES_MESSAGE TGBOT::ENTITIES_MESSAGE::get(){
+    return this->get_entities_mess;
+}
+
+// ENTITIES MESSAGE
+
 // ***************** FROM REPLY MESSAGE ******************* //
 
 TGBOT::ID_FROM_REPLY::ID_FROM_REPLY(){};
@@ -2519,6 +2669,7 @@ reply_to_message(var, met),
 forward_from(var, met),
 voice(var, met),
 document(var, met),
+entities(var, met),
 get_message(var, met){
     this->var = &var;
     this->method = &met;
@@ -2549,6 +2700,10 @@ TGBOT::VOICE TGBOT::MESSAGE::Voice(){
 
 TGBOT::DOCUMENT TGBOT::MESSAGE::Document(){
     return this->document;
+}
+
+TGBOT::ENTITIES_MESSAGE TGBOT::MESSAGE::Entities(){
+    return this->entities;
 }
 // MESSAGE
 

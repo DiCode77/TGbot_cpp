@@ -121,6 +121,96 @@ public:
 };
 // EVENT
 
+// ***************** ENTITIES MESSAGE ******************* //
+
+class OFFSET_ENTITIES_MESSAGE{
+    VARIABLE *var;
+    METHOD *method;
+    long index;
+    
+public:
+    OFFSET_ENTITIES_MESSAGE();
+    OFFSET_ENTITIES_MESSAGE(VARIABLE&, METHOD&);
+    
+    bool First(long&);
+    bool Last(long&);
+    bool Index(long&, long);
+    
+private:
+    bool GetOffset(long&, long, bool);
+    void getIndex(long);
+    
+    friend class GET_ENTITIES_MESSAGE;
+};
+
+class LENGTH_ENTITIES_MESSAGE{
+    VARIABLE *var;
+    METHOD *method;
+    long index;
+    
+public:
+    LENGTH_ENTITIES_MESSAGE();
+    LENGTH_ENTITIES_MESSAGE(VARIABLE&, METHOD&);
+    
+    bool First(long&);
+    bool Last(long&);
+    bool Index(long&, long);
+    
+private:
+    bool GetLength(long&, long, bool);
+    void getIndex(long);
+    
+    friend class GET_ENTITIES_MESSAGE;
+};
+
+class TYPE_ENTITIES_MESSAGE{
+    VARIABLE *var;
+    METHOD *method;
+    long index;
+    
+public:
+    TYPE_ENTITIES_MESSAGE();
+    TYPE_ENTITIES_MESSAGE(VARIABLE&, METHOD&);
+    bool First(std::string&);
+    bool Last(std::string&);
+    bool Index(std::string&, long);
+    
+private:
+    bool GetType(std::string&, long, long, bool);
+    void getIndex(long);
+    
+    friend class GET_ENTITIES_MESSAGE;
+};
+
+class GET_ENTITIES_MESSAGE{
+    VARIABLE *var;
+    METHOD *met;
+    OFFSET_ENTITIES_MESSAGE offset_entities;
+    LENGTH_ENTITIES_MESSAGE length_entities;
+    TYPE_ENTITIES_MESSAGE type_entities;
+public:
+    GET_ENTITIES_MESSAGE();
+    GET_ENTITIES_MESSAGE(VARIABLE &var, METHOD &met);
+    
+    OFFSET_ENTITIES_MESSAGE offset(long index);
+    LENGTH_ENTITIES_MESSAGE length(long index);
+    TYPE_ENTITIES_MESSAGE type(long index);
+};
+
+class ENTITIES_MESSAGE{
+    VARIABLE *var;
+    METHOD *method;
+    GET_ENTITIES_MESSAGE get_entities_mess;
+
+public:
+    ENTITIES_MESSAGE();
+    ENTITIES_MESSAGE(VARIABLE&, METHOD&);
+    
+    GET_ENTITIES_MESSAGE get();
+};
+
+//
+
 // ***************** FROM REPLY MESSAGE ******************* //
 class ID_FROM_REPLY{
     VARIABLE *var;
@@ -1263,6 +1353,7 @@ class MESSAGE{
     FORWARD_FROM forward_from;
     VOICE voice;
     DOCUMENT document;
+    ENTITIES_MESSAGE entities;
     VARIABLE *var;
     METHOD *method;
     GET_MESSAGE get_message;
@@ -1277,6 +1368,7 @@ public:
     FORWARD_FROM Forward();
     VOICE Voice();
     DOCUMENT Document();
+    ENTITIES_MESSAGE Entities();
 };
 // MESSAGE
 
@@ -1322,13 +1414,9 @@ public:
 // ***************** TGbot ******************* //
 
 class TGbot{
-public:
     RESULT result;
-private:
     VARIABLE var;
-public:
     EVENT event;
-private:
     METHOD method;
     
 public:
