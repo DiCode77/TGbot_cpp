@@ -277,11 +277,11 @@ TGBOT::OFFSET_ENTITIES_MESSAGE::OFFSET_ENTITIES_MESSAGE(VARIABLE &var, METHOD &m
     this->index = 0;
 }
 
-bool TGBOT::OFFSET_ENTITIES_MESSAGE::GetOffset(long &data, long index, bool isStatus){
+bool TGBOT::OFFSET_ENTITIES_MESSAGE::GetOffset(long &data, long index, long index_type, bool isStatus){
     if ((this->method->getIsStatusBot() && this->method->getSizeResult() && (index +1)) && isStatus){
         JsonHpp js = JsonHpp::parse(this->var->updates);
-        if (js["result"][index]["message"]["entities"].count("offset")){
-            data = js["result"][index]["message"]["entities"]["offset"].get<long>();
+        if (js["result"][index]["message"]["entities"][index_type].count("offset")){
+            data = js["result"][index]["message"]["entities"][index_type]["offset"].get<long>();
             return true;
         }
         else{
@@ -295,16 +295,8 @@ void TGBOT::OFFSET_ENTITIES_MESSAGE::getIndex(long isIndex){
     this->index = isIndex;
 }
 
-bool TGBOT::OFFSET_ENTITIES_MESSAGE::First(long &data){
-    return GetOffset(data, 0, true);
-}
-
-bool TGBOT::OFFSET_ENTITIES_MESSAGE::Last(long &data){
-    return GetOffset(data, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::OFFSET_ENTITIES_MESSAGE::Index(long &data, long index){
-    return GetOffset(data, index, (this->method->getSizeResult() > index));
+bool TGBOT::OFFSET_ENTITIES_MESSAGE::isNum(long &data){
+    return GetOffset(data, this->var->index, this->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::LENGTH_ENTITIES_MESSAGE::LENGTH_ENTITIES_MESSAGE(){}
@@ -314,11 +306,11 @@ TGBOT::LENGTH_ENTITIES_MESSAGE::LENGTH_ENTITIES_MESSAGE(VARIABLE &var, METHOD &m
     this->index = 0;
 }
 
-bool TGBOT::LENGTH_ENTITIES_MESSAGE::GetLength(long &data, long index, bool isStatus){
+bool TGBOT::LENGTH_ENTITIES_MESSAGE::GetLength(long &data, long index, long index_type, bool isStatus){
     if ((this->method->getIsStatusBot() && this->method->getSizeResult() && (index +1)) && isStatus){
         JsonHpp js = JsonHpp::parse(this->var->updates);
-        if (js["result"][index]["message"]["entities"].count("length")){
-            data = js["result"][index]["message"]["entities"]["length"].get<long>();
+        if (js["result"][index]["message"]["entities"][index_type].count("length")){
+            data = js["result"][index]["message"]["entities"][index_type]["length"].get<long>();
             return true;
         }
         else{
@@ -332,16 +324,8 @@ void TGBOT::LENGTH_ENTITIES_MESSAGE::getIndex(long isIndex){
     this->index = isIndex;
 }
 
-bool TGBOT::LENGTH_ENTITIES_MESSAGE::First(long &data){
-    return GetLength(data, 0, true);
-}
-
-bool TGBOT::LENGTH_ENTITIES_MESSAGE::Last(long &data){
-    return GetLength(data, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::LENGTH_ENTITIES_MESSAGE::Index(long &data, long index){
-    return GetLength(data, index, (this->method->getSizeResult() > index));
+bool TGBOT::LENGTH_ENTITIES_MESSAGE::isNum(long &data){
+    return GetLength(data, this->var->index, this->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::TYPE_ENTITIES_MESSAGE::TYPE_ENTITIES_MESSAGE(){}
@@ -370,16 +354,8 @@ void TGBOT::TYPE_ENTITIES_MESSAGE::getIndex(long isIndex){
     this->index = isIndex;
 }
 
-bool TGBOT::TYPE_ENTITIES_MESSAGE::First(std::string &str){
-    return GetType(str, 0, this->index, true);
-}
-
-bool TGBOT::TYPE_ENTITIES_MESSAGE::Last(std::string &str){
-    return GetType(str, this->method->getSizeResult() -1, this->index, true);
-}
-
-bool TGBOT::TYPE_ENTITIES_MESSAGE::Index(std::string &str, long index){
-    return GetType(str, index, this->index, (this->method->getSizeResult() > index));
+bool TGBOT::TYPE_ENTITIES_MESSAGE::isString(std::string &str){
+    return GetType(str, this->var->index, this->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::GET_ENTITIES_MESSAGE::GET_ENTITIES_MESSAGE(){};
@@ -441,16 +417,8 @@ bool TGBOT::ID_FROM_REPLY::GetFromId(long &data, long index, bool isStatus){
     return false;
 }
 
-bool TGBOT::ID_FROM_REPLY::First(long &data){
-    return GetFromId(data, 0, true);
-}
-
-bool TGBOT::ID_FROM_REPLY::Last(long &data){
-    return GetFromId(data, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::ID_FROM_REPLY::Index(long &data, long index){
-    return GetFromId(data, index, (this->method->getSizeResult() > index));
+bool TGBOT::ID_FROM_REPLY::isNum(long &data){
+    return GetFromId(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::IS_BOT_FROM_REPLY::IS_BOT_FROM_REPLY(){};
@@ -473,16 +441,8 @@ bool TGBOT::IS_BOT_FROM_REPLY::GetIsBotFrom(bool &data, long index, bool isStatu
     return false;
 }
 
-bool TGBOT::IS_BOT_FROM_REPLY::First(bool &data){
-    return GetIsBotFrom(data, 0, true);
-}
-
-bool TGBOT::IS_BOT_FROM_REPLY::Last(bool &data){
-    return GetIsBotFrom(data, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::IS_BOT_FROM_REPLY::Index(bool &data, long index){
-    return GetIsBotFrom(data, index, (this->method->getSizeResult() > index));
+bool TGBOT::IS_BOT_FROM_REPLY::isBool(bool &data){
+    return GetIsBotFrom(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::FIRST_NAME_FROM_REPLY::FIRST_NAME_FROM_REPLY(){};
@@ -506,16 +466,8 @@ bool TGBOT::FIRST_NAME_FROM_REPLY::GetFirstNameFrom(std::string &str, long index
     return false;
 }
 
-bool TGBOT::FIRST_NAME_FROM_REPLY::First(std::string &str){
-    return GetFirstNameFrom(str, 0, true);
-}
-
-bool TGBOT::FIRST_NAME_FROM_REPLY::Last(std::string &str){
-    return GetFirstNameFrom(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::FIRST_NAME_FROM_REPLY::Index(std::string &str, long index){
-    return GetFirstNameFrom(str, index, (this->method->getSizeResult() > index));
+bool TGBOT::FIRST_NAME_FROM_REPLY::isString(std::string &str){
+    return GetFirstNameFrom(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::LAST_NAME_FROM_REPLY::LAST_NAME_FROM_REPLY(){};
@@ -539,16 +491,8 @@ bool TGBOT::LAST_NAME_FROM_REPLY::GetLastNameFrom(std::string &str, long index, 
     return false;
 }
 
-bool TGBOT::LAST_NAME_FROM_REPLY::First(std::string &str){
-    return GetLastNameFrom(str, 0, true);
-}
-
-bool TGBOT::LAST_NAME_FROM_REPLY::Last(std::string &str){
-    return GetLastNameFrom(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::LAST_NAME_FROM_REPLY::Index(std::string &str, long index){
-    return GetLastNameFrom(str, index, (this->method->getSizeResult() > index));
+bool TGBOT::LAST_NAME_FROM_REPLY::isString(std::string &str){
+    return GetLastNameFrom(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::USERNAME_FROM_REPLY::USERNAME_FROM_REPLY(){};
@@ -572,16 +516,8 @@ bool TGBOT::USERNAME_FROM_REPLY::GetUserNameFrom(std::string &str, long index, b
     return false;
 }
 
-bool TGBOT::USERNAME_FROM_REPLY::First(std::string &str){
-    return GetUserNameFrom(str, 0, true);
-}
-
-bool TGBOT::USERNAME_FROM_REPLY::Last(std::string &str){
-    return GetUserNameFrom(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::USERNAME_FROM_REPLY::Index(std::string &str, long index){
-    return GetUserNameFrom(str, index, (this->method->getSizeResult() > index));
+bool TGBOT::USERNAME_FROM_REPLY::isString(std::string &str){
+    return GetUserNameFrom(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::LENG_CODE_FROM_REPLY::LENG_CODE_FROM_REPLY(){};
@@ -605,16 +541,8 @@ bool TGBOT::LENG_CODE_FROM_REPLY::GetLengCodeFrom(std::string &str, long index, 
     return false;
 }
 
-bool TGBOT::LENG_CODE_FROM_REPLY::First(std::string &str){
-    return GetLengCodeFrom(str, 0, true);
-}
-
-bool TGBOT::LENG_CODE_FROM_REPLY::Last(std::string &str){
-    return GetLengCodeFrom(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::LENG_CODE_FROM_REPLY::Index(std::string &str, long index){
-    return GetLengCodeFrom(str, index, (this->method->getSizeResult() > index));
+bool TGBOT::LENG_CODE_FROM_REPLY::isString(std::string &str){
+    return GetLengCodeFrom(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::GET_FROM_REPLY_MESSAGE::GET_FROM_REPLY_MESSAGE(){};
@@ -685,16 +613,8 @@ bool TGBOT::ID_CHAT_REPLY::GetChatId(long &data, long index, bool isStatus){
     return false;
 }
 
-bool TGBOT::ID_CHAT_REPLY::First(long &data){
-    return GetChatId(data, 0, true);
-}
-
-bool TGBOT::ID_CHAT_REPLY::Last(long &data){
-    return GetChatId(data, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::ID_CHAT_REPLY::Index(long &data, long index){
-    return GetChatId(data, index, (this->method->getSizeResult() > index));
+bool TGBOT::ID_CHAT_REPLY::isNum(long &data){
+    return GetChatId(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::FIRST_NAME_CHAT_REPLY::FIRST_NAME_CHAT_REPLY(){}
@@ -718,16 +638,8 @@ bool TGBOT::FIRST_NAME_CHAT_REPLY::GetFirstNameChat(std::string &str, long index
     return false;
 }
 
-bool TGBOT::FIRST_NAME_CHAT_REPLY::First(std::string &str){
-    return GetFirstNameChat(str, 0, true);
-}
-
-bool TGBOT::FIRST_NAME_CHAT_REPLY::Last(std::string &str){
-    return GetFirstNameChat(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::FIRST_NAME_CHAT_REPLY::Index(std::string &str, long index){
-    return GetFirstNameChat(str, index, (this->method->getSizeResult() > index));
+bool TGBOT::FIRST_NAME_CHAT_REPLY::isString(std::string &str){
+    return GetFirstNameChat(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::LAST_NAME_CHAT_REPLY::LAST_NAME_CHAT_REPLY(){}
@@ -751,16 +663,8 @@ bool TGBOT::LAST_NAME_CHAT_REPLY::GetLastNameChat(std::string &str, long index, 
     return false;
 }
 
-bool TGBOT::LAST_NAME_CHAT_REPLY::First(std::string &str){
-    return GetLastNameChat(str, 0, true);
-}
-
-bool TGBOT::LAST_NAME_CHAT_REPLY::Last(std::string &str){
-    return GetLastNameChat(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::LAST_NAME_CHAT_REPLY::Index(std::string &str, long index){
-    return GetLastNameChat(str, index, (this->method->getSizeResult() > index));
+bool TGBOT::LAST_NAME_CHAT_REPLY::isString(std::string &str){
+    return GetLastNameChat(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::USERNAME_CHAT_REPLY::USERNAME_CHAT_REPLY(){}
@@ -784,16 +688,8 @@ bool TGBOT::USERNAME_CHAT_REPLY::GetUsernameChat(std::string &str, long index, b
     return false;
 }
 
-bool TGBOT::USERNAME_CHAT_REPLY::First(std::string &str){
-    return GetUsernameChat(str, 0, true);
-}
-
-bool TGBOT::USERNAME_CHAT_REPLY::Last(std::string &str){
-    return GetUsernameChat(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::USERNAME_CHAT_REPLY::Index(std::string &str, long index){
-    return GetUsernameChat(str, index, (this->method->getSizeResult() > index));
+bool TGBOT::USERNAME_CHAT_REPLY::isString(std::string &str){
+    return GetUsernameChat(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::TYPE_CHAT_REPLY::TYPE_CHAT_REPLY(){}
@@ -817,16 +713,8 @@ bool TGBOT::TYPE_CHAT_REPLY::GetTypeChat(std::string &str, long index, bool isSt
     return false;
 }
 
-bool TGBOT::TYPE_CHAT_REPLY::First(std::string &str){
-    return GetTypeChat(str, 0, true);
-}
-
-bool TGBOT::TYPE_CHAT_REPLY::Last(std::string &str){
-    return GetTypeChat(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::TYPE_CHAT_REPLY::Index(std::string &str, long index){
-    return GetTypeChat(str, index, (this->method->getSizeResult() > index));
+bool TGBOT::TYPE_CHAT_REPLY::isString(std::string &str){
+    return GetTypeChat(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::GET_CHAT_REPLY_MESSAGE::GET_CHAT_REPLY_MESSAGE(){};
@@ -891,16 +779,8 @@ bool TGBOT::ID_REPLY_MESSAGE::GetMessageId(long &data, long index, bool isStatus
     return false;
 }
 
-bool TGBOT::ID_REPLY_MESSAGE::First(long &data){
-    return GetMessageId(data, 0, true);
-}
-
-bool TGBOT::ID_REPLY_MESSAGE::Last(long &data){
-    return GetMessageId(data, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::ID_REPLY_MESSAGE::Index(long &data, long index){
-    return GetMessageId(data, index, (this->method->getSizeResult() > index));
+bool TGBOT::ID_REPLY_MESSAGE::isNum(long &data){
+    return GetMessageId(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::DATE_REPLY_MESSAGE::DATE_REPLY_MESSAGE(){}
@@ -923,16 +803,8 @@ bool TGBOT::DATE_REPLY_MESSAGE::GetMessageData(long &data, long index, bool isSt
     return false;
 }
 
-bool TGBOT::DATE_REPLY_MESSAGE::First(long &data){
-    return GetMessageData(data, 0, true);
-}
-
-bool TGBOT::DATE_REPLY_MESSAGE::Last(long &data){
-    return GetMessageData(data, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::DATE_REPLY_MESSAGE::Index(long &data, long index){
-    return GetMessageData(data, index, (this->method->getSizeResult() > index));
+bool TGBOT::DATE_REPLY_MESSAGE::isNum(long &data){
+    return GetMessageData(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::TEXT_REPLY_MESSAGE::TEXT_REPLY_MESSAGE(){}
@@ -956,16 +828,8 @@ bool TGBOT::TEXT_REPLY_MESSAGE::GetMessageText(std::string &str, long index, boo
     return false;
 }
 
-bool TGBOT::TEXT_REPLY_MESSAGE::First(std::string &str){
-    return GetMessageText(str, 0, true);
-}
-
-bool TGBOT::TEXT_REPLY_MESSAGE::Last(std::string &str){
-    return GetMessageText(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::TEXT_REPLY_MESSAGE::Index(std::string &str, long index){
-    return GetMessageText(str, index, (this->method->getSizeResult() > index));
+bool TGBOT::TEXT_REPLY_MESSAGE::isString(std::string &str){
+    return GetMessageText(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::GET_REPLY_TO_MESSAGE::GET_REPLY_TO_MESSAGE(){};
@@ -1030,16 +894,8 @@ bool TGBOT::DURATION_VOICE::GetDuration(long &data, long index, bool isStatus){
     return false;
 }
 
-bool TGBOT::DURATION_VOICE::First(long &data){
-    return GetDuration(data, 0, true);
-}
-
-bool TGBOT::DURATION_VOICE::Last(long &data){
-    return GetDuration(data, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::DURATION_VOICE::Index(long &data, long index){
-    return GetDuration(data, index, (this->method->getSizeResult() > index));
+bool TGBOT::DURATION_VOICE::isNum(long &data){
+    return GetDuration(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::MIME_TYPE_VOICE::MIME_TYPE_VOICE(){};
@@ -1063,16 +919,8 @@ bool TGBOT::MIME_TYPE_VOICE::GetMimeType(std::string &str, long index, bool isSt
     return false;
 }
 
-bool TGBOT::MIME_TYPE_VOICE::First(std::string &str){
-    return GetMimeType(str, 0, true);
-}
-
-bool TGBOT::MIME_TYPE_VOICE::Last(std::string &str){
-    return GetMimeType(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::MIME_TYPE_VOICE::Index(std::string &str, long index){
-    return GetMimeType(str, index, (this->method->getSizeResult() > index));
+bool TGBOT::MIME_TYPE_VOICE::isString(std::string &str){
+    return GetMimeType(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::FILE_ID_VOICE::FILE_ID_VOICE(){};
@@ -1096,16 +944,8 @@ bool TGBOT::FILE_ID_VOICE::GetFileId(std::string &str, long index, bool isStatus
     return false;
 }
 
-bool TGBOT::FILE_ID_VOICE::First(std::string &str){
-    return GetFileId(str, 0, true);
-}
-
-bool TGBOT::FILE_ID_VOICE::Last(std::string &str){
-    return GetFileId(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::FILE_ID_VOICE::Index(std::string &str, long index){
-    return GetFileId(str, index, (this->method->getSizeResult() > index));
+bool TGBOT::FILE_ID_VOICE::isString(std::string &str){
+    return GetFileId(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::FILE_UNIQUE_ID_VOICE::FILE_UNIQUE_ID_VOICE(){};
@@ -1129,16 +969,8 @@ bool TGBOT::FILE_UNIQUE_ID_VOICE::GetFileUniqueId(std::string &str, long index, 
     return false;
 }
 
-bool TGBOT::FILE_UNIQUE_ID_VOICE::First(std::string &str){
-    return GetFileUniqueId(str, 0, true);
-}
-
-bool TGBOT::FILE_UNIQUE_ID_VOICE::Last(std::string &str){
-    return GetFileUniqueId(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::FILE_UNIQUE_ID_VOICE::Index(std::string &str, long index){
-    return GetFileUniqueId(str, index, (this->method->getSizeResult() > index));
+bool TGBOT::FILE_UNIQUE_ID_VOICE::isString(std::string &str){
+    return GetFileUniqueId(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::FILE_SIZE_VOICE::FILE_SIZE_VOICE(){};
@@ -1161,17 +993,10 @@ bool TGBOT::FILE_SIZE_VOICE::GetFileSize(long &data, long index, bool isStatus){
     return false;
 }
 
-bool TGBOT::FILE_SIZE_VOICE::First(long &data){
-    return GetFileSize(data, 0, true);
+bool TGBOT::FILE_SIZE_VOICE::isNum(long &data){
+    return GetFileSize(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
-bool TGBOT::FILE_SIZE_VOICE::Last(long &data){
-    return GetFileSize(data, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::FILE_SIZE_VOICE::Index(long &data, long index){
-    return GetFileSize(data, index, (this->method->getSizeResult() > index));
-}
 
 TGBOT::GET_VOICE::GET_VOICE(){};
 TGBOT::GET_VOICE::GET_VOICE(VARIABLE &var, METHOD &met) :
@@ -1239,17 +1064,10 @@ bool TGBOT::FILE_ID_THUMBNAIL_DOCUMENT::GetFileId(std::string &str, long index, 
     return false;
 }
 
-bool TGBOT::FILE_ID_THUMBNAIL_DOCUMENT::First(std::string &str){
-    return GetFileId(str, 0, true);
+bool TGBOT::FILE_ID_THUMBNAIL_DOCUMENT::isString(std::string &str){
+    return GetFileId(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
-bool TGBOT::FILE_ID_THUMBNAIL_DOCUMENT::Last(std::string &str){
-    return GetFileId(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::FILE_ID_THUMBNAIL_DOCUMENT::Index(std::string &str, long index){
-    return GetFileId(str, index, (this->method->getSizeResult() > index));
-}
 
 TGBOT::FILE_UIQUE_ID_THUMBNAIL_DOCUMENT::FILE_UIQUE_ID_THUMBNAIL_DOCUMENT(){}
 TGBOT::FILE_UIQUE_ID_THUMBNAIL_DOCUMENT::FILE_UIQUE_ID_THUMBNAIL_DOCUMENT(VARIABLE &var, METHOD &met){
@@ -1272,16 +1090,8 @@ bool TGBOT::FILE_UIQUE_ID_THUMBNAIL_DOCUMENT::GetUniqueId(std::string &str, long
     return false;
 }
 
-bool TGBOT::FILE_UIQUE_ID_THUMBNAIL_DOCUMENT::First(std::string &str){
-    return GetUniqueId(str, 0, true);
-}
-
-bool TGBOT::FILE_UIQUE_ID_THUMBNAIL_DOCUMENT::Last(std::string &str){
-    return GetUniqueId(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::FILE_UIQUE_ID_THUMBNAIL_DOCUMENT::Index(std::string &str, long index){
-    return GetUniqueId(str, index, (this->method->getSizeResult() > index));
+bool TGBOT::FILE_UIQUE_ID_THUMBNAIL_DOCUMENT::isString(std::string &str){
+    return GetUniqueId(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::FILE_SIZE_THUMBNAIL_DOCUMENT::FILE_SIZE_THUMBNAIL_DOCUMENT(){}
@@ -1304,16 +1114,8 @@ bool TGBOT::FILE_SIZE_THUMBNAIL_DOCUMENT::GetFileSize(long &data, long index, bo
     return false;
 }
 
-bool TGBOT::FILE_SIZE_THUMBNAIL_DOCUMENT::First(long &data){
-    return GetFileSize(data, 0, true);
-}
-
-bool TGBOT::FILE_SIZE_THUMBNAIL_DOCUMENT::Last(long &data){
-    return GetFileSize(data, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::FILE_SIZE_THUMBNAIL_DOCUMENT::Index(long &data, long index){
-    return GetFileSize(data, index, (this->method->getSizeResult() > index));
+bool TGBOT::FILE_SIZE_THUMBNAIL_DOCUMENT::isNum(long &data){
+    return GetFileSize(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::WIDTH_THUMBNAIL_DOCUMENT::WIDTH_THUMBNAIL_DOCUMENT(){}
@@ -1336,16 +1138,8 @@ bool TGBOT::WIDTH_THUMBNAIL_DOCUMENT::GetWidth(long &data, long index, bool isSt
     return false;
 }
 
-bool TGBOT::WIDTH_THUMBNAIL_DOCUMENT::First(long &data){
-    return GetWidth(data, 0, true);
-}
-
-bool TGBOT::WIDTH_THUMBNAIL_DOCUMENT::Last(long &data){
-    return GetWidth(data, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::WIDTH_THUMBNAIL_DOCUMENT::Index(long &data, long index){
-    return GetWidth(data, index, (this->method->getSizeResult() > index));
+bool TGBOT::WIDTH_THUMBNAIL_DOCUMENT::isNum(long &data){
+    return GetWidth(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::HEIGHT_THUMBNAIL_DOCUMENT::HEIGHT_THUMBNAIL_DOCUMENT(){}
@@ -1368,16 +1162,8 @@ bool TGBOT::HEIGHT_THUMBNAIL_DOCUMENT::GetHeight(long &data, long index, bool is
     return false;
 }
 
-bool TGBOT::HEIGHT_THUMBNAIL_DOCUMENT::First(long &data){
-    return GetHeight(data, 0, true);
-}
-
-bool TGBOT::HEIGHT_THUMBNAIL_DOCUMENT::Last(long &data){
-    return GetHeight(data, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::HEIGHT_THUMBNAIL_DOCUMENT::Index(long &data, long index){
-    return GetHeight(data, index, (this->method->getSizeResult() > index));
+bool TGBOT::HEIGHT_THUMBNAIL_DOCUMENT::isNum(long &data){
+    return GetHeight(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::GET_THUMBNAIL_DOCUMENT::GET_THUMBNAIL_DOCUMENT(){}
@@ -1446,16 +1232,8 @@ bool TGBOT::FILE_ID_THUMB_DOCUMENT::GetFileId(std::string &str, long index, bool
     return false;
 }
 
-bool TGBOT::FILE_ID_THUMB_DOCUMENT::First(std::string &str){
-    return GetFileId(str, 0, true);
-}
-
-bool TGBOT::FILE_ID_THUMB_DOCUMENT::Last(std::string &str){
-    return GetFileId(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::FILE_ID_THUMB_DOCUMENT::Index(std::string &str, long index){
-    return GetFileId(str, index, (this->method->getSizeResult() > index));
+bool TGBOT::FILE_ID_THUMB_DOCUMENT::isString(std::string &str){
+    return GetFileId(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::FILE_UNIQUE_ID_THUMB_DOCUMENT::FILE_UNIQUE_ID_THUMB_DOCUMENT(){}
@@ -1479,17 +1257,10 @@ bool TGBOT::FILE_UNIQUE_ID_THUMB_DOCUMENT::GetUniqueId(std::string &str, long in
     return false;
 }
 
-bool TGBOT::FILE_UNIQUE_ID_THUMB_DOCUMENT::First(std::string &str){
-    return GetUniqueId(str, 0, true);
+bool TGBOT::FILE_UNIQUE_ID_THUMB_DOCUMENT::isString(std::string &str){
+    return GetUniqueId(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
-bool TGBOT::FILE_UNIQUE_ID_THUMB_DOCUMENT::Last(std::string &str){
-    return GetUniqueId(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::FILE_UNIQUE_ID_THUMB_DOCUMENT::Index(std::string &str, long index){
-    return GetUniqueId(str, index, (this->method->getSizeResult() > index));
-}
 
 TGBOT::FILE_SIZE_THUMB_DOCUMENT::FILE_SIZE_THUMB_DOCUMENT(){}
 TGBOT::FILE_SIZE_THUMB_DOCUMENT::FILE_SIZE_THUMB_DOCUMENT(VARIABLE &var, METHOD &met){
@@ -1511,16 +1282,8 @@ bool TGBOT::FILE_SIZE_THUMB_DOCUMENT::GetFileSize(long &data, long index, bool i
     return false;
 }
 
-bool TGBOT::FILE_SIZE_THUMB_DOCUMENT::First(long &data){
-    return GetFileSize(data, 0, true);
-}
-
-bool TGBOT::FILE_SIZE_THUMB_DOCUMENT::Last(long &data){
-    return GetFileSize(data, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::FILE_SIZE_THUMB_DOCUMENT::Index(long &data, long index){
-    return GetFileSize(data, index, (this->method->getSizeResult() > index));
+bool TGBOT::FILE_SIZE_THUMB_DOCUMENT::isNum(long &data){
+    return GetFileSize(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::WIDTH_THUMB_DOCUMENT::WIDTH_THUMB_DOCUMENT(){}
@@ -1543,16 +1306,8 @@ bool TGBOT::WIDTH_THUMB_DOCUMENT::GetWidth(long &data, long index, bool isStatus
     return false;
 }
 
-bool TGBOT::WIDTH_THUMB_DOCUMENT::First(long &data){
-    return GetWidth(data, 0, true);
-}
-
-bool TGBOT::WIDTH_THUMB_DOCUMENT::Last(long &data){
-    return GetWidth(data, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::WIDTH_THUMB_DOCUMENT::Index(long &data, long index){
-    return GetWidth(data, index, (this->method->getSizeResult() > index));
+bool TGBOT::WIDTH_THUMB_DOCUMENT::isNum(long &data){
+    return GetWidth(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::HEIGHT_THUMB_DOCUMENT::HEIGHT_THUMB_DOCUMENT(){}
@@ -1575,17 +1330,10 @@ bool TGBOT::HEIGHT_THUMB_DOCUMENT::GetHeight(long &data, long index, bool isStat
     return false;
 }
 
-bool TGBOT::HEIGHT_THUMB_DOCUMENT::First(long &data){
-    return GetHeight(data, 0, true);
+bool TGBOT::HEIGHT_THUMB_DOCUMENT::isNum(long &data){
+    return GetHeight(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
-bool TGBOT::HEIGHT_THUMB_DOCUMENT::Last(long &data){
-    return GetHeight(data, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::HEIGHT_THUMB_DOCUMENT::Index(long &data, long index){
-    return GetHeight(data, index, (this->method->getSizeResult() > index));
-}
 
 TGBOT::GET_THUMB_DOCUMENT::GET_THUMB_DOCUMENT(){}
 TGBOT::GET_THUMB_DOCUMENT::GET_THUMB_DOCUMENT(VARIABLE &var, METHOD &met) :
@@ -1653,18 +1401,10 @@ bool TGBOT::FILE_NAME_DOCUMENT::GetFileName(std::string &str, long index, bool i
     return false;
 }
 
-
-bool TGBOT::FILE_NAME_DOCUMENT::First(std::string &str){
-    return GetFileName(str, 0, true);
+bool TGBOT::FILE_NAME_DOCUMENT::isString(std::string &str){
+    return GetFileName(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
-bool TGBOT::FILE_NAME_DOCUMENT::Last(std::string &str){
-    return GetFileName(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::FILE_NAME_DOCUMENT::Index(std::string &str, long index){
-    return GetFileName(str, index, (this->method->getSizeResult() > index));
-}
 
 TGBOT::MIME_TYPE_DOCUMENT::MIME_TYPE_DOCUMENT(){}
 TGBOT::MIME_TYPE_DOCUMENT::MIME_TYPE_DOCUMENT(VARIABLE &var, METHOD &met){
@@ -1687,17 +1427,8 @@ bool TGBOT::MIME_TYPE_DOCUMENT::GetMimeType(std::string &str, long index, bool i
     return false;
 }
 
-
-bool TGBOT::MIME_TYPE_DOCUMENT::First(std::string &str){
-    return GetMimeType(str, 0, true);
-}
-
-bool TGBOT::MIME_TYPE_DOCUMENT::Last(std::string &str){
-    return GetMimeType(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::MIME_TYPE_DOCUMENT::Index(std::string &str, long index){
-    return GetMimeType(str, index, (this->method->getSizeResult() > index));
+bool TGBOT::MIME_TYPE_DOCUMENT::isString(std::string &str){
+    return GetMimeType(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::FILE_ID_DOCUMENT::FILE_ID_DOCUMENT(){}
@@ -1721,18 +1452,10 @@ bool TGBOT::FILE_ID_DOCUMENT::GetFileId(std::string &str, long index, bool isSta
     return false;
 }
 
-
-bool TGBOT::FILE_ID_DOCUMENT::First(std::string &str){
-    return GetFileId(str, 0, true);
+bool TGBOT::FILE_ID_DOCUMENT::isString(std::string &str){
+    return GetFileId(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
-bool TGBOT::FILE_ID_DOCUMENT::Last(std::string &str){
-    return GetFileId(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::FILE_ID_DOCUMENT::Index(std::string &str, long index){
-    return GetFileId(str, index, (this->method->getSizeResult() > index));
-}
 
 TGBOT::FILE_UNIQUE_ID_DOCUMENT::FILE_UNIQUE_ID_DOCUMENT(){}
 TGBOT::FILE_UNIQUE_ID_DOCUMENT::FILE_UNIQUE_ID_DOCUMENT(VARIABLE &var, METHOD &met){
@@ -1755,17 +1478,8 @@ bool TGBOT::FILE_UNIQUE_ID_DOCUMENT::GetFileUniqueId(std::string &str, long inde
     return false;
 }
 
-
-bool TGBOT::FILE_UNIQUE_ID_DOCUMENT::First(std::string &str){
-    return GetFileUniqueId(str, 0, true);
-}
-
-bool TGBOT::FILE_UNIQUE_ID_DOCUMENT::Last(std::string &str){
-    return GetFileUniqueId(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::FILE_UNIQUE_ID_DOCUMENT::Index(std::string &str, long index){
-    return GetFileUniqueId(str, index, (this->method->getSizeResult() > index));
+bool TGBOT::FILE_UNIQUE_ID_DOCUMENT::isString(std::string &str){
+    return GetFileUniqueId(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 
@@ -1789,17 +1503,10 @@ bool TGBOT::FILE_SIZE_DOCUMENT::GetFileSize(long &data, long index, bool isStatu
     return false;
 }
 
-bool TGBOT::FILE_SIZE_DOCUMENT::First(long &data){
-    return GetFileSize(data, 0, true);
+bool TGBOT::FILE_SIZE_DOCUMENT::isNum(long &data){
+    return GetFileSize(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
-bool TGBOT::FILE_SIZE_DOCUMENT::Last(long &data){
-    return GetFileSize(data, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::FILE_SIZE_DOCUMENT::Index(long &data, long index){
-    return GetFileSize(data, index, (this->method->getSizeResult() > index));
-}
 
 TGBOT::GET_DOCUMENT::GET_DOCUMENT(){}
 TGBOT::GET_DOCUMENT::GET_DOCUMENT(VARIABLE &var, METHOD &met) :
@@ -1874,17 +1581,10 @@ bool TGBOT::ID_FORWARD_FROM::GetForwardId(long &data, long index, bool isStatus)
     return false;
 }
 
-bool TGBOT::ID_FORWARD_FROM::First(long &data){
-    return GetForwardId(data, 0, true);
+bool TGBOT::ID_FORWARD_FROM::isNum(long &data){
+    return GetForwardId(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
-bool TGBOT::ID_FORWARD_FROM::Last(long &data){
-    return GetForwardId(data, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::ID_FORWARD_FROM::Index(long &data, long index){
-    return GetForwardId(data, index, (this->method->getSizeResult() > index));
-}
 
 TGBOT::IS_BOT_FORWARD_FROM::IS_BOT_FORWARD_FROM(){};
 TGBOT::IS_BOT_FORWARD_FROM::IS_BOT_FORWARD_FROM(VARIABLE &var, METHOD &met){
@@ -1906,16 +1606,8 @@ bool TGBOT::IS_BOT_FORWARD_FROM::GetIsBotForward(bool &data, long index, bool is
     return false;
 }
 
-bool TGBOT::IS_BOT_FORWARD_FROM::First(bool &data){
-    return GetIsBotForward(data, 0, true);
-}
-
-bool TGBOT::IS_BOT_FORWARD_FROM::Last(bool &data){
-    return GetIsBotForward(data, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::IS_BOT_FORWARD_FROM::Index(bool &data, long index){
-    return GetIsBotForward(data, index, (this->method->getSizeResult() > index));
+bool TGBOT::IS_BOT_FORWARD_FROM::isBool(bool &data){
+    return GetIsBotForward(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::FIRST_NAME_FORWARD_FROM::FIRST_NAME_FORWARD_FROM(){};
@@ -1939,17 +1631,10 @@ bool TGBOT::FIRST_NAME_FORWARD_FROM::GetFirstNameForward(std::string &str, long 
     return false;
 }
 
-bool TGBOT::FIRST_NAME_FORWARD_FROM::First(std::string &str){
-    return GetFirstNameForward(str, 0, true);
+bool TGBOT::FIRST_NAME_FORWARD_FROM::isString(std::string &str){
+    return GetFirstNameForward(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
-bool TGBOT::FIRST_NAME_FORWARD_FROM::Last(std::string &str){
-    return GetFirstNameForward(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::FIRST_NAME_FORWARD_FROM::Index(std::string &str, long index){
-    return GetFirstNameForward(str, index, (this->method->getSizeResult() > index));
-}
 
 TGBOT::LAST_NAME_FORWARD_FROM::LAST_NAME_FORWARD_FROM(){};
 TGBOT::LAST_NAME_FORWARD_FROM::LAST_NAME_FORWARD_FROM(VARIABLE &var, METHOD &met){
@@ -1972,17 +1657,10 @@ bool TGBOT::LAST_NAME_FORWARD_FROM::GetLastNameForward(std::string &str, long in
     return false;
 }
 
-bool TGBOT::LAST_NAME_FORWARD_FROM::First(std::string &str){
-    return GetLastNameForward(str, 0, true);
+bool TGBOT::LAST_NAME_FORWARD_FROM::isString(std::string &str){
+    return GetLastNameForward(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
-bool TGBOT::LAST_NAME_FORWARD_FROM::Last(std::string &str){
-    return GetLastNameForward(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::LAST_NAME_FORWARD_FROM::Index(std::string &str, long index){
-    return GetLastNameForward(str, index, (this->method->getSizeResult() > index));
-}
 
 TGBOT::USERNAME_FORWARD_FROM::USERNAME_FORWARD_FROM(){};
 TGBOT::USERNAME_FORWARD_FROM::USERNAME_FORWARD_FROM(VARIABLE &var, METHOD &met){
@@ -2005,17 +1683,10 @@ bool TGBOT::USERNAME_FORWARD_FROM::GetUserNameForward(std::string &str, long ind
     return false;
 }
 
-bool TGBOT::USERNAME_FORWARD_FROM::First(std::string &str){
-    return GetUserNameForward(str, 0, true);
+bool TGBOT::USERNAME_FORWARD_FROM::isString(std::string &str){
+    return GetUserNameForward(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
-bool TGBOT::USERNAME_FORWARD_FROM::Last(std::string &str){
-    return GetUserNameForward(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::USERNAME_FORWARD_FROM::Index(std::string &str, long index){
-    return GetUserNameForward(str, index, (this->method->getSizeResult() > index));
-}
 
 TGBOT::GET_FORWARD_FROM::GET_FORWARD_FROM(){};
 TGBOT::GET_FORWARD_FROM::GET_FORWARD_FROM(VARIABLE &var, METHOD &met) :
@@ -2081,16 +1752,10 @@ bool TGBOT::ID_FROM::GetFromId(long &data, long index, bool isStatus){
     return false;
 }
 
-bool TGBOT::ID_FROM::First(long &data){
-    return GetFromId(data, 0, true);
+bool TGBOT::ID_FROM::isNum(long &data){
+    return GetFromId(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
-bool TGBOT::ID_FROM::Last(long &data){
-    return GetFromId(data, this->method->getSizeResult() -1, true);
-}
-bool TGBOT::ID_FROM::Index(long &data, long index){
-    return GetFromId(data, index, (this->method->getSizeResult() > index));
-}
 
 TGBOT::IS_BOT_FROM::IS_BOT_FROM(){};
 TGBOT::IS_BOT_FROM::IS_BOT_FROM(VARIABLE &var, METHOD &met){
@@ -2112,16 +1777,8 @@ bool TGBOT::IS_BOT_FROM::GetIsBotFrom(bool &data, long index, bool isStatus){
     return false;
 }
 
-bool TGBOT::IS_BOT_FROM::First(bool &data){
-    return GetIsBotFrom(data, 0, true);
-}
-
-bool TGBOT::IS_BOT_FROM::Last(bool &data){
-    return GetIsBotFrom(data, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::IS_BOT_FROM::Index(bool &data, long index){
-    return GetIsBotFrom(data, index, (this->method->getSizeResult() > index));
+bool TGBOT::IS_BOT_FROM::isBool(bool &data){
+    return GetIsBotFrom(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::FIRST_NAME_FROM::FIRST_NAME_FROM(){};
@@ -2144,17 +1801,8 @@ bool TGBOT::FIRST_NAME_FROM::GetFirstNameFrom(std::string &str, long index, bool
     }
     return false;
 }
-
-bool TGBOT::FIRST_NAME_FROM::First(std::string &str){
-    return GetFirstNameFrom(str, 0, true);
-}
-
-bool TGBOT::FIRST_NAME_FROM::Last(std::string &str){
-    return GetFirstNameFrom(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::FIRST_NAME_FROM::Index(std::string &str, long index){
-    return GetFirstNameFrom(str, index, (this->method->getSizeResult() > index));
+bool TGBOT::FIRST_NAME_FROM::isString(std::string &str){
+    return GetFirstNameFrom(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::LAST_NAME_FROM::LAST_NAME_FROM(){};
@@ -2178,16 +1826,8 @@ bool TGBOT::LAST_NAME_FROM::GetLastNameFrom(std::string &str, long index, bool i
     return false;
 }
 
-bool TGBOT::LAST_NAME_FROM::First(std::string &str){
-    return GetLastNameFrom(str, 0, true);
-}
-
-bool TGBOT::LAST_NAME_FROM::Last(std::string &str){
-    return GetLastNameFrom(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::LAST_NAME_FROM::Index(std::string &str, long index){
-    return GetLastNameFrom(str, index, (this->method->getSizeResult() > index));
+bool TGBOT::LAST_NAME_FROM::isString(std::string &str){
+    return GetLastNameFrom(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::USERNAME_FROM::USERNAME_FROM(){};
@@ -2211,17 +1851,10 @@ bool TGBOT::USERNAME_FROM::GetUsernameFrom(std::string &str, long index, bool is
     return false;
 }
 
-bool TGBOT::USERNAME_FROM::First(std::string &str){
-    return GetUsernameFrom(str, 0, true);
+bool TGBOT::USERNAME_FROM::isString(std::string &str){
+    return GetUsernameFrom(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
-bool TGBOT::USERNAME_FROM::Last(std::string &str){
-    return GetUsernameFrom(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::USERNAME_FROM::Index(std::string &str, long index){
-    return GetUsernameFrom(str, index, (this->method->getSizeResult() > index));
-}
 
 TGBOT::LANG_CODE_FROM::LANG_CODE_FROM(){};
 TGBOT::LANG_CODE_FROM::LANG_CODE_FROM(VARIABLE &var, METHOD &met){
@@ -2244,17 +1877,10 @@ bool TGBOT::LANG_CODE_FROM::GetLengCodeFrom(std::string &str, long index, bool i
     return false;
 }
 
-bool TGBOT::LANG_CODE_FROM::First(std::string &str){
-    return GetLengCodeFrom(str, 0, true);
+bool TGBOT::LANG_CODE_FROM::isString(std::string &str){
+    return GetLengCodeFrom(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
-bool TGBOT::LANG_CODE_FROM::Last(std::string &str){
-    return GetLengCodeFrom(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::LANG_CODE_FROM::Index(std::string &str, long index){
-    return GetLengCodeFrom(str, index, (this->method->getSizeResult() > index));
-}
 
 TGBOT::GET_FROM::GET_FROM(){};
 TGBOT::GET_FROM::GET_FROM(VARIABLE &var, METHOD &met) :
@@ -2324,16 +1950,10 @@ bool TGBOT::ID_CHAT::GetChatId(long &data, long index, bool isStatus){
     return false;
 }
 
-bool TGBOT::ID_CHAT::First(long &data){
-    return GetChatId(data, 0, true);
+bool TGBOT::ID_CHAT::isNum(long &data){
+    return GetChatId(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
-bool TGBOT::ID_CHAT::Last(long &data){
-    return GetChatId(data, this->method->getSizeResult() -1, true);
-}
-bool TGBOT::ID_CHAT::Index(long &data, long index){
-    return GetChatId(data, index, (this->method->getSizeResult() > index));
-}
 
 TGBOT::FIRST_NAME_CHAT::FIRST_NAME_CHAT(){};
 TGBOT::FIRST_NAME_CHAT::FIRST_NAME_CHAT(VARIABLE &var, METHOD &met){
@@ -2356,16 +1976,8 @@ bool TGBOT::FIRST_NAME_CHAT::GetFirstNameChat(std::string &str, long index, bool
     return false;
 }
 
-bool TGBOT::FIRST_NAME_CHAT::First(std::string &str){
-    return GetFirstNameChat(str, 0, true);
-}
-
-bool TGBOT::FIRST_NAME_CHAT::Last(std::string &str){
-    return GetFirstNameChat(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::FIRST_NAME_CHAT::Index(std::string &str, long index){
-    return GetFirstNameChat(str, index, (this->method->getSizeResult() > index));
+bool TGBOT::FIRST_NAME_CHAT::isString(std::string &str){
+    return GetFirstNameChat(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 TGBOT::LAST_NAME_CHAT::LAST_NAME_CHAT(){};
@@ -2389,16 +2001,8 @@ bool TGBOT::LAST_NAME_CHAT::GetLastNameChat(std::string &str, long index, bool i
     return false;
 }
 
-bool TGBOT::LAST_NAME_CHAT::First(std::string &str){
-    return GetLastNameChat(str, 0, true);
-}
-
-bool TGBOT::LAST_NAME_CHAT::Last(std::string &str){
-    return GetLastNameChat(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::LAST_NAME_CHAT::Index(std::string &str, long index){
-    return GetLastNameChat(str, index, (this->method->getSizeResult() > index));
+bool TGBOT::LAST_NAME_CHAT::isString(std::string &str){
+    return GetLastNameChat(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 
@@ -2423,16 +2027,8 @@ bool TGBOT::USERNAME_CHAT::GetUsernameChat(std::string &str, long index, bool is
     return false;
 }
 
-bool TGBOT::USERNAME_CHAT::First(std::string &str){
-    return GetUsernameChat(str, 0, true);
-}
-
-bool TGBOT::USERNAME_CHAT::Last(std::string &str){
-    return GetUsernameChat(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::USERNAME_CHAT::Index(std::string &str, long index){
-    return GetUsernameChat(str, index, (this->method->getSizeResult() > index));
+bool TGBOT::USERNAME_CHAT::isString(std::string &str){
+    return GetUsernameChat(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
 
@@ -2457,17 +2053,10 @@ bool TGBOT::TYPE_CHAT::GetTypeChat(std::string &str, long index, bool isStatus){
     return false;
 }
 
-bool TGBOT::TYPE_CHAT::First(std::string &str){
-    return GetTypeChat(str, 0, true);
+bool TGBOT::TYPE_CHAT::isString(std::string &str){
+    return GetTypeChat(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
-bool TGBOT::TYPE_CHAT::Last(std::string &str){
-    return GetTypeChat(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::TYPE_CHAT::Index(std::string &str, long index){
-    return GetTypeChat(str, index, (this->method->getSizeResult() > index));
-}
 
 TGBOT::GET_CHAT::GET_CHAT(){}
 TGBOT::GET_CHAT::GET_CHAT(VARIABLE &var, METHOD &met) :
@@ -2533,17 +2122,10 @@ bool TGBOT::TEXT_MESSAGE::GetMessageText(std::string &str, long index, bool isSt
     return false;
 }
 
-bool TGBOT::TEXT_MESSAGE::First(std::string &str){
-    return GetMessageText(str, 0, true);
+bool TGBOT::TEXT_MESSAGE::isString(std::string &str){
+    return GetMessageText(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
-bool TGBOT::TEXT_MESSAGE::Last(std::string &str){
-    return GetMessageText(str, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::TEXT_MESSAGE::Index(std::string &str, long index){
-    return GetMessageText(str, index, (this->method->getSizeResult() > index));
-}
 
 bool TGBOT::FORWARD_DATE_MESSAGE::GetMessageForwardData(long &data, long index, bool isStatus){
     if ((this->method->getIsStatusBot() && this->method->getSizeResult() && (index +1)) && isStatus){
@@ -2559,17 +2141,10 @@ bool TGBOT::FORWARD_DATE_MESSAGE::GetMessageForwardData(long &data, long index, 
     return false;
 }
 
-bool TGBOT::FORWARD_DATE_MESSAGE::First(long &data){
-    return GetMessageForwardData(data, 0, true);
+bool TGBOT::FORWARD_DATE_MESSAGE::isNum(long &data){
+    return GetMessageForwardData(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
-bool TGBOT::FORWARD_DATE_MESSAGE::Last(long &data){
-    return GetMessageForwardData(data, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::FORWARD_DATE_MESSAGE::Index(long &data, long index){
-    return GetMessageForwardData(data, index, (this->method->getSizeResult() > index));
-}
 
 TGBOT::ID_MESSAGE::ID_MESSAGE(){};
 TGBOT::ID_MESSAGE::ID_MESSAGE(VARIABLE &var, METHOD &met){
@@ -2597,17 +2172,10 @@ bool TGBOT::DATE_MESSAGE::GetMessageData(long &data, long index, bool isStatus){
     return false;
 }
 
-bool TGBOT::DATE_MESSAGE::First(long &data){
-    return GetMessageData(data, 0, true);
+bool TGBOT::DATE_MESSAGE::isNum(long &data){
+    return GetMessageData(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
-bool TGBOT::DATE_MESSAGE::Last(long &data){
-    return GetMessageData(data, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::DATE_MESSAGE::Index(long &data, long index){
-    return GetMessageData(data, index, (this->method->getSizeResult() > index));
-}
 
 TGBOT::FORWARD_DATE_MESSAGE::FORWARD_DATE_MESSAGE(){};
 TGBOT::FORWARD_DATE_MESSAGE::FORWARD_DATE_MESSAGE(VARIABLE &var, METHOD &met){
@@ -2629,17 +2197,10 @@ bool TGBOT::ID_MESSAGE::GetMessageId(long &data, long index, bool isStatus){
     return false;
 }
 
-bool TGBOT::ID_MESSAGE::First(long &data){
-    return GetMessageId(data, 0, true);
+bool TGBOT::ID_MESSAGE::isNum(long &data){
+    return GetMessageId(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
-bool TGBOT::ID_MESSAGE::Last(long &data){
-    return GetMessageId(data, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::ID_MESSAGE::Index(long &data, long index){
-    return GetMessageId(data, index, (this->method->getSizeResult() > index));
-}
 
 TGBOT::GET_MESSAGE::GET_MESSAGE(){};
 TGBOT::GET_MESSAGE::GET_MESSAGE(VARIABLE &var, METHOD &met) : id_message(var, met), date_message(var, met), forward_date_message(var, met), text_message(var, met){
@@ -2728,17 +2289,10 @@ bool TGBOT::ID_UPDATE::GetUpdateId(long &data, long index, bool isStatus){
     return false;
 }
 
-bool TGBOT::ID_UPDATE::First(long &data){
-    return GetUpdateId(data, 0, true);
+bool TGBOT::ID_UPDATE::isNum(long &data){
+    return GetUpdateId(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
-bool TGBOT::ID_UPDATE::Last(long &data){
-    return GetUpdateId(data, this->method->getSizeResult() -1, true);
-}
-
-bool TGBOT::ID_UPDATE::Index(long &data, long index){
-    return GetUpdateId(data, index, (this->method->getSizeResult() > index));
-}
 
 TGBOT::GET_RESULT::GET_RESULT(){};
 TGBOT::GET_RESULT::GET_RESULT(VARIABLE &var, METHOD &met) : id_update(var, met){
@@ -2772,7 +2326,8 @@ TGBOT::TGbot::TGbot(const char *token) : result(this->var, this->method), event(
     this->var.token.append(token);
 }
 
-TGBOT::RESULT TGBOT::TGbot::Result(){
+TGBOT::RESULT TGBOT::TGbot::Result(long iSindex){
+    this->var.index = iSindex;
     return this->result;
 }
 
