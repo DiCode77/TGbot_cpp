@@ -461,6 +461,16 @@ bool TGBOT::ID_FROM_REPLY::isNum(long &data){
     return GetFromId(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::ID_FROM_REPLY::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["reply_to_message"]["from"].count("id")){
+            return true;
+        }
+    }
+    return false;
+}
+
 TGBOT::IS_BOT_FROM_REPLY::IS_BOT_FROM_REPLY(){};
 TGBOT::IS_BOT_FROM_REPLY::IS_BOT_FROM_REPLY(VARIABLE &var, METHOD &met){
     this->var = &var;
@@ -483,6 +493,16 @@ bool TGBOT::IS_BOT_FROM_REPLY::GetIsBotFrom(bool &data, long index, bool isStatu
 
 bool TGBOT::IS_BOT_FROM_REPLY::isBool(bool &data){
     return GetIsBotFrom(data, this->var->index, (this->method->getSizeResult() > this->var->index));
+}
+
+bool TGBOT::IS_BOT_FROM_REPLY::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["reply_to_message"]["from"].count("is_bot")){
+            return true;
+        }
+    }
+    return false;
 }
 
 TGBOT::FIRST_NAME_FROM_REPLY::FIRST_NAME_FROM_REPLY(){};
@@ -510,6 +530,16 @@ bool TGBOT::FIRST_NAME_FROM_REPLY::isString(std::string &str){
     return GetFirstNameFrom(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::FIRST_NAME_FROM_REPLY::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["reply_to_message"]["from"].count("first_name")){
+            return true;
+        }
+    }
+    return false;
+}
+
 TGBOT::LAST_NAME_FROM_REPLY::LAST_NAME_FROM_REPLY(){};
 TGBOT::LAST_NAME_FROM_REPLY::LAST_NAME_FROM_REPLY(VARIABLE &var, METHOD &met){
     this->var = &var;
@@ -533,6 +563,16 @@ bool TGBOT::LAST_NAME_FROM_REPLY::GetLastNameFrom(std::string &str, long index, 
 
 bool TGBOT::LAST_NAME_FROM_REPLY::isString(std::string &str){
     return GetLastNameFrom(str, this->var->index, (this->method->getSizeResult() > this->var->index));
+}
+
+bool TGBOT::LAST_NAME_FROM_REPLY::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["reply_to_message"]["from"].count("last_name")){
+            return true;
+        }
+    }
+    return false;
 }
 
 TGBOT::USERNAME_FROM_REPLY::USERNAME_FROM_REPLY(){};
@@ -560,6 +600,16 @@ bool TGBOT::USERNAME_FROM_REPLY::isString(std::string &str){
     return GetUserNameFrom(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::USERNAME_FROM_REPLY::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["reply_to_message"]["from"].count("username")){
+            return true;
+        }
+    }
+    return false;
+}
+
 TGBOT::LENG_CODE_FROM_REPLY::LENG_CODE_FROM_REPLY(){};
 TGBOT::LENG_CODE_FROM_REPLY::LENG_CODE_FROM_REPLY(VARIABLE &var, METHOD &met){
     this->var = &var;
@@ -583,6 +633,16 @@ bool TGBOT::LENG_CODE_FROM_REPLY::GetLengCodeFrom(std::string &str, long index, 
 
 bool TGBOT::LENG_CODE_FROM_REPLY::isString(std::string &str){
     return GetLengCodeFrom(str, this->var->index, (this->method->getSizeResult() > this->var->index));
+}
+
+bool TGBOT::LENG_CODE_FROM_REPLY::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["reply_to_message"]["from"].count("language_code")){
+            return true;
+        }
+    }
+    return false;
 }
 
 TGBOT::GET_FROM_REPLY_MESSAGE::GET_FROM_REPLY_MESSAGE(){};
@@ -667,6 +727,16 @@ bool TGBOT::ID_CHAT_REPLY::isNum(long &data){
     return GetChatId(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::ID_CHAT_REPLY::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["reply_to_message"]["chat"].count("id")){
+            return true;
+        }
+    }
+    return false;
+}
+
 TGBOT::FIRST_NAME_CHAT_REPLY::FIRST_NAME_CHAT_REPLY(){}
 TGBOT::FIRST_NAME_CHAT_REPLY::FIRST_NAME_CHAT_REPLY(VARIABLE &var, METHOD &met){
     this->var = &var;
@@ -690,6 +760,16 @@ bool TGBOT::FIRST_NAME_CHAT_REPLY::GetFirstNameChat(std::string &str, long index
 
 bool TGBOT::FIRST_NAME_CHAT_REPLY::isString(std::string &str){
     return GetFirstNameChat(str, this->var->index, (this->method->getSizeResult() > this->var->index));
+}
+
+bool TGBOT::FIRST_NAME_CHAT_REPLY::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["reply_to_message"]["chat"].count("first_name")){
+            return true;
+        }
+    }
+    return false;
 }
 
 TGBOT::LAST_NAME_CHAT_REPLY::LAST_NAME_CHAT_REPLY(){}
@@ -717,6 +797,16 @@ bool TGBOT::LAST_NAME_CHAT_REPLY::isString(std::string &str){
     return GetLastNameChat(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::LAST_NAME_CHAT_REPLY::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["reply_to_message"]["chat"].count("last_name")){
+            return true;
+        }
+    }
+    return false;
+}
+
 TGBOT::USERNAME_CHAT_REPLY::USERNAME_CHAT_REPLY(){}
 TGBOT::USERNAME_CHAT_REPLY::USERNAME_CHAT_REPLY(VARIABLE &var, METHOD &met){
     this->var = &var;
@@ -742,6 +832,16 @@ bool TGBOT::USERNAME_CHAT_REPLY::isString(std::string &str){
     return GetUsernameChat(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::USERNAME_CHAT_REPLY::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["reply_to_message"]["chat"].count("username")){
+            return true;
+        }
+    }
+    return false;
+}
+
 TGBOT::TYPE_CHAT_REPLY::TYPE_CHAT_REPLY(){}
 TGBOT::TYPE_CHAT_REPLY::TYPE_CHAT_REPLY(VARIABLE &var, METHOD &met){
     this->var = &var;
@@ -765,6 +865,16 @@ bool TGBOT::TYPE_CHAT_REPLY::GetTypeChat(std::string &str, long index, bool isSt
 
 bool TGBOT::TYPE_CHAT_REPLY::isString(std::string &str){
     return GetTypeChat(str, this->var->index, (this->method->getSizeResult() > this->var->index));
+}
+
+bool TGBOT::TYPE_CHAT_REPLY::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["reply_to_message"]["chat"].count("type")){
+            return true;
+        }
+    }
+    return false;
 }
 
 TGBOT::GET_CHAT_REPLY_MESSAGE::GET_CHAT_REPLY_MESSAGE(){};
@@ -843,6 +953,16 @@ bool TGBOT::ID_REPLY_MESSAGE::isNum(long &data){
     return GetMessageId(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::ID_REPLY_MESSAGE::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["reply_to_message"].count("message_id")){
+            return true;
+        }
+    }
+    return false;
+}
+
 TGBOT::DATE_REPLY_MESSAGE::DATE_REPLY_MESSAGE(){}
 TGBOT::DATE_REPLY_MESSAGE::DATE_REPLY_MESSAGE(VARIABLE &var, METHOD &met){
     this->var = &var;
@@ -865,6 +985,16 @@ bool TGBOT::DATE_REPLY_MESSAGE::GetMessageData(long &data, long index, bool isSt
 
 bool TGBOT::DATE_REPLY_MESSAGE::isNum(long &data){
     return GetMessageData(data, this->var->index, (this->method->getSizeResult() > this->var->index));
+}
+
+bool TGBOT::DATE_REPLY_MESSAGE::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["reply_to_message"].count("date")){
+            return true;
+        }
+    }
+    return false;
 }
 
 TGBOT::TEXT_REPLY_MESSAGE::TEXT_REPLY_MESSAGE(){}
@@ -890,6 +1020,16 @@ bool TGBOT::TEXT_REPLY_MESSAGE::GetMessageText(std::string &str, long index, boo
 
 bool TGBOT::TEXT_REPLY_MESSAGE::isString(std::string &str){
     return GetMessageText(str, this->var->index, (this->method->getSizeResult() > this->var->index));
+}
+
+bool TGBOT::TEXT_REPLY_MESSAGE::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["reply_to_message"].count("text")){
+            return true;
+        }
+    }
+    return false;
 }
 
 TGBOT::GET_REPLY_TO_MESSAGE::GET_REPLY_TO_MESSAGE(){};
@@ -1197,6 +1337,16 @@ bool TGBOT::FILE_ID_THUMBNAIL_DOCUMENT::isString(std::string &str){
     return GetFileId(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::FILE_ID_THUMBNAIL_DOCUMENT::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["document"]["thumbnail"].count("file_id")){
+            return true;
+        }
+    }
+    return false;
+}
+
 
 TGBOT::FILE_UIQUE_ID_THUMBNAIL_DOCUMENT::FILE_UIQUE_ID_THUMBNAIL_DOCUMENT(){}
 TGBOT::FILE_UIQUE_ID_THUMBNAIL_DOCUMENT::FILE_UIQUE_ID_THUMBNAIL_DOCUMENT(VARIABLE &var, METHOD &met){
@@ -1223,6 +1373,16 @@ bool TGBOT::FILE_UIQUE_ID_THUMBNAIL_DOCUMENT::isString(std::string &str){
     return GetUniqueId(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::FILE_UIQUE_ID_THUMBNAIL_DOCUMENT::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["document"]["thumbnail"].count("file_unique_id")){
+            return true;
+        }
+    }
+    return false;
+}
+
 TGBOT::FILE_SIZE_THUMBNAIL_DOCUMENT::FILE_SIZE_THUMBNAIL_DOCUMENT(){}
 TGBOT::FILE_SIZE_THUMBNAIL_DOCUMENT::FILE_SIZE_THUMBNAIL_DOCUMENT(VARIABLE &var, METHOD &met){
     this->var = &var;
@@ -1245,6 +1405,16 @@ bool TGBOT::FILE_SIZE_THUMBNAIL_DOCUMENT::GetFileSize(long &data, long index, bo
 
 bool TGBOT::FILE_SIZE_THUMBNAIL_DOCUMENT::isNum(long &data){
     return GetFileSize(data, this->var->index, (this->method->getSizeResult() > this->var->index));
+}
+
+bool TGBOT::FILE_SIZE_THUMBNAIL_DOCUMENT::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["document"]["thumbnail"].count("file_size")){
+            return true;
+        }
+    }
+    return false;
 }
 
 TGBOT::WIDTH_THUMBNAIL_DOCUMENT::WIDTH_THUMBNAIL_DOCUMENT(){}
@@ -1271,6 +1441,16 @@ bool TGBOT::WIDTH_THUMBNAIL_DOCUMENT::isNum(long &data){
     return GetWidth(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::WIDTH_THUMBNAIL_DOCUMENT::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["document"]["thumbnail"].count("width")){
+            return true;
+        }
+    }
+    return false;
+}
+
 TGBOT::HEIGHT_THUMBNAIL_DOCUMENT::HEIGHT_THUMBNAIL_DOCUMENT(){}
 TGBOT::HEIGHT_THUMBNAIL_DOCUMENT::HEIGHT_THUMBNAIL_DOCUMENT(VARIABLE &var, METHOD &met){
     this->var = &var;
@@ -1293,6 +1473,16 @@ bool TGBOT::HEIGHT_THUMBNAIL_DOCUMENT::GetHeight(long &data, long index, bool is
 
 bool TGBOT::HEIGHT_THUMBNAIL_DOCUMENT::isNum(long &data){
     return GetHeight(data, this->var->index, (this->method->getSizeResult() > this->var->index));
+}
+
+bool TGBOT::HEIGHT_THUMBNAIL_DOCUMENT::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["document"]["thumbnail"].count("height")){
+            return true;
+        }
+    }
+    return false;
 }
 
 TGBOT::GET_THUMBNAIL_DOCUMENT::GET_THUMBNAIL_DOCUMENT(){}
@@ -1336,6 +1526,16 @@ TGBOT::GET_THUMBNAIL_DOCUMENT TGBOT::THUMBNAIL_DOCUMENT::get(){
     return this->get_thumbnail_doc;
 }
 
+bool TGBOT::THUMBNAIL_DOCUMENT::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["document"].count("thumbnail")){
+            return true;
+        }
+    }
+    return false;
+}
+
 // thumbnail document
 
 // ***************** thumb document ******************* //
@@ -1365,6 +1565,16 @@ bool TGBOT::FILE_ID_THUMB_DOCUMENT::isString(std::string &str){
     return GetFileId(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::FILE_ID_THUMB_DOCUMENT::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["document"]["thumb"].count("file_id")){
+            return true;
+        }
+    }
+    return false;
+}
+
 TGBOT::FILE_UNIQUE_ID_THUMB_DOCUMENT::FILE_UNIQUE_ID_THUMB_DOCUMENT(){}
 TGBOT::FILE_UNIQUE_ID_THUMB_DOCUMENT::FILE_UNIQUE_ID_THUMB_DOCUMENT(VARIABLE &var, METHOD &met){
     this->var = &var;
@@ -1388,6 +1598,16 @@ bool TGBOT::FILE_UNIQUE_ID_THUMB_DOCUMENT::GetUniqueId(std::string &str, long in
 
 bool TGBOT::FILE_UNIQUE_ID_THUMB_DOCUMENT::isString(std::string &str){
     return GetUniqueId(str, this->var->index, (this->method->getSizeResult() > this->var->index));
+}
+
+bool TGBOT::FILE_UNIQUE_ID_THUMB_DOCUMENT::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["document"]["thumb"].count("file_unique_id")){
+            return true;
+        }
+    }
+    return false;
 }
 
 
@@ -1415,6 +1635,16 @@ bool TGBOT::FILE_SIZE_THUMB_DOCUMENT::isNum(long &data){
     return GetFileSize(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::FILE_SIZE_THUMB_DOCUMENT::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["document"]["thumb"].count("file_size")){
+            return true;
+        }
+    }
+    return false;
+}
+
 TGBOT::WIDTH_THUMB_DOCUMENT::WIDTH_THUMB_DOCUMENT(){}
 TGBOT::WIDTH_THUMB_DOCUMENT::WIDTH_THUMB_DOCUMENT(VARIABLE &var, METHOD &met){
     this->var = &var;
@@ -1439,6 +1669,16 @@ bool TGBOT::WIDTH_THUMB_DOCUMENT::isNum(long &data){
     return GetWidth(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::WIDTH_THUMB_DOCUMENT::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["document"]["thumb"].count("width")){
+            return true;
+        }
+    }
+    return false;
+}
+
 TGBOT::HEIGHT_THUMB_DOCUMENT::HEIGHT_THUMB_DOCUMENT(){}
 TGBOT::HEIGHT_THUMB_DOCUMENT::HEIGHT_THUMB_DOCUMENT(VARIABLE &var, METHOD &met){
     this->var = &var;
@@ -1461,6 +1701,16 @@ bool TGBOT::HEIGHT_THUMB_DOCUMENT::GetHeight(long &data, long index, bool isStat
 
 bool TGBOT::HEIGHT_THUMB_DOCUMENT::isNum(long &data){
     return GetHeight(data, this->var->index, (this->method->getSizeResult() > this->var->index));
+}
+
+bool TGBOT::HEIGHT_THUMB_DOCUMENT::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["document"]["thumb"].count("height")){
+            return true;
+        }
+    }
+    return false;
 }
 
 
@@ -1503,6 +1753,16 @@ TGBOT::THUMB_DOCUMENT::THUMB_DOCUMENT(VARIABLE &var, METHOD &met) : get_thumb_do
 
 TGBOT::GET_THUMB_DOCUMENT TGBOT::THUMB_DOCUMENT::get(){
     return this->get_thumb_doc;
+}
+
+bool TGBOT::THUMB_DOCUMENT::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["document"].count("thumb")){
+            return true;
+        }
+    }
+    return false;
 }
 
 // thumb document

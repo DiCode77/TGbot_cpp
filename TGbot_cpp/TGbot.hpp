@@ -215,6 +215,7 @@ public:
     ID_FROM_REPLY();
     ID_FROM_REPLY(VARIABLE&, METHOD&);
     bool isNum(long&);
+    bool is();
     
 private:
     bool GetFromId(long&, long, bool);
@@ -227,6 +228,7 @@ public:
     IS_BOT_FROM_REPLY();
     IS_BOT_FROM_REPLY(VARIABLE&, METHOD&);
     bool isBool(bool&);
+    bool is();
     
 private:
     bool GetIsBotFrom(bool&, long, bool);
@@ -239,6 +241,7 @@ public:
     FIRST_NAME_FROM_REPLY();
     FIRST_NAME_FROM_REPLY(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetFirstNameFrom(std::string&, long, bool);
@@ -251,6 +254,7 @@ public:
     LAST_NAME_FROM_REPLY();
     LAST_NAME_FROM_REPLY(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetLastNameFrom(std::string&, long, bool);
@@ -263,6 +267,7 @@ public:
     USERNAME_FROM_REPLY();
     USERNAME_FROM_REPLY(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetUserNameFrom(std::string&, long, bool);
@@ -275,6 +280,7 @@ public:
     LENG_CODE_FROM_REPLY();
     LENG_CODE_FROM_REPLY(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetLengCodeFrom(std::string&, long, bool);
@@ -321,6 +327,7 @@ public:
     ID_CHAT_REPLY();
     ID_CHAT_REPLY(VARIABLE&, METHOD&);
     bool isNum(long&);
+    bool is();
     
 private:
     bool GetChatId(long&, long, bool);
@@ -333,6 +340,7 @@ public:
     FIRST_NAME_CHAT_REPLY();
     FIRST_NAME_CHAT_REPLY(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetFirstNameChat(std::string&, long, bool);
@@ -345,6 +353,7 @@ public:
     LAST_NAME_CHAT_REPLY();
     LAST_NAME_CHAT_REPLY(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetLastNameChat(std::string&, long, bool);
@@ -357,6 +366,7 @@ public:
     USERNAME_CHAT_REPLY();
     USERNAME_CHAT_REPLY(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetUsernameChat(std::string&, long, bool);
@@ -369,6 +379,7 @@ public:
     TYPE_CHAT_REPLY();
     TYPE_CHAT_REPLY(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetTypeChat(std::string&, long, bool);
@@ -414,6 +425,7 @@ public:
     ID_REPLY_MESSAGE();
     ID_REPLY_MESSAGE(VARIABLE&, METHOD&);
     bool isNum(long&);
+    bool is();
     
 private:
     bool GetMessageId(long&, long, bool);
@@ -426,6 +438,7 @@ public:
     DATE_REPLY_MESSAGE();
     DATE_REPLY_MESSAGE(VARIABLE&, METHOD&);
     bool isNum(long&);
+    bool is();
     
 private:
     bool GetMessageData(long&, long, bool);
@@ -438,6 +451,7 @@ public:
     TEXT_REPLY_MESSAGE();
     TEXT_REPLY_MESSAGE(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetMessageText(std::string&, long, bool);
@@ -589,6 +603,7 @@ public:
     FILE_ID_THUMBNAIL_DOCUMENT();
     FILE_ID_THUMBNAIL_DOCUMENT(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetFileId(std::string&, long, bool);
@@ -601,6 +616,7 @@ public:
     FILE_UIQUE_ID_THUMBNAIL_DOCUMENT();
     FILE_UIQUE_ID_THUMBNAIL_DOCUMENT(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetUniqueId(std::string&, long, bool);
@@ -613,6 +629,7 @@ public:
     FILE_SIZE_THUMBNAIL_DOCUMENT();
     FILE_SIZE_THUMBNAIL_DOCUMENT(VARIABLE&, METHOD&);
     bool isNum(long&);
+    bool is();
     
 private:
     bool GetFileSize(long&, long, bool);
@@ -625,6 +642,7 @@ public:
     WIDTH_THUMBNAIL_DOCUMENT();
     WIDTH_THUMBNAIL_DOCUMENT(VARIABLE&, METHOD&);
     bool isNum(long&);
+    bool is();
     
 private:
     bool GetWidth(long&, long, bool);
@@ -637,6 +655,7 @@ public:
     HEIGHT_THUMBNAIL_DOCUMENT();
     HEIGHT_THUMBNAIL_DOCUMENT(VARIABLE&, METHOD&);
     bool isNum(long&);
+    bool is();
     
 private:
     bool GetHeight(long&, long, bool);
@@ -669,6 +688,7 @@ public:
     THUMBNAIL_DOCUMENT();
     THUMBNAIL_DOCUMENT(VARIABLE&, METHOD&);
     GET_THUMBNAIL_DOCUMENT get();
+    bool is();
 };
 // thumbnail document
 
@@ -680,6 +700,7 @@ public:
     FILE_ID_THUMB_DOCUMENT();
     FILE_ID_THUMB_DOCUMENT(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetFileId(std::string&, long, bool);
@@ -692,6 +713,7 @@ public:
     FILE_UNIQUE_ID_THUMB_DOCUMENT();
     FILE_UNIQUE_ID_THUMB_DOCUMENT(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetUniqueId(std::string&, long, bool);
@@ -704,6 +726,7 @@ public:
     FILE_SIZE_THUMB_DOCUMENT();
     FILE_SIZE_THUMB_DOCUMENT(VARIABLE&, METHOD&);
     bool isNum(long&);
+    bool is();
     
 private:
     bool GetFileSize(long&, long, bool);
@@ -716,6 +739,7 @@ public:
     WIDTH_THUMB_DOCUMENT();
     WIDTH_THUMB_DOCUMENT(VARIABLE&, METHOD&);
     bool isNum(long&);
+    bool is();
     
 private:
     bool GetWidth(long&, long, bool);
@@ -728,6 +752,7 @@ public:
     HEIGHT_THUMB_DOCUMENT();
     HEIGHT_THUMB_DOCUMENT(VARIABLE&, METHOD&);
     bool isNum(long&);
+    bool is();
     
 private:
     bool GetHeight(long&, long, bool);
@@ -761,6 +786,7 @@ public:
     THUMB_DOCUMENT();
     THUMB_DOCUMENT(VARIABLE&, METHOD&);
     GET_THUMB_DOCUMENT get();
+    bool is();
 };
 // humb document
 
