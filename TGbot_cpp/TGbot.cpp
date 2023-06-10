@@ -299,6 +299,16 @@ bool TGBOT::OFFSET_ENTITIES_MESSAGE::isNum(long &data){
     return GetOffset(data, this->var->index, this->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::OFFSET_ENTITIES_MESSAGE::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["entities"][this->index].count("offset")){
+            return true;
+        }
+    }
+    return false;
+}
+
 TGBOT::LENGTH_ENTITIES_MESSAGE::LENGTH_ENTITIES_MESSAGE(){}
 TGBOT::LENGTH_ENTITIES_MESSAGE::LENGTH_ENTITIES_MESSAGE(VARIABLE &var, METHOD &met){
     this->var = &var;
@@ -326,6 +336,16 @@ void TGBOT::LENGTH_ENTITIES_MESSAGE::getIndex(long isIndex){
 
 bool TGBOT::LENGTH_ENTITIES_MESSAGE::isNum(long &data){
     return GetLength(data, this->var->index, this->index, (this->method->getSizeResult() > this->var->index));
+}
+
+bool TGBOT::LENGTH_ENTITIES_MESSAGE::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["entities"][this->index].count("length")){
+            return true;
+        }
+    }
+    return false;
 }
 
 TGBOT::TYPE_ENTITIES_MESSAGE::TYPE_ENTITIES_MESSAGE(){}
@@ -356,6 +376,16 @@ void TGBOT::TYPE_ENTITIES_MESSAGE::getIndex(long isIndex){
 
 bool TGBOT::TYPE_ENTITIES_MESSAGE::isString(std::string &str){
     return GetType(str, this->var->index, this->index, (this->method->getSizeResult() > this->var->index));
+}
+
+bool TGBOT::TYPE_ENTITIES_MESSAGE::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["entities"][this->index].count("type")){
+            return true;
+        }
+    }
+    return false;
 }
 
 TGBOT::GET_ENTITIES_MESSAGE::GET_ENTITIES_MESSAGE(){};
@@ -391,6 +421,16 @@ TGBOT::ENTITIES_MESSAGE::ENTITIES_MESSAGE(VARIABLE &var, METHOD &met) : get_enti
 
 TGBOT::GET_ENTITIES_MESSAGE TGBOT::ENTITIES_MESSAGE::get(){
     return this->get_entities_mess;
+}
+
+bool TGBOT::ENTITIES_MESSAGE::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"].count("entities")){
+            return true;
+        }
+    }
+    return false;
 }
 
 // ENTITIES MESSAGE
@@ -590,6 +630,16 @@ TGBOT::FROM_REPLY_MESSAGE::FROM_REPLY_MESSAGE(VARIABLE &var, METHOD &met) : get_
 TGBOT::GET_FROM_REPLY_MESSAGE TGBOT::FROM_REPLY_MESSAGE::get(){
     return this->get_from_reply_message;
 }
+
+bool TGBOT::FROM_REPLY_MESSAGE::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["reply_to_message"].count("from")){
+            return true;
+        }
+    }
+    return false;
+}
 // FROM REPLY MESSAGE
 
 // ***************** CHAT REPLY MESSAGE ******************* //
@@ -756,6 +806,16 @@ TGBOT::CHAT_REPLY_MESSAGE::CHAT_REPLY_MESSAGE(VARIABLE &var, METHOD &met) : get_
 TGBOT::GET_CHAT_REPLY_MESSAGE TGBOT::CHAT_REPLY_MESSAGE::get(){
     return this->get_chat_reply_message;
 }
+
+bool TGBOT::CHAT_REPLY_MESSAGE::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["reply_to_message"].count("chat")){
+            return true;
+        }
+    }
+    return false;
+}
 // CHAT REPLY MESSAGE
 
 // ***************** REPLY_TO_MESSAGE ******************* //
@@ -870,6 +930,16 @@ TGBOT::FROM_REPLY_MESSAGE TGBOT::REPLY_TO_MESSAGE::from(){
 TGBOT::CHAT_REPLY_MESSAGE TGBOT::REPLY_TO_MESSAGE::chat(){
     return this->chat_reply_message;
 }
+
+bool TGBOT::REPLY_TO_MESSAGE::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"].count("reply_to_message")){
+            return true;
+        }
+    }
+    return false;
+}
 // REPLY_TO_MESSAGE
 
 // ***************** VOICE ******************* //
@@ -898,6 +968,16 @@ bool TGBOT::DURATION_VOICE::isNum(long &data){
     return GetDuration(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::DURATION_VOICE::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["voice"].count("duration")){
+            return true;
+        }
+    }
+    return false;
+}
+
 TGBOT::MIME_TYPE_VOICE::MIME_TYPE_VOICE(){};
 TGBOT::MIME_TYPE_VOICE::MIME_TYPE_VOICE(VARIABLE &var, METHOD &met){
     this->var = &var;
@@ -921,6 +1001,16 @@ bool TGBOT::MIME_TYPE_VOICE::GetMimeType(std::string &str, long index, bool isSt
 
 bool TGBOT::MIME_TYPE_VOICE::isString(std::string &str){
     return GetMimeType(str, this->var->index, (this->method->getSizeResult() > this->var->index));
+}
+
+bool TGBOT::MIME_TYPE_VOICE::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["voice"].count("mime_type")){
+            return true;
+        }
+    }
+    return false;
 }
 
 TGBOT::FILE_ID_VOICE::FILE_ID_VOICE(){};
@@ -948,6 +1038,16 @@ bool TGBOT::FILE_ID_VOICE::isString(std::string &str){
     return GetFileId(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::FILE_ID_VOICE::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["voice"].count("file_id")){
+            return true;
+        }
+    }
+    return false;
+}
+
 TGBOT::FILE_UNIQUE_ID_VOICE::FILE_UNIQUE_ID_VOICE(){};
 TGBOT::FILE_UNIQUE_ID_VOICE::FILE_UNIQUE_ID_VOICE(VARIABLE &var, METHOD &met){
     this->var = &var;
@@ -971,6 +1071,16 @@ bool TGBOT::FILE_UNIQUE_ID_VOICE::GetFileUniqueId(std::string &str, long index, 
 
 bool TGBOT::FILE_UNIQUE_ID_VOICE::isString(std::string &str){
     return GetFileUniqueId(str, this->var->index, (this->method->getSizeResult() > this->var->index));
+}
+
+bool TGBOT::FILE_UNIQUE_ID_VOICE::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["voice"].count("file_unique_id")){
+            return true;
+        }
+    }
+    return false;
 }
 
 TGBOT::FILE_SIZE_VOICE::FILE_SIZE_VOICE(){};
@@ -997,6 +1107,15 @@ bool TGBOT::FILE_SIZE_VOICE::isNum(long &data){
     return GetFileSize(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::FILE_SIZE_VOICE::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["voice"].count("file_size")){
+            return true;
+        }
+    }
+    return false;
+}
 
 TGBOT::GET_VOICE::GET_VOICE(){};
 TGBOT::GET_VOICE::GET_VOICE(VARIABLE &var, METHOD &met) :
@@ -1037,6 +1156,16 @@ TGBOT::VOICE::VOICE(VARIABLE &var, METHOD &met) : get_voice(var, met){
 
 TGBOT::GET_VOICE TGBOT::VOICE::get(){
     return this->get_voice;
+}
+
+bool TGBOT::VOICE::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"].count("voice")){
+            return true;
+        }
+    }
+    return false;
 }
 
 // VOICE
@@ -1405,6 +1534,15 @@ bool TGBOT::FILE_NAME_DOCUMENT::isString(std::string &str){
     return GetFileName(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::FILE_NAME_DOCUMENT::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["document"].count("file_name")){
+            return true;
+        }
+    }
+    return false;
+}
 
 TGBOT::MIME_TYPE_DOCUMENT::MIME_TYPE_DOCUMENT(){}
 TGBOT::MIME_TYPE_DOCUMENT::MIME_TYPE_DOCUMENT(VARIABLE &var, METHOD &met){
@@ -1431,6 +1569,16 @@ bool TGBOT::MIME_TYPE_DOCUMENT::isString(std::string &str){
     return GetMimeType(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::MIME_TYPE_DOCUMENT::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["document"].count("mime_type")){
+            return true;
+        }
+    }
+    return false;
+}
+
 TGBOT::FILE_ID_DOCUMENT::FILE_ID_DOCUMENT(){}
 TGBOT::FILE_ID_DOCUMENT::FILE_ID_DOCUMENT(VARIABLE &var, METHOD &met){
     this->var = &var;
@@ -1454,6 +1602,16 @@ bool TGBOT::FILE_ID_DOCUMENT::GetFileId(std::string &str, long index, bool isSta
 
 bool TGBOT::FILE_ID_DOCUMENT::isString(std::string &str){
     return GetFileId(str, this->var->index, (this->method->getSizeResult() > this->var->index));
+}
+
+bool TGBOT::FILE_ID_DOCUMENT::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["document"].count("file_id")){
+            return true;
+        }
+    }
+    return false;
 }
 
 
@@ -1482,6 +1640,15 @@ bool TGBOT::FILE_UNIQUE_ID_DOCUMENT::isString(std::string &str){
     return GetFileUniqueId(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::FILE_UNIQUE_ID_DOCUMENT::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["document"].count("file_unique_id")){
+            return true;
+        }
+    }
+    return false;
+}
 
 TGBOT::FILE_SIZE_DOCUMENT::FILE_SIZE_DOCUMENT(){}
 TGBOT::FILE_SIZE_DOCUMENT::FILE_SIZE_DOCUMENT(VARIABLE &var, METHOD &met){
@@ -1507,6 +1674,15 @@ bool TGBOT::FILE_SIZE_DOCUMENT::isNum(long &data){
     return GetFileSize(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::FILE_SIZE_DOCUMENT::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["document"].count("file_size")){
+            return true;
+        }
+    }
+    return false;
+}
 
 TGBOT::GET_DOCUMENT::GET_DOCUMENT(){}
 TGBOT::GET_DOCUMENT::GET_DOCUMENT(VARIABLE &var, METHOD &met) :
@@ -1555,6 +1731,16 @@ TGBOT::THUMBNAIL_DOCUMENT TGBOT::DOCUMENT::Thumbnail(){
 
 TGBOT::THUMB_DOCUMENT TGBOT::DOCUMENT::Thumb(){
     return this->thumb;
+}
+
+bool TGBOT::DOCUMENT::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"].count("document")){
+            return true;
+        }
+    }
+    return false;
 }
 
 // document
@@ -1729,6 +1915,16 @@ TGBOT::GET_FORWARD_FROM TGBOT::FORWARD_FROM::get(){
     return this->get_forward_from;;
 }
 
+bool TGBOT::FORWARD_FROM::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"].count("forward_from")){
+            return true;
+        }
+    }
+    return false;
+}
+
 // FORWARD_FROM
 
 // ***************** FROM ******************* //
@@ -1805,6 +2001,16 @@ bool TGBOT::FIRST_NAME_FROM::isString(std::string &str){
     return GetFirstNameFrom(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::FIRST_NAME_FROM::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["from"].count("first_name")){
+            return true;
+        }
+    }
+    return false;
+}
+
 TGBOT::LAST_NAME_FROM::LAST_NAME_FROM(){};
 TGBOT::LAST_NAME_FROM::LAST_NAME_FROM(VARIABLE &var, METHOD &met){
     this->var = &var;
@@ -1828,6 +2034,16 @@ bool TGBOT::LAST_NAME_FROM::GetLastNameFrom(std::string &str, long index, bool i
 
 bool TGBOT::LAST_NAME_FROM::isString(std::string &str){
     return GetLastNameFrom(str, this->var->index, (this->method->getSizeResult() > this->var->index));
+}
+
+bool TGBOT::LAST_NAME_FROM::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["from"].count("last_name")){
+            return true;
+        }
+    }
+    return false;
 }
 
 TGBOT::USERNAME_FROM::USERNAME_FROM(){};
@@ -1855,6 +2071,15 @@ bool TGBOT::USERNAME_FROM::isString(std::string &str){
     return GetUsernameFrom(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::USERNAME_FROM::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["from"].count("username")){
+            return true;
+        }
+    }
+    return false;
+}
 
 TGBOT::LANG_CODE_FROM::LANG_CODE_FROM(){};
 TGBOT::LANG_CODE_FROM::LANG_CODE_FROM(VARIABLE &var, METHOD &met){
@@ -1881,6 +2106,15 @@ bool TGBOT::LANG_CODE_FROM::isString(std::string &str){
     return GetLengCodeFrom(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::LANG_CODE_FROM::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["from"].count("language_code")){
+            return true;
+        }
+    }
+    return false;
+}
 
 TGBOT::GET_FROM::GET_FROM(){};
 TGBOT::GET_FROM::GET_FROM(VARIABLE &var, METHOD &met) :
@@ -1926,6 +2160,16 @@ TGBOT::FROM::FROM(VARIABLE &var, METHOD &met) : get_from(var, met){
 
 TGBOT::GET_FROM TGBOT::FROM::get(){
     return this->get_from;
+}
+
+bool TGBOT::FROM::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"].count("from")){
+            return true;
+        }
+    }
+    return false;
 }
 // FROM
 
@@ -1980,6 +2224,16 @@ bool TGBOT::FIRST_NAME_CHAT::isString(std::string &str){
     return GetFirstNameChat(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::FIRST_NAME_CHAT::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["chat"].count("first_name")){
+            return true;
+        }
+    }
+    return false;
+}
+
 TGBOT::LAST_NAME_CHAT::LAST_NAME_CHAT(){};
 TGBOT::LAST_NAME_CHAT::LAST_NAME_CHAT(VARIABLE &var, METHOD &met){
     this->var = &var;
@@ -2005,6 +2259,15 @@ bool TGBOT::LAST_NAME_CHAT::isString(std::string &str){
     return GetLastNameChat(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::LAST_NAME_CHAT::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["chat"].count("last_name")){
+            return true;
+        }
+    }
+    return false;
+}
 
 TGBOT::USERNAME_CHAT::USERNAME_CHAT(){};
 TGBOT::USERNAME_CHAT::USERNAME_CHAT(VARIABLE &var, METHOD &met){
@@ -2031,6 +2294,15 @@ bool TGBOT::USERNAME_CHAT::isString(std::string &str){
     return GetUsernameChat(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::USERNAME_CHAT::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["chat"].count("username")){
+            return true;
+        }
+    }
+    return false;
+}
 
 TGBOT::TYPE_CHAT::TYPE_CHAT(){};
 TGBOT::TYPE_CHAT::TYPE_CHAT(VARIABLE &var, METHOD &met){
@@ -2057,6 +2329,15 @@ bool TGBOT::TYPE_CHAT::isString(std::string &str){
     return GetTypeChat(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::TYPE_CHAT::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["chat"].count("type")){
+            return true;
+        }
+    }
+    return false;
+}
 
 TGBOT::GET_CHAT::GET_CHAT(){}
 TGBOT::GET_CHAT::GET_CHAT(VARIABLE &var, METHOD &met) :
@@ -2098,6 +2379,16 @@ TGBOT::CHAT::CHAT(VARIABLE &var, METHOD &met) : get_chat(var, met){
 TGBOT::GET_CHAT TGBOT::CHAT::get(){
     return this->get_chat;
 }
+
+bool TGBOT::CHAT::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"].count("chat")){
+            return true;
+        }
+    }
+    return false;
+}
 // CHAT
 
 // ***************** MESSAGE ******************* //
@@ -2126,6 +2417,16 @@ bool TGBOT::TEXT_MESSAGE::isString(std::string &str){
     return GetMessageText(str, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::TEXT_MESSAGE::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"].count("text")){
+            return true;
+        }
+    }
+    return false;
+}
+
 
 bool TGBOT::FORWARD_DATE_MESSAGE::GetMessageForwardData(long &data, long index, bool isStatus){
     if ((this->method->getIsStatusBot() && this->method->getSizeResult() && (index +1)) && isStatus){
@@ -2145,6 +2446,15 @@ bool TGBOT::FORWARD_DATE_MESSAGE::isNum(long &data){
     return GetMessageForwardData(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::FORWARD_DATE_MESSAGE::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"].count("forward_date")){
+            return true;
+        }
+    }
+    return false;
+}
 
 TGBOT::ID_MESSAGE::ID_MESSAGE(){};
 TGBOT::ID_MESSAGE::ID_MESSAGE(VARIABLE &var, METHOD &met){
@@ -2176,6 +2486,15 @@ bool TGBOT::DATE_MESSAGE::isNum(long &data){
     return GetMessageData(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::DATE_MESSAGE::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"].count("date")){
+            return true;
+        }
+    }
+    return false;
+}
 
 TGBOT::FORWARD_DATE_MESSAGE::FORWARD_DATE_MESSAGE(){};
 TGBOT::FORWARD_DATE_MESSAGE::FORWARD_DATE_MESSAGE(VARIABLE &var, METHOD &met){
@@ -2201,6 +2520,15 @@ bool TGBOT::ID_MESSAGE::isNum(long &data){
     return GetMessageId(data, this->var->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::ID_MESSAGE::is(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"].count("message_id")){
+            return true;
+        }
+    }
+    return false;
+}
 
 TGBOT::GET_MESSAGE::GET_MESSAGE(){};
 TGBOT::GET_MESSAGE::GET_MESSAGE(VARIABLE &var, METHOD &met) : id_message(var, met), date_message(var, met), forward_date_message(var, met), text_message(var, met){

@@ -133,6 +133,7 @@ public:
     OFFSET_ENTITIES_MESSAGE();
     OFFSET_ENTITIES_MESSAGE(VARIABLE&, METHOD&);
     bool isNum(long&);
+    bool is();
     
 private:
     bool GetOffset(long&, long, long, bool);
@@ -150,6 +151,7 @@ public:
     LENGTH_ENTITIES_MESSAGE();
     LENGTH_ENTITIES_MESSAGE(VARIABLE&, METHOD&);
     bool isNum(long&);
+    bool is();
     
 private:
     bool GetLength(long&, long, long, bool);
@@ -167,6 +169,7 @@ public:
     TYPE_ENTITIES_MESSAGE();
     TYPE_ENTITIES_MESSAGE(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetType(std::string&, long, long, bool);
@@ -198,8 +201,8 @@ class ENTITIES_MESSAGE{
 public:
     ENTITIES_MESSAGE();
     ENTITIES_MESSAGE(VARIABLE&, METHOD&);
-    
     GET_ENTITIES_MESSAGE get();
+    bool is();
 };
 
 //
@@ -306,6 +309,7 @@ public:
     FROM_REPLY_MESSAGE();
     FROM_REPLY_MESSAGE(VARIABLE&, METHOD&);
     GET_FROM_REPLY_MESSAGE get();
+    bool is();
 };
 // FROM REPLY MESSAGE
 
@@ -397,6 +401,7 @@ public:
     CHAT_REPLY_MESSAGE();
     CHAT_REPLY_MESSAGE(VARIABLE&, METHOD&);
     GET_CHAT_REPLY_MESSAGE get();
+    bool is();
 
 };
 // CHAT REPLY MESSAGE
@@ -466,6 +471,7 @@ public:
     GET_REPLY_TO_MESSAGE get();
     FROM_REPLY_MESSAGE from();
     CHAT_REPLY_MESSAGE chat();
+    bool is();
 };
 // REPLY MESSAGE
 
@@ -479,6 +485,7 @@ public:
     DURATION_VOICE();
     DURATION_VOICE(VARIABLE&, METHOD&);
     bool isNum(long&);
+    bool is();
     
 private:
     bool GetDuration(long&, long, bool);
@@ -492,6 +499,7 @@ public:
     MIME_TYPE_VOICE();
     MIME_TYPE_VOICE(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetMimeType(std::string&, long, bool);
@@ -505,6 +513,7 @@ public:
     FILE_ID_VOICE();
     FILE_ID_VOICE(VARIABLE &var, METHOD &met);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetFileId(std::string&, long, bool);
@@ -518,6 +527,7 @@ public:
     FILE_UNIQUE_ID_VOICE();
     FILE_UNIQUE_ID_VOICE(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetFileUniqueId(std::string&, long, bool);
@@ -531,6 +541,7 @@ public:
     FILE_SIZE_VOICE();
     FILE_SIZE_VOICE(VARIABLE&, METHOD&);
     bool isNum(long&);
+    bool is();
     
 private:
     bool GetFileSize(long&, long, bool);
@@ -564,6 +575,7 @@ public:
     VOICE();
     VOICE(VARIABLE&, METHOD&);
     GET_VOICE get();
+    bool is();
 };
 
 // VOICE
@@ -762,6 +774,7 @@ public:
     FILE_NAME_DOCUMENT();
     FILE_NAME_DOCUMENT(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetFileName(std::string&, long, bool);
@@ -774,6 +787,7 @@ public:
     MIME_TYPE_DOCUMENT();
     MIME_TYPE_DOCUMENT(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetMimeType(std::string&, long, bool);
@@ -786,6 +800,7 @@ public:
     FILE_ID_DOCUMENT();
     FILE_ID_DOCUMENT(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetFileId(std::string&, long, bool);
@@ -798,6 +813,7 @@ public:
     FILE_UNIQUE_ID_DOCUMENT();
     FILE_UNIQUE_ID_DOCUMENT(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetFileUniqueId(std::string&, long, bool);
@@ -810,6 +826,7 @@ public:
     FILE_SIZE_DOCUMENT();
     FILE_SIZE_DOCUMENT(VARIABLE&, METHOD&);
     bool isNum(long&);
+    bool is();
     
 private:
     bool GetFileSize(long&, long, bool);
@@ -842,10 +859,10 @@ class DOCUMENT{
 public:
     DOCUMENT();
     DOCUMENT(VARIABLE&, METHOD&);
-    
     GET_DOCUMENT get();
     THUMBNAIL_DOCUMENT Thumbnail();
     THUMB_DOCUMENT Thumb();
+    bool is();
 };
 // document
 
@@ -943,6 +960,7 @@ public:
     FORWARD_FROM();
     FORWARD_FROM(VARIABLE&, METHOD&);
     GET_FORWARD_FROM get();
+    bool is();
 };
 // FORWARD_FROM
 
@@ -955,6 +973,7 @@ public:
     ID_FROM();
     ID_FROM(VARIABLE&, METHOD&);
     bool isNum(long&);
+    bool is();
     
 private:
     bool GetFromId(long&, long, bool);
@@ -967,8 +986,8 @@ class IS_BOT_FROM{
 public:
     IS_BOT_FROM();
     IS_BOT_FROM(VARIABLE&, METHOD&);
-    
     bool isBool(bool&);
+    bool is();
     
 private:
     bool GetIsBotFrom(bool&, long, bool);
@@ -982,6 +1001,7 @@ public:
     FIRST_NAME_FROM();
     FIRST_NAME_FROM(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetFirstNameFrom(std::string&, long, bool);
@@ -995,6 +1015,7 @@ public:
     LAST_NAME_FROM();
     LAST_NAME_FROM(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetLastNameFrom(std::string&, long, bool);
@@ -1008,6 +1029,7 @@ public:
     USERNAME_FROM();
     USERNAME_FROM(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetUsernameFrom(std::string&, long, bool);
@@ -1021,6 +1043,7 @@ public:
     LANG_CODE_FROM();
     LANG_CODE_FROM(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetLengCodeFrom(std::string&, long, bool);
@@ -1055,8 +1078,9 @@ class FROM{
 public:
     FROM();
     FROM(VARIABLE&, METHOD&);
-    
     GET_FROM get();
+    bool is();
+    
 };
 // FROM
 
@@ -1069,6 +1093,7 @@ public:
     ID_CHAT();
     ID_CHAT(VARIABLE&, METHOD&);
     bool isNum(long&);
+    bool is();
     
 private:
     bool GetChatId(long&, long, bool);
@@ -1082,6 +1107,7 @@ public:
     FIRST_NAME_CHAT();
     FIRST_NAME_CHAT(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetFirstNameChat(std::string&, long, bool);
@@ -1095,6 +1121,7 @@ public:
     LAST_NAME_CHAT();
     LAST_NAME_CHAT(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetLastNameChat(std::string&, long, bool);
@@ -1107,8 +1134,8 @@ class USERNAME_CHAT{
 public:
     USERNAME_CHAT();
     USERNAME_CHAT(VARIABLE&, METHOD&);
-    
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetUsernameChat(std::string&, long, bool);
@@ -1121,8 +1148,8 @@ class TYPE_CHAT{
 public:
     TYPE_CHAT();
     TYPE_CHAT(VARIABLE&, METHOD&);
-    
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetTypeChat(std::string&, long, bool);
@@ -1156,6 +1183,7 @@ public:
     CHAT();
     CHAT(VARIABLE&, METHOD&);
     GET_CHAT get();
+    bool is();
 };
 // CHAT
 
@@ -1167,6 +1195,7 @@ public:
     TEXT_MESSAGE();
     TEXT_MESSAGE(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool is();
     
 private:
     bool GetMessageText(std::string&, long, bool);
@@ -1179,6 +1208,7 @@ public:
     FORWARD_DATE_MESSAGE();
     FORWARD_DATE_MESSAGE(VARIABLE&, METHOD&);
     bool isNum(long&);
+    bool is();
     
 private:
     bool GetMessageForwardData(long&, long, bool);
@@ -1191,6 +1221,7 @@ public:
     DATE_MESSAGE();
     DATE_MESSAGE(VARIABLE&, METHOD&);
     bool isNum(long&);
+    bool is();
     
 private:
     bool GetMessageData(long&, long, bool);
@@ -1203,6 +1234,7 @@ public:
     ID_MESSAGE();
     ID_MESSAGE(VARIABLE&, METHOD&);
     bool isNum(long&);
+    bool is();
     
 private:
     bool GetMessageId(long&, long, bool);
