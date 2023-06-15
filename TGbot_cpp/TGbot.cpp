@@ -378,6 +378,16 @@ bool TGBOT::TYPE_ENTITIES_MESSAGE::isString(std::string &str){
     return GetType(str, this->var->index, this->index, (this->method->getSizeResult() > this->var->index));
 }
 
+bool TGBOT::TYPE_ENTITIES_MESSAGE::isCommand(std::string str){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["entities"][this->index].count("type")){
+            return (js["result"][this->var->index]["message"]["entities"][this->index]["type"].get<std::string>() == str);
+        }
+    }
+    return false;
+}
+
 bool TGBOT::TYPE_ENTITIES_MESSAGE::is(){
     if (this->method->getIsStatusBot() && this->method->getSizeResult()){
         JsonHpp js = JsonHpp::parse(this->var->updates);
@@ -2683,6 +2693,16 @@ bool TGBOT::TEXT_MESSAGE::GetMessageText(std::string &str, long index, bool isSt
 
 bool TGBOT::TEXT_MESSAGE::isString(std::string &str){
     return GetMessageText(str, this->var->index, (this->method->getSizeResult() > this->var->index));
+}
+
+bool TGBOT::TEXT_MESSAGE::isCommand(std::string str){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"].count("text")){
+            return (js["result"][this->var->index]["message"]["text"].get<std::string>().find(str) != std::string::npos);
+        }
+    }
+    return false;
 }
 
 bool TGBOT::TEXT_MESSAGE::is(){
