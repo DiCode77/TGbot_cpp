@@ -2705,6 +2705,19 @@ bool TGBOT::TEXT_MESSAGE::isCommand(std::string str){
     return false;
 }
 
+bool TGBOT::TEXT_MESSAGE::isCommandFirst(std::string str){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"].count("text")){
+            long pos = js["result"][this->var->index]["message"]["text"].get<std::string>().find(str);
+            if (pos != std::string::npos){
+                return pos == 0;
+            }
+        }
+    }
+    return false;
+}
+
 bool TGBOT::TEXT_MESSAGE::is(){
     if (this->method->getIsStatusBot() && this->method->getSizeResult()){
         JsonHpp js = JsonHpp::parse(this->var->updates);
