@@ -433,6 +433,14 @@ bool TGBOT::ENTITIES_MESSAGE::is(){
     return false;
 }
 
+long TGBOT::ENTITIES_MESSAGE::getAllItems(){
+    if (this->method->getIsStatusBot() && this->method->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        return js["result"][this->var->index]["message"]["entities"].size();
+    }
+    return 0;
+}
+
 // ENTITIES MESSAGE
 
 // ***************** FROM REPLY MESSAGE ******************* //
@@ -2906,6 +2914,14 @@ TGBOT::MESSAGE TGBOT::RESULT::Message(){
     return this->message;
 }
 
+long TGBOT::RESULT::getAllItems(){
+    return this->method->getSizeResult();
+}
+
+void TGBOT::RESULT::setIndex(size_t isIndex){
+    this->var->index = isIndex;
+}
+
 // RESULT
 
 // ***************** TGbot ******************* //
@@ -2914,8 +2930,7 @@ TGBOT::TGbot::TGbot(const char *token) : result(this->var, this->method), event(
     this->var.token.append(token);
 }
 
-TGBOT::RESULT TGBOT::TGbot::Result(long iSindex){
-    this->var.index = iSindex;
+TGBOT::RESULT TGBOT::TGbot::Result(){
     return this->result;
 }
 
@@ -2927,8 +2942,8 @@ void TGBOT::TGbot::getStatusBot(){
     this->method.getStatusBot();
 }
 
-long TGBOT::TGbot::getSizeResult(){
-    return this->method.getSizeResult();
+bool TGBOT::TGbot::getIsStatusBot(){
+    return this->method.getIsStatusBot();
 }
 
 void TGBOT::TGbot::Sleep_for(int sleep){
