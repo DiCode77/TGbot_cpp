@@ -100,7 +100,7 @@ class CLEAR_EVENT{
 public:
     CLEAR_EVENT();
     CLEAR_EVENT(VARIABLE&, METHOD&, CURL_UPDATES&);
-    CLEAR_UPDATE_EVENT updates();
+    CLEAR_UPDATE_EVENT &updates();
 };
 
 class EVENT{
@@ -116,9 +116,9 @@ public:
     EVENT(VARIABLE&, METHOD&);
     void timeOut(int);
     void sleep(int);
-    EVENT_UPDATE getUpdate();
-    SEND_EVENT send();
-    CLEAR_EVENT clear();
+    EVENT_UPDATE &getUpdate();
+    SEND_EVENT &send();
+    CLEAR_EVENT &clear();
 };
 // EVENT
 
@@ -189,9 +189,9 @@ public:
     GET_ENTITIES_MESSAGE();
     GET_ENTITIES_MESSAGE(VARIABLE &var, METHOD &met);
     
-    OFFSET_ENTITIES_MESSAGE offset(long index);
-    LENGTH_ENTITIES_MESSAGE length(long index);
-    TYPE_ENTITIES_MESSAGE type(long index);
+    OFFSET_ENTITIES_MESSAGE &offset(long index);
+    LENGTH_ENTITIES_MESSAGE &length(long index);
+    TYPE_ENTITIES_MESSAGE &type(long index);
 };
 
 class ENTITIES_MESSAGE{
@@ -202,7 +202,7 @@ class ENTITIES_MESSAGE{
 public:
     ENTITIES_MESSAGE();
     ENTITIES_MESSAGE(VARIABLE&, METHOD&);
-    GET_ENTITIES_MESSAGE get();
+    GET_ENTITIES_MESSAGE &get();
     bool is();
     long getAllItems();
 };
@@ -301,12 +301,12 @@ class GET_FROM_REPLY_MESSAGE{
 public:
     GET_FROM_REPLY_MESSAGE();
     GET_FROM_REPLY_MESSAGE(VARIABLE&, METHOD&);
-    ID_FROM_REPLY id();
-    IS_BOT_FROM_REPLY is_bot();
-    FIRST_NAME_FROM_REPLY first_name();
-    LAST_NAME_FROM_REPLY last_name();
-    USERNAME_FROM_REPLY username();
-    LENG_CODE_FROM_REPLY language_code();
+    ID_FROM_REPLY &id();
+    IS_BOT_FROM_REPLY &is_bot();
+    FIRST_NAME_FROM_REPLY &first_name();
+    LAST_NAME_FROM_REPLY &last_name();
+    USERNAME_FROM_REPLY &username();
+    LENG_CODE_FROM_REPLY &language_code();
 };
 
 class FROM_REPLY_MESSAGE{
@@ -316,7 +316,7 @@ class FROM_REPLY_MESSAGE{
 public:
     FROM_REPLY_MESSAGE();
     FROM_REPLY_MESSAGE(VARIABLE&, METHOD&);
-    GET_FROM_REPLY_MESSAGE get();
+    GET_FROM_REPLY_MESSAGE &get();
     bool is();
 };
 // FROM REPLY MESSAGE
@@ -399,11 +399,11 @@ public:
     GET_CHAT_REPLY_MESSAGE();
     GET_CHAT_REPLY_MESSAGE(VARIABLE&, METHOD&);
     
-    ID_CHAT_REPLY id();
-    FIRST_NAME_CHAT_REPLY first_name();
-    LAST_NAME_CHAT_REPLY last_name();
-    USERNAME_CHAT_REPLY username();
-    TYPE_CHAT_REPLY type();
+    ID_CHAT_REPLY &id();
+    FIRST_NAME_CHAT_REPLY &first_name();
+    LAST_NAME_CHAT_REPLY &last_name();
+    USERNAME_CHAT_REPLY &username();
+    TYPE_CHAT_REPLY &type();
 };
 
 class CHAT_REPLY_MESSAGE{
@@ -413,7 +413,7 @@ class CHAT_REPLY_MESSAGE{
 public:
     CHAT_REPLY_MESSAGE();
     CHAT_REPLY_MESSAGE(VARIABLE&, METHOD&);
-    GET_CHAT_REPLY_MESSAGE get();
+    GET_CHAT_REPLY_MESSAGE &get();
     bool is();
 
 };
@@ -469,9 +469,9 @@ class GET_REPLY_TO_MESSAGE{
 public:
     GET_REPLY_TO_MESSAGE();
     GET_REPLY_TO_MESSAGE(VARIABLE&, METHOD&);
-    ID_REPLY_MESSAGE id();
-    DATE_REPLY_MESSAGE date();
-    TEXT_REPLY_MESSAGE text();
+    ID_REPLY_MESSAGE &id();
+    DATE_REPLY_MESSAGE &date();
+    TEXT_REPLY_MESSAGE &text();
 };
 
 class REPLY_TO_MESSAGE{
@@ -484,9 +484,9 @@ class REPLY_TO_MESSAGE{
 public:
     REPLY_TO_MESSAGE();
     REPLY_TO_MESSAGE(VARIABLE&, METHOD&);
-    GET_REPLY_TO_MESSAGE get();
-    FROM_REPLY_MESSAGE from();
-    CHAT_REPLY_MESSAGE chat();
+    GET_REPLY_TO_MESSAGE &get();
+    FROM_REPLY_MESSAGE &from();
+    CHAT_REPLY_MESSAGE &chat();
     bool is();
 };
 // REPLY MESSAGE
@@ -575,11 +575,11 @@ class GET_VOICE{
 public:
     GET_VOICE();
     GET_VOICE(VARIABLE&, METHOD&);
-    DURATION_VOICE duration();
-    MIME_TYPE_VOICE mime_type();
-    FILE_ID_VOICE file_id();
-    FILE_UNIQUE_ID_VOICE file_unique_id();
-    FILE_SIZE_VOICE file_size();
+    DURATION_VOICE &duration();
+    MIME_TYPE_VOICE &mime_type();
+    FILE_ID_VOICE &file_id();
+    FILE_UNIQUE_ID_VOICE &file_unique_id();
+    FILE_SIZE_VOICE &file_size();
 };
 
 class VOICE{
@@ -590,7 +590,7 @@ class VOICE{
 public:
     VOICE();
     VOICE(VARIABLE&, METHOD&);
-    GET_VOICE get();
+    GET_VOICE &get();
     bool is();
 };
 
@@ -675,11 +675,11 @@ public:
     GET_THUMBNAIL_DOCUMENT();
     GET_THUMBNAIL_DOCUMENT(VARIABLE&, METHOD&);
     
-    FILE_ID_THUMBNAIL_DOCUMENT file_id();
-    FILE_UIQUE_ID_THUMBNAIL_DOCUMENT file_unique_id();
-    FILE_SIZE_THUMBNAIL_DOCUMENT file_size();
-    WIDTH_THUMBNAIL_DOCUMENT width();
-    HEIGHT_THUMBNAIL_DOCUMENT height();
+    FILE_ID_THUMBNAIL_DOCUMENT &file_id();
+    FILE_UIQUE_ID_THUMBNAIL_DOCUMENT &file_unique_id();
+    FILE_SIZE_THUMBNAIL_DOCUMENT &file_size();
+    WIDTH_THUMBNAIL_DOCUMENT &width();
+    HEIGHT_THUMBNAIL_DOCUMENT &height();
 };
 
 class THUMBNAIL_DOCUMENT{
@@ -689,7 +689,7 @@ class THUMBNAIL_DOCUMENT{
 public:
     THUMBNAIL_DOCUMENT();
     THUMBNAIL_DOCUMENT(VARIABLE&, METHOD&);
-    GET_THUMBNAIL_DOCUMENT get();
+    GET_THUMBNAIL_DOCUMENT &get();
     bool is();
 };
 // thumbnail document
@@ -773,11 +773,11 @@ public:
     GET_THUMB_DOCUMENT();
     GET_THUMB_DOCUMENT(VARIABLE&, METHOD&);
     
-    FILE_ID_THUMB_DOCUMENT file_id();
-    FILE_UNIQUE_ID_THUMB_DOCUMENT file_unique_id();
-    FILE_SIZE_THUMB_DOCUMENT file_size();
-    WIDTH_THUMB_DOCUMENT width();
-    HEIGHT_THUMB_DOCUMENT height();
+    FILE_ID_THUMB_DOCUMENT &file_id();
+    FILE_UNIQUE_ID_THUMB_DOCUMENT &file_unique_id();
+    FILE_SIZE_THUMB_DOCUMENT &file_size();
+    WIDTH_THUMB_DOCUMENT &width();
+    HEIGHT_THUMB_DOCUMENT &height();
 };
 
 class THUMB_DOCUMENT{
@@ -787,7 +787,7 @@ class THUMB_DOCUMENT{
 public:
     THUMB_DOCUMENT();
     THUMB_DOCUMENT(VARIABLE&, METHOD&);
-    GET_THUMB_DOCUMENT get();
+    GET_THUMB_DOCUMENT &get();
     bool is();
 };
 // humb document
@@ -871,11 +871,11 @@ class GET_DOCUMENT{
 public:
     GET_DOCUMENT();
     GET_DOCUMENT(VARIABLE&, METHOD&);
-    FILE_NAME_DOCUMENT file_name();
-    MIME_TYPE_DOCUMENT mime_type();
-    FILE_ID_DOCUMENT file_id();
-    FILE_UNIQUE_ID_DOCUMENT file_unique_id();
-    FILE_SIZE_DOCUMENT file_size();
+    FILE_NAME_DOCUMENT &file_name();
+    MIME_TYPE_DOCUMENT &mime_type();
+    FILE_ID_DOCUMENT &file_id();
+    FILE_UNIQUE_ID_DOCUMENT &file_unique_id();
+    FILE_SIZE_DOCUMENT &file_size();
 };
 
 class DOCUMENT{
@@ -887,9 +887,9 @@ class DOCUMENT{
 public:
     DOCUMENT();
     DOCUMENT(VARIABLE&, METHOD&);
-    GET_DOCUMENT get();
-    THUMBNAIL_DOCUMENT Thumbnail();
-    THUMB_DOCUMENT Thumb();
+    GET_DOCUMENT &get();
+    THUMBNAIL_DOCUMENT &Thumbnail();
+    THUMB_DOCUMENT &Thumb();
     bool is();
 };
 // document
@@ -972,11 +972,11 @@ public:
     GET_FORWARD_FROM();
     GET_FORWARD_FROM(VARIABLE&, METHOD&);
     
-    ID_FORWARD_FROM id();
-    IS_BOT_FORWARD_FROM is_bot();
-    FIRST_NAME_FORWARD_FROM first_name();
-    LAST_NAME_FORWARD_FROM last_name();
-    USERNAME_FORWARD_FROM username();
+    ID_FORWARD_FROM &id();
+    IS_BOT_FORWARD_FROM &is_bot();
+    FIRST_NAME_FORWARD_FROM &first_name();
+    LAST_NAME_FORWARD_FROM &last_name();
+    USERNAME_FORWARD_FROM &username();
 };
 
 class FORWARD_FROM{
@@ -987,7 +987,7 @@ class FORWARD_FROM{
 public:
     FORWARD_FROM();
     FORWARD_FROM(VARIABLE&, METHOD&);
-    GET_FORWARD_FROM get();
+    GET_FORWARD_FROM &get();
     bool is();
 };
 // FORWARD_FROM
@@ -1090,12 +1090,12 @@ class GET_FROM{
 public:
     GET_FROM();
     GET_FROM(VARIABLE&, METHOD&);
-    ID_FROM id();
-    IS_BOT_FROM is_bot();
-    FIRST_NAME_FROM first_name();
-    LAST_NAME_FROM last_name();
-    USERNAME_FROM username();
-    LANG_CODE_FROM language_code();
+    ID_FROM &id();
+    IS_BOT_FROM &is_bot();
+    FIRST_NAME_FROM &first_name();
+    LAST_NAME_FROM &last_name();
+    USERNAME_FROM &username();
+    LANG_CODE_FROM &language_code();
 
 };
 
@@ -1106,7 +1106,7 @@ class FROM{
 public:
     FROM();
     FROM(VARIABLE&, METHOD&);
-    GET_FROM get();
+    GET_FROM &get();
     bool is();
     
 };
@@ -1195,11 +1195,11 @@ public:
     GET_CHAT();
     GET_CHAT(VARIABLE &var, METHOD &met);
     
-    ID_CHAT id();
-    FIRST_NAME_CHAT first_name();
-    LAST_NAME_CHAT last_name();
-    USERNAME_CHAT username();
-    TYPE_CHAT type();
+    ID_CHAT &id();
+    FIRST_NAME_CHAT &first_name();
+    LAST_NAME_CHAT &last_name();
+    USERNAME_CHAT &username();
+    TYPE_CHAT &type();
     
 };
 
@@ -1210,7 +1210,7 @@ class CHAT{
 public:
     CHAT();
     CHAT(VARIABLE&, METHOD&);
-    GET_CHAT get();
+    GET_CHAT &get();
     bool is();
 };
 // CHAT
@@ -1281,10 +1281,10 @@ class GET_MESSAGE{
 public:
     GET_MESSAGE();
     GET_MESSAGE(VARIABLE&, METHOD&);
-    ID_MESSAGE id();
-    DATE_MESSAGE date();
-    TEXT_MESSAGE text();
-    FORWARD_DATE_MESSAGE forward_date();
+    ID_MESSAGE &id();
+    DATE_MESSAGE &date();
+    TEXT_MESSAGE &text();
+    FORWARD_DATE_MESSAGE &forward_date();
 };
 
 class MESSAGE{
@@ -1302,14 +1302,14 @@ class MESSAGE{
 public:
     MESSAGE();
     MESSAGE(VARIABLE&, METHOD&);
-    GET_MESSAGE get();
-    FROM From();
-    CHAT Chat();
-    REPLY_TO_MESSAGE Reply();
-    FORWARD_FROM Forward();
-    VOICE Voice();
-    DOCUMENT Document();
-    ENTITIES_MESSAGE Entities();
+    GET_MESSAGE &get();
+    FROM &From();
+    CHAT &Chat();
+    REPLY_TO_MESSAGE &Reply();
+    FORWARD_FROM &Forward();
+    VOICE &Voice();
+    DOCUMENT &Document();
+    ENTITIES_MESSAGE &Entities();
 };
 // MESSAGE
 
@@ -1334,7 +1334,7 @@ class GET_RESULT{
 public:
     GET_RESULT();
     GET_RESULT(VARIABLE&, METHOD&);
-    ID_UPDATE id();
+    ID_UPDATE &id();
 };
 
 class RESULT{
@@ -1345,8 +1345,8 @@ class RESULT{
 public:
     RESULT();
     RESULT(VARIABLE&, METHOD&);
-    GET_RESULT get();
-    MESSAGE Message();
+    GET_RESULT &get();
+    MESSAGE &Message();
     long getAllItems();
     void setIndex(size_t);
 };
@@ -1363,8 +1363,8 @@ class TGbot{
 public:
     TGbot();
     TGbot(const char*);
-    RESULT Result();
-    EVENT Event();
+    RESULT &Result();
+    EVENT &Event();
     void getStatusBot();
     bool getIsStatusBot();
     void Sleep_for(int);
