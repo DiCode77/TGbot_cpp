@@ -233,9 +233,10 @@ TGBOT::CLEAR_EVENT::CLEAR_EVENT(){};
 TGBOT::CLEAR_EVENT::CLEAR_EVENT(VARIABLE &var, METHOD &met,  CURL_UPDATES &curl_update) : clear_update_event(var, met, curl_update){
     this->var = &var;
     this->method = &met;
+    this->curl_update = &curl_update;
 }
 
-TGBOT::CLEAR_UPDATE_EVENT TGBOT::CLEAR_EVENT::updates(){
+TGBOT::CLEAR_UPDATE_EVENT &TGBOT::CLEAR_EVENT::updates(){
     return this->clear_update_event;
 }
 
@@ -256,15 +257,15 @@ void TGBOT::EVENT::sleep(int sleep){
     this->curl_update.sleep(sleep);
 }
 
-TGBOT::EVENT_UPDATE TGBOT::EVENT::getUpdate(){
+TGBOT::EVENT_UPDATE &TGBOT::EVENT::getUpdate(){
     return this->event_update;
 }
 
-TGBOT::SEND_EVENT TGBOT::EVENT::send(){
+TGBOT::SEND_EVENT &TGBOT::EVENT::send(){
     return this->send_event;
 }
 
-TGBOT::CLEAR_EVENT TGBOT::EVENT::clear(){
+TGBOT::CLEAR_EVENT &TGBOT::EVENT::clear(){
     return this->clear_event;
 }
 // EVENT
@@ -407,17 +408,17 @@ type_entities(var, met){
     this->met = &met;
 }
 
-TGBOT::OFFSET_ENTITIES_MESSAGE TGBOT::GET_ENTITIES_MESSAGE::offset(long index){
+TGBOT::OFFSET_ENTITIES_MESSAGE &TGBOT::GET_ENTITIES_MESSAGE::offset(long index){
     this->offset_entities.getIndex(index);
     return this->offset_entities;
 }
 
-TGBOT::LENGTH_ENTITIES_MESSAGE TGBOT::GET_ENTITIES_MESSAGE::length(long index){
+TGBOT::LENGTH_ENTITIES_MESSAGE &TGBOT::GET_ENTITIES_MESSAGE::length(long index){
     this->length_entities.getIndex(index);
     return this->length_entities;
 }
 
-TGBOT::TYPE_ENTITIES_MESSAGE TGBOT::GET_ENTITIES_MESSAGE::type(long index){
+TGBOT::TYPE_ENTITIES_MESSAGE &TGBOT::GET_ENTITIES_MESSAGE::type(long index){
     this->type_entities.getIndex(index);
     return type_entities;
 }
@@ -429,7 +430,7 @@ TGBOT::ENTITIES_MESSAGE::ENTITIES_MESSAGE(VARIABLE &var, METHOD &met) : get_enti
     this->method = &met;
 }
 
-TGBOT::GET_ENTITIES_MESSAGE TGBOT::ENTITIES_MESSAGE::get(){
+TGBOT::GET_ENTITIES_MESSAGE &TGBOT::ENTITIES_MESSAGE::get(){
     return this->get_entities_mess;
 }
 
@@ -675,27 +676,27 @@ leng_code_from_reply(var, met){
     this->method = &met;
 }
 
-TGBOT::ID_FROM_REPLY TGBOT::GET_FROM_REPLY_MESSAGE::id(){
+TGBOT::ID_FROM_REPLY &TGBOT::GET_FROM_REPLY_MESSAGE::id(){
     return this->id_from_reply;
 }
 
-TGBOT::IS_BOT_FROM_REPLY TGBOT::GET_FROM_REPLY_MESSAGE::is_bot(){
+TGBOT::IS_BOT_FROM_REPLY &TGBOT::GET_FROM_REPLY_MESSAGE::is_bot(){
     return this->is_bot_from_reply;
 }
 
-TGBOT::FIRST_NAME_FROM_REPLY TGBOT::GET_FROM_REPLY_MESSAGE::first_name(){
+TGBOT::FIRST_NAME_FROM_REPLY &TGBOT::GET_FROM_REPLY_MESSAGE::first_name(){
     return this->first_name_from_reply;
 }
 
-TGBOT::LAST_NAME_FROM_REPLY TGBOT::GET_FROM_REPLY_MESSAGE::last_name(){
+TGBOT::LAST_NAME_FROM_REPLY &TGBOT::GET_FROM_REPLY_MESSAGE::last_name(){
     return this->last_name_from_reply;
 }
 
-TGBOT::USERNAME_FROM_REPLY TGBOT::GET_FROM_REPLY_MESSAGE::username(){
+TGBOT::USERNAME_FROM_REPLY &TGBOT::GET_FROM_REPLY_MESSAGE::username(){
     return this->username_from_reply;
 }
 
-TGBOT::LENG_CODE_FROM_REPLY TGBOT::GET_FROM_REPLY_MESSAGE::language_code(){
+TGBOT::LENG_CODE_FROM_REPLY &TGBOT::GET_FROM_REPLY_MESSAGE::language_code(){
     return this->leng_code_from_reply;
 }
 
@@ -705,7 +706,7 @@ TGBOT::FROM_REPLY_MESSAGE::FROM_REPLY_MESSAGE(VARIABLE &var, METHOD &met) : get_
     this->method = &met;
 }
 
-TGBOT::GET_FROM_REPLY_MESSAGE TGBOT::FROM_REPLY_MESSAGE::get(){
+TGBOT::GET_FROM_REPLY_MESSAGE &TGBOT::FROM_REPLY_MESSAGE::get(){
     return this->get_from_reply_message;
 }
 
@@ -905,23 +906,23 @@ type_chat_reply(var, met){
     this->var = &var;
     this->method = &met;
 }
-TGBOT::ID_CHAT_REPLY TGBOT::GET_CHAT_REPLY_MESSAGE::id(){
+TGBOT::ID_CHAT_REPLY &TGBOT::GET_CHAT_REPLY_MESSAGE::id(){
     return this->id_chat_reply;
 }
 
-TGBOT::FIRST_NAME_CHAT_REPLY TGBOT::GET_CHAT_REPLY_MESSAGE::first_name(){
+TGBOT::FIRST_NAME_CHAT_REPLY &TGBOT::GET_CHAT_REPLY_MESSAGE::first_name(){
     return this->first_name_chat_reply;
 }
 
-TGBOT::LAST_NAME_CHAT_REPLY TGBOT::GET_CHAT_REPLY_MESSAGE::last_name(){
+TGBOT::LAST_NAME_CHAT_REPLY &TGBOT::GET_CHAT_REPLY_MESSAGE::last_name(){
     return this->last_name_chat_reply;
 }
 
-TGBOT::USERNAME_CHAT_REPLY TGBOT::GET_CHAT_REPLY_MESSAGE::username(){
+TGBOT::USERNAME_CHAT_REPLY &TGBOT::GET_CHAT_REPLY_MESSAGE::username(){
     return username_chat_reply;
 }
 
-TGBOT::TYPE_CHAT_REPLY TGBOT::GET_CHAT_REPLY_MESSAGE::type(){
+TGBOT::TYPE_CHAT_REPLY &TGBOT::GET_CHAT_REPLY_MESSAGE::type(){
     return this->type_chat_reply;
 }
 
@@ -931,7 +932,7 @@ TGBOT::CHAT_REPLY_MESSAGE::CHAT_REPLY_MESSAGE(VARIABLE &var, METHOD &met) : get_
     this->method = &met;
 }
 
-TGBOT::GET_CHAT_REPLY_MESSAGE TGBOT::CHAT_REPLY_MESSAGE::get(){
+TGBOT::GET_CHAT_REPLY_MESSAGE &TGBOT::CHAT_REPLY_MESSAGE::get(){
     return this->get_chat_reply_message;
 }
 
@@ -1056,15 +1057,15 @@ TGBOT::GET_REPLY_TO_MESSAGE::GET_REPLY_TO_MESSAGE(VARIABLE &var, METHOD &met) : 
     this->method = &met;
 }
 
-TGBOT::ID_REPLY_MESSAGE TGBOT::GET_REPLY_TO_MESSAGE::id(){
+TGBOT::ID_REPLY_MESSAGE &TGBOT::GET_REPLY_TO_MESSAGE::id(){
     return this->id_message;;
 }
 
-TGBOT::DATE_REPLY_MESSAGE TGBOT::GET_REPLY_TO_MESSAGE::date(){
+TGBOT::DATE_REPLY_MESSAGE &TGBOT::GET_REPLY_TO_MESSAGE::date(){
     return this->date_message;
 }
 
-TGBOT::TEXT_REPLY_MESSAGE TGBOT::GET_REPLY_TO_MESSAGE::text(){
+TGBOT::TEXT_REPLY_MESSAGE &TGBOT::GET_REPLY_TO_MESSAGE::text(){
     return this->text_message;
 }
 
@@ -1077,15 +1078,15 @@ get_reply_to_message(var, met){
     this->method = &met;
 }
 
-TGBOT::GET_REPLY_TO_MESSAGE TGBOT::REPLY_TO_MESSAGE::get(){
+TGBOT::GET_REPLY_TO_MESSAGE &TGBOT::REPLY_TO_MESSAGE::get(){
     return this->get_reply_to_message;
 }
 
-TGBOT::FROM_REPLY_MESSAGE TGBOT::REPLY_TO_MESSAGE::from(){
+TGBOT::FROM_REPLY_MESSAGE &TGBOT::REPLY_TO_MESSAGE::from(){
     return this->from_reply_message;
 }
 
-TGBOT::CHAT_REPLY_MESSAGE TGBOT::REPLY_TO_MESSAGE::chat(){
+TGBOT::CHAT_REPLY_MESSAGE &TGBOT::REPLY_TO_MESSAGE::chat(){
     return this->chat_reply_message;
 }
 
@@ -1286,23 +1287,23 @@ file_size_voice(var, met){
     this->method = &met;
 }
 
-TGBOT::DURATION_VOICE TGBOT::GET_VOICE::duration(){
+TGBOT::DURATION_VOICE &TGBOT::GET_VOICE::duration(){
     return this->duration_voice;
 }
 
-TGBOT::MIME_TYPE_VOICE TGBOT::GET_VOICE::mime_type(){
+TGBOT::MIME_TYPE_VOICE &TGBOT::GET_VOICE::mime_type(){
     return this->mime_type_voice;
 }
 
-TGBOT::FILE_ID_VOICE TGBOT::GET_VOICE::file_id(){
+TGBOT::FILE_ID_VOICE &TGBOT::GET_VOICE::file_id(){
     return this->file_id_voice;
 }
 
-TGBOT::FILE_UNIQUE_ID_VOICE TGBOT::GET_VOICE::file_unique_id(){
+TGBOT::FILE_UNIQUE_ID_VOICE &TGBOT::GET_VOICE::file_unique_id(){
     return this->file_unique_id_voice;
 }
 
-TGBOT::FILE_SIZE_VOICE TGBOT::GET_VOICE::file_size(){
+TGBOT::FILE_SIZE_VOICE &TGBOT::GET_VOICE::file_size(){
     return this->file_size_voice;
 }
 
@@ -1312,7 +1313,7 @@ TGBOT::VOICE::VOICE(VARIABLE &var, METHOD &met) : get_voice(var, met){
     this->method = &met;
 }
 
-TGBOT::GET_VOICE TGBOT::VOICE::get(){
+TGBOT::GET_VOICE &TGBOT::VOICE::get(){
     return this->get_voice;
 }
 
@@ -1514,23 +1515,23 @@ height_thu_doc(var, met){
     this->method = &met;
 }
 
-TGBOT::FILE_ID_THUMBNAIL_DOCUMENT TGBOT::GET_THUMBNAIL_DOCUMENT::file_id(){
+TGBOT::FILE_ID_THUMBNAIL_DOCUMENT &TGBOT::GET_THUMBNAIL_DOCUMENT::file_id(){
     return this->file_id_thumbnail_doc;
 }
 
-TGBOT::FILE_UIQUE_ID_THUMBNAIL_DOCUMENT TGBOT::GET_THUMBNAIL_DOCUMENT::file_unique_id(){
+TGBOT::FILE_UIQUE_ID_THUMBNAIL_DOCUMENT &TGBOT::GET_THUMBNAIL_DOCUMENT::file_unique_id(){
     return this->file_uique_id_thu_doc;
 }
 
-TGBOT::FILE_SIZE_THUMBNAIL_DOCUMENT TGBOT::GET_THUMBNAIL_DOCUMENT::file_size(){
+TGBOT::FILE_SIZE_THUMBNAIL_DOCUMENT &TGBOT::GET_THUMBNAIL_DOCUMENT::file_size(){
     return this->file_size_thu_doc;
 }
 
-TGBOT::WIDTH_THUMBNAIL_DOCUMENT TGBOT::GET_THUMBNAIL_DOCUMENT::width(){
+TGBOT::WIDTH_THUMBNAIL_DOCUMENT &TGBOT::GET_THUMBNAIL_DOCUMENT::width(){
     return this->width_thu_doc;
 }
 
-TGBOT::HEIGHT_THUMBNAIL_DOCUMENT TGBOT::GET_THUMBNAIL_DOCUMENT::height(){
+TGBOT::HEIGHT_THUMBNAIL_DOCUMENT &TGBOT::GET_THUMBNAIL_DOCUMENT::height(){
     return this->height_thu_doc;
 }
 
@@ -1540,7 +1541,7 @@ TGBOT::THUMBNAIL_DOCUMENT::THUMBNAIL_DOCUMENT(VARIABLE &var, METHOD &met) : get_
     this->method = &met;
 }
 
-TGBOT::GET_THUMBNAIL_DOCUMENT TGBOT::THUMBNAIL_DOCUMENT::get(){
+TGBOT::GET_THUMBNAIL_DOCUMENT &TGBOT::THUMBNAIL_DOCUMENT::get(){
     return this->get_thumbnail_doc;
 }
 
@@ -1743,23 +1744,23 @@ height_thumb_doc(var, met){
     this->method = &met;
 }
 
-TGBOT::FILE_ID_THUMB_DOCUMENT TGBOT::GET_THUMB_DOCUMENT::file_id(){
+TGBOT::FILE_ID_THUMB_DOCUMENT &TGBOT::GET_THUMB_DOCUMENT::file_id(){
     return this->file_id_thumb_doc;
 }
 
-TGBOT::FILE_UNIQUE_ID_THUMB_DOCUMENT TGBOT::GET_THUMB_DOCUMENT::file_unique_id(){
+TGBOT::FILE_UNIQUE_ID_THUMB_DOCUMENT &TGBOT::GET_THUMB_DOCUMENT::file_unique_id(){
     return this->file_unique_id_thumb_doc;
 }
 
-TGBOT::FILE_SIZE_THUMB_DOCUMENT TGBOT::GET_THUMB_DOCUMENT::file_size(){
+TGBOT::FILE_SIZE_THUMB_DOCUMENT &TGBOT::GET_THUMB_DOCUMENT::file_size(){
     return this->file_size_thumb_doc;
 }
 
-TGBOT::WIDTH_THUMB_DOCUMENT TGBOT::GET_THUMB_DOCUMENT::width(){
+TGBOT::WIDTH_THUMB_DOCUMENT &TGBOT::GET_THUMB_DOCUMENT::width(){
     return this->width_thumb_doc;
 }
 
-TGBOT::HEIGHT_THUMB_DOCUMENT TGBOT::GET_THUMB_DOCUMENT::height(){
+TGBOT::HEIGHT_THUMB_DOCUMENT &TGBOT::GET_THUMB_DOCUMENT::height(){
     return this->height_thumb_doc;
 }
 
@@ -1769,7 +1770,7 @@ TGBOT::THUMB_DOCUMENT::THUMB_DOCUMENT(VARIABLE &var, METHOD &met) : get_thumb_do
     this->method = &met;
 }
 
-TGBOT::GET_THUMB_DOCUMENT TGBOT::THUMB_DOCUMENT::get(){
+TGBOT::GET_THUMB_DOCUMENT &TGBOT::THUMB_DOCUMENT::get(){
     return this->get_thumb_doc;
 }
 
@@ -1973,23 +1974,23 @@ file_size_doc(var, met){
     this->method = &met;
 }
 
-TGBOT::FILE_NAME_DOCUMENT TGBOT::GET_DOCUMENT::file_name(){
+TGBOT::FILE_NAME_DOCUMENT &TGBOT::GET_DOCUMENT::file_name(){
     return this->file_name_doc;
 }
 
-TGBOT::MIME_TYPE_DOCUMENT TGBOT::GET_DOCUMENT::mime_type(){
+TGBOT::MIME_TYPE_DOCUMENT &TGBOT::GET_DOCUMENT::mime_type(){
     return this->mime_type_doc;
 }
 
-TGBOT::FILE_ID_DOCUMENT TGBOT::GET_DOCUMENT::file_id(){
+TGBOT::FILE_ID_DOCUMENT &TGBOT::GET_DOCUMENT::file_id(){
     return this->file_id_doc;
 }
 
-TGBOT::FILE_UNIQUE_ID_DOCUMENT TGBOT::GET_DOCUMENT::file_unique_id(){
+TGBOT::FILE_UNIQUE_ID_DOCUMENT &TGBOT::GET_DOCUMENT::file_unique_id(){
     return this->file_unique_id_doc;
 }
 
-TGBOT::FILE_SIZE_DOCUMENT TGBOT::GET_DOCUMENT::file_size(){
+TGBOT::FILE_SIZE_DOCUMENT &TGBOT::GET_DOCUMENT::file_size(){
     return this->file_size_doc;
 }
 
@@ -1999,15 +2000,15 @@ TGBOT::DOCUMENT::DOCUMENT(VARIABLE &var, METHOD &met) : get_document(var, met), 
     this->method = &met;
 }
 
-TGBOT::GET_DOCUMENT TGBOT::DOCUMENT::get(){
+TGBOT::GET_DOCUMENT &TGBOT::DOCUMENT::get(){
     return this->get_document;
 }
 
-TGBOT::THUMBNAIL_DOCUMENT TGBOT::DOCUMENT::Thumbnail(){
+TGBOT::THUMBNAIL_DOCUMENT &TGBOT::DOCUMENT::Thumbnail(){
     return this->thumbnail;
 }
 
-TGBOT::THUMB_DOCUMENT TGBOT::DOCUMENT::Thumb(){
+TGBOT::THUMB_DOCUMENT &TGBOT::DOCUMENT::Thumb(){
     return this->thumb;
 }
 
@@ -2163,23 +2164,23 @@ username_forward_from(var, met){
     this->method = &met;
 };
 
-TGBOT::ID_FORWARD_FROM TGBOT::GET_FORWARD_FROM::id(){
+TGBOT::ID_FORWARD_FROM &TGBOT::GET_FORWARD_FROM::id(){
     return this->id_rorward_from;
 }
 
-TGBOT::IS_BOT_FORWARD_FROM TGBOT::GET_FORWARD_FROM::is_bot(){
+TGBOT::IS_BOT_FORWARD_FROM &TGBOT::GET_FORWARD_FROM::is_bot(){
     return this->is_bot_forward_from;
 }
 
-TGBOT::FIRST_NAME_FORWARD_FROM TGBOT::GET_FORWARD_FROM::first_name(){
+TGBOT::FIRST_NAME_FORWARD_FROM &TGBOT::GET_FORWARD_FROM::first_name(){
     return this->first_name_forward_from;
 }
 
-TGBOT::LAST_NAME_FORWARD_FROM TGBOT::GET_FORWARD_FROM::last_name(){
+TGBOT::LAST_NAME_FORWARD_FROM &TGBOT::GET_FORWARD_FROM::last_name(){
     return this->last_name_forward_wrom;
 }
 
-TGBOT::USERNAME_FORWARD_FROM TGBOT::GET_FORWARD_FROM::username(){
+TGBOT::USERNAME_FORWARD_FROM &TGBOT::GET_FORWARD_FROM::username(){
     return this->username_forward_from;
 }
 
@@ -2189,7 +2190,7 @@ TGBOT::FORWARD_FROM::FORWARD_FROM(VARIABLE &var, METHOD &met) : get_forward_from
     this->method = &met;
 };
 
-TGBOT::GET_FORWARD_FROM TGBOT::FORWARD_FROM::get(){
+TGBOT::GET_FORWARD_FROM &TGBOT::FORWARD_FROM::get(){
     return this->get_forward_from;;
 }
 
@@ -2406,27 +2407,27 @@ leng_code_from(var, met){
     this->method = &met;
 }
 
-TGBOT::ID_FROM TGBOT::GET_FROM::id(){
+TGBOT::ID_FROM &TGBOT::GET_FROM::id(){
     return this->id_from;
 }
 
-TGBOT::IS_BOT_FROM TGBOT::GET_FROM::is_bot(){
+TGBOT::IS_BOT_FROM &TGBOT::GET_FROM::is_bot(){
     return this->is_bot_from;
 }
 
-TGBOT::FIRST_NAME_FROM TGBOT::GET_FROM::first_name(){
+TGBOT::FIRST_NAME_FROM &TGBOT::GET_FROM::first_name(){
     return this->first_name_from;
 }
 
-TGBOT::LAST_NAME_FROM TGBOT::GET_FROM::last_name(){
+TGBOT::LAST_NAME_FROM &TGBOT::GET_FROM::last_name(){
     return this->last_name_from;
 }
 
-TGBOT::USERNAME_FROM TGBOT::GET_FROM::username(){
+TGBOT::USERNAME_FROM &TGBOT::GET_FROM::username(){
     return this->username_from;
 }
 
-TGBOT::LANG_CODE_FROM TGBOT::GET_FROM::language_code(){
+TGBOT::LANG_CODE_FROM &TGBOT::GET_FROM::language_code(){
     return this->leng_code_from;
 }
 
@@ -2436,7 +2437,7 @@ TGBOT::FROM::FROM(VARIABLE &var, METHOD &met) : get_from(var, met){
     this->method = &met;
 }
 
-TGBOT::GET_FROM TGBOT::FROM::get(){
+TGBOT::GET_FROM &TGBOT::FROM::get(){
     return this->get_from;
 }
 
@@ -2628,23 +2629,23 @@ type_chat(var, met){
     this->method = &met;
 }
 
-TGBOT::ID_CHAT TGBOT::GET_CHAT::id(){
+TGBOT::ID_CHAT &TGBOT::GET_CHAT::id(){
     return this->id_chat;
 }
 
-TGBOT::FIRST_NAME_CHAT TGBOT::GET_CHAT::first_name(){
+TGBOT::FIRST_NAME_CHAT &TGBOT::GET_CHAT::first_name(){
     return this->first_name_chat;
 }
 
-TGBOT::LAST_NAME_CHAT TGBOT::GET_CHAT::last_name(){
+TGBOT::LAST_NAME_CHAT &TGBOT::GET_CHAT::last_name(){
     return this->last_name_chat;
 }
 
-TGBOT::USERNAME_CHAT TGBOT::GET_CHAT::username(){
+TGBOT::USERNAME_CHAT &TGBOT::GET_CHAT::username(){
     return this->username_chat;
 }
 
-TGBOT::TYPE_CHAT TGBOT::GET_CHAT::type(){
+TGBOT::TYPE_CHAT &TGBOT::GET_CHAT::type(){
     return this->type_chat;
 }
 
@@ -2654,7 +2655,7 @@ TGBOT::CHAT::CHAT(VARIABLE &var, METHOD &met) : get_chat(var, met){
     this->method = &met;
 }
 
-TGBOT::GET_CHAT TGBOT::CHAT::get(){
+TGBOT::GET_CHAT &TGBOT::CHAT::get(){
     return this->get_chat;
 }
 
@@ -2837,17 +2838,17 @@ TGBOT::GET_MESSAGE::GET_MESSAGE(VARIABLE &var, METHOD &met) : id_message(var, me
     this->method = &met;
 }
 
-TGBOT::ID_MESSAGE TGBOT::GET_MESSAGE::id(){
+TGBOT::ID_MESSAGE &TGBOT::GET_MESSAGE::id(){
     return this->id_message;
 }
-TGBOT::DATE_MESSAGE TGBOT::GET_MESSAGE::date(){
+TGBOT::DATE_MESSAGE &TGBOT::GET_MESSAGE::date(){
     return this->date_message;
 }
-TGBOT::TEXT_MESSAGE TGBOT::GET_MESSAGE::text(){
+TGBOT::TEXT_MESSAGE &TGBOT::GET_MESSAGE::text(){
     return this->text_message;
 }
 
-TGBOT::FORWARD_DATE_MESSAGE TGBOT::GET_MESSAGE::forward_date(){
+TGBOT::FORWARD_DATE_MESSAGE &TGBOT::GET_MESSAGE::forward_date(){
     return this->forward_date_message;
 }
 
@@ -2865,34 +2866,34 @@ get_message(var, met){
     this->method = &met;
 }
 
-TGBOT::GET_MESSAGE TGBOT::MESSAGE::get(){
+TGBOT::GET_MESSAGE &TGBOT::MESSAGE::get(){
     return this->get_message;
 }
 
-TGBOT::FROM TGBOT::MESSAGE::From(){
+TGBOT::FROM &TGBOT::MESSAGE::From(){
     return this->from;
 };
-TGBOT::CHAT TGBOT::MESSAGE::Chat(){
+TGBOT::CHAT &TGBOT::MESSAGE::Chat(){
     return this->chat;
 }
 
-TGBOT::REPLY_TO_MESSAGE TGBOT::MESSAGE::Reply(){
+TGBOT::REPLY_TO_MESSAGE &TGBOT::MESSAGE::Reply(){
     return this->reply_to_message;
 }
 
-TGBOT::FORWARD_FROM TGBOT::MESSAGE::Forward(){
+TGBOT::FORWARD_FROM &TGBOT::MESSAGE::Forward(){
     return this->forward_from;
 }
 
-TGBOT::VOICE TGBOT::MESSAGE::Voice(){
+TGBOT::VOICE &TGBOT::MESSAGE::Voice(){
     return this->voice;
 }
 
-TGBOT::DOCUMENT TGBOT::MESSAGE::Document(){
+TGBOT::DOCUMENT &TGBOT::MESSAGE::Document(){
     return this->document;
 }
 
-TGBOT::ENTITIES_MESSAGE TGBOT::MESSAGE::Entities(){
+TGBOT::ENTITIES_MESSAGE &TGBOT::MESSAGE::Entities(){
     return this->entities;
 }
 // MESSAGE
@@ -2929,7 +2930,7 @@ TGBOT::GET_RESULT::GET_RESULT(VARIABLE &var, METHOD &met) : id_update(var, met){
     this->method = &met;
 }
 
-TGBOT::ID_UPDATE TGBOT::GET_RESULT::id(){
+TGBOT::ID_UPDATE &TGBOT::GET_RESULT::id(){
     return this->id_update;
 }
 
@@ -2939,11 +2940,11 @@ TGBOT::RESULT::RESULT(VARIABLE &var, METHOD &met) : message(var, met), get_resul
     this->method = &met;
 }
 
-TGBOT::GET_RESULT TGBOT::RESULT::get(){
+TGBOT::GET_RESULT &TGBOT::RESULT::get(){
     return this->get_result;
 }
 
-TGBOT::MESSAGE TGBOT::RESULT::Message(){
+TGBOT::MESSAGE &TGBOT::RESULT::Message(){
     return this->message;
 }
 
@@ -2963,11 +2964,11 @@ TGBOT::TGbot::TGbot(const char *token) : result(this->var, this->method), event(
     this->var.token.append(token);
 }
 
-TGBOT::RESULT TGBOT::TGbot::Result(){
+TGBOT::RESULT &TGBOT::TGbot::Result(){
     return this->result;
 }
 
-TGBOT::EVENT TGBOT::TGbot::Event(){
+TGBOT::EVENT &TGBOT::TGbot::Event(){
     return this->event;
 }
 
