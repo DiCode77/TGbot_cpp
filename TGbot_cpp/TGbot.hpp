@@ -169,6 +169,7 @@ public:
     TYPE_ENTITIES_MESSAGE();
     TYPE_ENTITIES_MESSAGE(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool isCommand(std::string);
     bool is();
     
 private:
@@ -1222,6 +1223,7 @@ public:
     TEXT_MESSAGE();
     TEXT_MESSAGE(VARIABLE&, METHOD&);
     bool isString(std::string&);
+    bool isCommand(std::string);
     bool is();
     
 private:
