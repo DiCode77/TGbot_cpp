@@ -203,6 +203,7 @@ public:
     ENTITIES_MESSAGE(VARIABLE&, METHOD&);
     GET_ENTITIES_MESSAGE get();
     bool is();
+    long getAllItems();
 };
 
 //
@@ -1343,6 +1344,8 @@ public:
     RESULT(VARIABLE&, METHOD&);
     GET_RESULT get();
     MESSAGE Message();
+    long getAllItems();
+    void setIndex(size_t);
 };
 // RESULT
 
@@ -1357,10 +1360,10 @@ class TGbot{
 public:
     TGbot();
     TGbot(const char*);
-    RESULT Result(long index);
+    RESULT Result();
     EVENT Event();
     void getStatusBot();
-    long getSizeResult();
+    bool getIsStatusBot();
     void Sleep_for(int);
 };
 // TGbot
