@@ -1224,6 +1224,7 @@ public:
     TEXT_MESSAGE(VARIABLE&, METHOD&);
     bool isString(std::string&);
     bool isCommand(std::string);
+    bool isCommandFirst(std::string);
     bool is();
     
 private:
