@@ -1,7 +1,8 @@
 #  TGbot_cpp
 
 This is a test version of the bot, written in c++, the idea is simplicity and functionality, now the bot can receive requests, send messages, and respond to messages.
-Хочу підмітити що TGbot тестується поки тільки під macOS.
+
+I would like to note that TGbot is tested only under macOS.
 
 To use the bot:
 
@@ -11,7 +12,7 @@ After creating a bot through BotFather and copying the token to main.cpp, we tak
 
 2) Install CURL with the command: brew install curl
 
-3) Install Json parser [Json](https://github.com/nlohmann/json/releases)
+3) Install Json parser [Json](https://github.com/nlohmann/json/releases/download/v3.11.2/json.hpp)
  
 4) mkdir ~/desktop/tgbot;
 
