@@ -137,7 +137,7 @@ public:
     
 private:
     bool GetOffset(long&, long, long, bool);
-    void getIndex(long);
+    void setIndex(long);
     
     friend class GET_ENTITIES_MESSAGE;
 };
@@ -155,7 +155,7 @@ public:
     
 private:
     bool GetLength(long&, long, long, bool);
-    void getIndex(long);
+    void setIndex(long);
     
     friend class GET_ENTITIES_MESSAGE;
 };
@@ -174,7 +174,7 @@ public:
     
 private:
     bool GetType(std::string&, long, long, bool);
-    void getIndex(long);
+    void setIndex(long);
     
     friend class GET_ENTITIES_MESSAGE;
 };
@@ -595,6 +595,114 @@ public:
 };
 
 // VOICE
+
+// ***************** PHOTO ******************* //
+
+class FILE_ID_PHOTO{
+    VARIABLE *var;
+    METHOD *met;
+    long index;
+    
+public:
+    FILE_ID_PHOTO();
+    FILE_ID_PHOTO(VARIABLE&, METHOD&);
+    bool isString(std::string&);
+    bool is();
+    void setIndex(long);
+private:
+    bool GetFileId(std::string&, long, bool);
+};
+
+class FILE_UNIQUE_ID_PHOTO{
+    VARIABLE *var;
+    METHOD *met;
+    long index;
+    
+public:
+    FILE_UNIQUE_ID_PHOTO();
+    FILE_UNIQUE_ID_PHOTO(VARIABLE&, METHOD&);
+    bool isString(std::string&);
+    bool is();
+    void setIndex(long);
+private:
+    bool GetFileUniqueId(std::string&, long, bool);
+};
+
+class FILE_SIZE_PHOTO{
+    VARIABLE *var;
+    METHOD *met;
+    long index;
+    
+public:
+    FILE_SIZE_PHOTO();
+    FILE_SIZE_PHOTO(VARIABLE&, METHOD&);
+    bool isNum(long&);
+    bool is();
+    void setIndex(long);
+private:
+    bool GetFileSize(long&, long, bool);
+};
+
+class WIDTH_PHOTO{
+    VARIABLE *var;
+    METHOD *met;
+    long index;
+    
+public:
+    WIDTH_PHOTO();
+    WIDTH_PHOTO(VARIABLE&, METHOD&);
+    bool isNum(long&);
+    bool is();
+    void setIndex(long);
+private:
+    bool GetWidth(long&, long, bool);
+};
+
+class HEIGHT_PHOTO{
+    VARIABLE *var;
+    METHOD *met;
+    long index;
+    
+public:
+    HEIGHT_PHOTO();
+    HEIGHT_PHOTO(VARIABLE&, METHOD&);
+    bool isNum(long&);
+    bool is();
+    void setIndex(long);
+private:
+    bool GetHeight(long&, long, bool);
+};
+
+class GET_PHOTO{
+    VARIABLE *var;
+    METHOD *met;
+    FILE_ID_PHOTO file_id_photo;
+    FILE_UNIQUE_ID_PHOTO file_unique_id_photo;
+    FILE_SIZE_PHOTO file_size_photo;
+    WIDTH_PHOTO width_photo;
+    HEIGHT_PHOTO height_photo;
+    
+public:
+    GET_PHOTO();
+    GET_PHOTO(VARIABLE&, METHOD&);
+    FILE_ID_PHOTO &file_id();
+    FILE_UNIQUE_ID_PHOTO &file_unique_id();
+    FILE_SIZE_PHOTO &file_size();
+    WIDTH_PHOTO &width();
+    HEIGHT_PHOTO &height();
+};
+
+class PHOTO{
+    VARIABLE *var;
+    METHOD *met;
+    GET_PHOTO get_photo;
+public:
+    PHOTO();
+    PHOTO(VARIABLE&, METHOD&);
+    GET_PHOTO &get();
+    bool is();
+};
+// PHOTO
 
 // ***************** thumbnail document ******************* //
 
@@ -1294,6 +1402,7 @@ class MESSAGE{
     FORWARD_FROM forward_from;
     VOICE voice;
     DOCUMENT document;
+    PHOTO photo;
     ENTITIES_MESSAGE entities;
     VARIABLE *var;
     METHOD *method;
@@ -1309,6 +1418,7 @@ public:
     FORWARD_FROM &Forward();
     VOICE &Voice();
     DOCUMENT &Document();
+    PHOTO &Photo();
     ENTITIES_MESSAGE &Entities();
 };
 // MESSAGE

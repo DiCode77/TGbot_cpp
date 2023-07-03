@@ -292,7 +292,7 @@ bool TGBOT::OFFSET_ENTITIES_MESSAGE::GetOffset(long &data, long index, long inde
     return false;
 }
 
-void TGBOT::OFFSET_ENTITIES_MESSAGE::getIndex(long isIndex){
+void TGBOT::OFFSET_ENTITIES_MESSAGE::setIndex(long isIndex){
     this->index = isIndex;
 }
 
@@ -331,7 +331,7 @@ bool TGBOT::LENGTH_ENTITIES_MESSAGE::GetLength(long &data, long index, long inde
     return false;
 }
 
-void TGBOT::LENGTH_ENTITIES_MESSAGE::getIndex(long isIndex){
+void TGBOT::LENGTH_ENTITIES_MESSAGE::setIndex(long isIndex){
     this->index = isIndex;
 }
 
@@ -371,7 +371,7 @@ bool TGBOT::TYPE_ENTITIES_MESSAGE::GetType(std::string &str, long index, long in
     return false;
 }
 
-void TGBOT::TYPE_ENTITIES_MESSAGE::getIndex(long isIndex){
+void TGBOT::TYPE_ENTITIES_MESSAGE::setIndex(long isIndex){
     this->index = isIndex;
 }
 
@@ -409,17 +409,17 @@ type_entities(var, met){
 }
 
 TGBOT::OFFSET_ENTITIES_MESSAGE &TGBOT::GET_ENTITIES_MESSAGE::offset(long index){
-    this->offset_entities.getIndex(index);
+    this->offset_entities.setIndex(index);
     return this->offset_entities;
 }
 
 TGBOT::LENGTH_ENTITIES_MESSAGE &TGBOT::GET_ENTITIES_MESSAGE::length(long index){
-    this->length_entities.getIndex(index);
+    this->length_entities.setIndex(index);
     return this->length_entities;
 }
 
 TGBOT::TYPE_ENTITIES_MESSAGE &TGBOT::GET_ENTITIES_MESSAGE::type(long index){
-    this->type_entities.getIndex(index);
+    this->type_entities.setIndex(index);
     return type_entities;
 }
 
@@ -1328,6 +1328,256 @@ bool TGBOT::VOICE::is(){
 }
 
 // VOICE
+
+// ***************** PHOTO ******************* //
+
+TGBOT::FILE_ID_PHOTO::FILE_ID_PHOTO(){};
+TGBOT::FILE_ID_PHOTO::FILE_ID_PHOTO(VARIABLE &var, METHOD &met){
+    this->var = &var;
+    this->met = &met;
+    this->index = 0;
+}
+
+void TGBOT::FILE_ID_PHOTO::setIndex(long index){
+    this->index = index;
+}
+
+bool TGBOT::FILE_ID_PHOTO::GetFileId(std::string &str, long isIndex, bool isStatus){
+    this->met->strClear(str);
+    if ((this->met->getIsStatusBot() && this->met->getSizeResult() && (index +1)) && isStatus){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][isIndex]["message"]["photo"][this->index].count("file_id")){
+            str = js["result"][isIndex]["message"]["photo"][this->index]["file_id"].get<std::string>();
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    return false;
+}
+
+bool TGBOT::FILE_ID_PHOTO::isString(std::string &str){
+    return GetFileId(str, this->var->index, (this->met->getSizeResult() > this->var->index));
+}
+
+bool TGBOT::FILE_ID_PHOTO::is(){
+    if (this->met->getIsStatusBot() && this->met->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["photo"][this->index].count("file_id")){
+            return true;
+        }
+    }
+    return false;
+}
+
+TGBOT::FILE_UNIQUE_ID_PHOTO::FILE_UNIQUE_ID_PHOTO(){};
+TGBOT::FILE_UNIQUE_ID_PHOTO::FILE_UNIQUE_ID_PHOTO(VARIABLE &var, METHOD &met){
+    this->var = &var;
+    this->met = &met;
+}
+
+void TGBOT::FILE_UNIQUE_ID_PHOTO::setIndex(long index){
+    this->index = index;
+}
+
+bool TGBOT::FILE_UNIQUE_ID_PHOTO::GetFileUniqueId(std::string &str, long isIndex, bool isStatus){
+    this->met->strClear(str);
+    if ((this->met->getIsStatusBot() && this->met->getSizeResult() && (index +1)) && isStatus){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][isIndex]["message"]["photo"][this->index].count("file_unique_id")){
+            str = js["result"][isIndex]["message"]["photo"][this->index]["file_unique_id"].get<std::string>();
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    return false;
+}
+
+bool TGBOT::FILE_UNIQUE_ID_PHOTO::isString(std::string &str){
+    return GetFileUniqueId(str, this->var->index, (this->met->getSizeResult() > this->var->index));
+}
+
+bool TGBOT::FILE_UNIQUE_ID_PHOTO::is(){
+    if (this->met->getIsStatusBot() && this->met->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["photo"][this->index].count("file_unique_id")){
+            return true;
+        }
+    }
+    return false;
+}
+
+TGBOT::FILE_SIZE_PHOTO::FILE_SIZE_PHOTO(){};
+TGBOT::FILE_SIZE_PHOTO::FILE_SIZE_PHOTO(VARIABLE &var, METHOD &met){
+    this->var = &var;
+    this->met = &met;
+    this->index = 0;
+}
+
+void TGBOT::FILE_SIZE_PHOTO::setIndex(long index){
+    this->index = index;
+}
+
+bool TGBOT::FILE_SIZE_PHOTO::GetFileSize(long &data, long index, bool isStatus){
+    if ((this->met->getIsStatusBot() && this->met->getSizeResult() && (index +1)) && isStatus){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][index]["message"]["photo"][this->index].count("file_size")){
+            data = js["result"][index]["message"]["photo"][this->index]["file_size"].get<long>();
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    return false;
+}
+bool TGBOT::FILE_SIZE_PHOTO::isNum(long &data){
+    return GetFileSize(data, this->var->index, (this->met->getSizeResult() > this->var->index));
+}
+
+bool TGBOT::FILE_SIZE_PHOTO::is(){
+    if (this->met->getIsStatusBot() && this->met->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["photo"][this->index].count("file_size")){
+            return true;
+        }
+    }
+    return false;
+}
+
+TGBOT::WIDTH_PHOTO::WIDTH_PHOTO(){};
+TGBOT::WIDTH_PHOTO::WIDTH_PHOTO(VARIABLE &var, METHOD &met){
+    this->var = &var;
+    this->met = &met;
+    this->index = 0;
+}
+
+void TGBOT::WIDTH_PHOTO::setIndex(long index){
+    this->index = index;
+}
+
+bool TGBOT::WIDTH_PHOTO::GetWidth(long &data, long index, bool isStatus){
+    if ((this->met->getIsStatusBot() && this->met->getSizeResult() && (index +1)) && isStatus){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][index]["message"]["photo"][this->index].count("width")){
+            data = js["result"][index]["message"]["photo"][this->index]["width"].get<long>();
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    return false;
+}
+
+bool TGBOT::WIDTH_PHOTO::isNum(long &data){
+    return GetWidth(data, this->var->index, (this->met->getSizeResult() > this->var->index));
+}
+
+bool TGBOT::WIDTH_PHOTO::is(){
+    if (this->met->getIsStatusBot() && this->met->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["photo"][this->index].count("width")){
+            return true;
+        }
+    }
+    return false;
+}
+
+TGBOT::HEIGHT_PHOTO::HEIGHT_PHOTO(){};
+TGBOT::HEIGHT_PHOTO::HEIGHT_PHOTO(VARIABLE &var, METHOD &met){
+    this->var = &var;
+    this->met = &met;
+    this->index = 0;
+}
+
+void TGBOT::HEIGHT_PHOTO::setIndex(long index){
+    this->index = index;
+}
+
+bool TGBOT::HEIGHT_PHOTO::GetHeight(long &data, long index, bool isStatus){
+    if ((this->met->getIsStatusBot() && this->met->getSizeResult() && (index +1)) && isStatus){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][index]["message"]["photo"][this->index].count("height")){
+            data = js["result"][index]["message"]["photo"][this->index]["height"].get<long>();
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    return false;
+}
+
+bool TGBOT::HEIGHT_PHOTO::isNum(long &data){
+    return GetHeight(data, this->var->index, (this->met->getSizeResult() > this->var->index));
+}
+
+bool TGBOT::HEIGHT_PHOTO::is(){
+    if (this->met->getIsStatusBot() && this->met->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index]["message"]["photo"][this->index].count("height")){
+            return true;
+        }
+    }
+    return false;
+}
+
+TGBOT::GET_PHOTO::GET_PHOTO(){};
+TGBOT::GET_PHOTO::GET_PHOTO(VARIABLE &var, METHOD &met) :
+file_id_photo(var, met),
+file_unique_id_photo(var, met),
+file_size_photo(var, met),
+width_photo(var, met),
+height_photo(var, met){
+    this->var = &var;
+    this->met = &met;
+}
+
+TGBOT::FILE_ID_PHOTO &TGBOT::GET_PHOTO::file_id(){
+    return this->file_id_photo;
+}
+
+TGBOT::FILE_UNIQUE_ID_PHOTO &TGBOT::GET_PHOTO::file_unique_id(){
+    return this->file_unique_id_photo;
+}
+
+TGBOT::FILE_SIZE_PHOTO &TGBOT::GET_PHOTO::file_size(){
+    return this->file_size_photo;
+}
+
+TGBOT::WIDTH_PHOTO &TGBOT::GET_PHOTO::width(){
+    return this->width_photo;
+}
+
+TGBOT::HEIGHT_PHOTO &TGBOT::GET_PHOTO::height(){
+    return this->height_photo;
+}
+
+TGBOT::PHOTO::PHOTO(){};
+TGBOT::PHOTO::PHOTO(VARIABLE &var, METHOD &met) : get_photo(var, met){
+    this->var = &var;
+    this->met = &met;
+}
+
+TGBOT::GET_PHOTO &TGBOT::PHOTO::get(){
+    return this->get_photo;
+}
+
+bool TGBOT::PHOTO::is(){
+    if (this->met->getIsStatusBot() && this->met->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        if (js["result"][this->var->index].count("photo")){
+            return true;
+        }
+    }
+    return false;
+}
+
+// PHOTO
 
 // ***************** thumbnail document ******************* //
 
@@ -2860,6 +3110,7 @@ reply_to_message(var, met),
 forward_from(var, met),
 voice(var, met),
 document(var, met),
+photo(var, met),
 entities(var, met),
 get_message(var, met){
     this->var = &var;
@@ -2891,6 +3142,10 @@ TGBOT::VOICE &TGBOT::MESSAGE::Voice(){
 
 TGBOT::DOCUMENT &TGBOT::MESSAGE::Document(){
     return this->document;
+}
+
+TGBOT::PHOTO &TGBOT::MESSAGE::Photo(){
+    return this->photo;
 }
 
 TGBOT::ENTITIES_MESSAGE &TGBOT::MESSAGE::Entities(){
