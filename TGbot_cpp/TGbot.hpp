@@ -204,7 +204,7 @@ public:
     ENTITIES_MESSAGE(VARIABLE&, METHOD&);
     GET_ENTITIES_MESSAGE &get();
     bool is();
-    long getAllItems();
+    long items();
 };
 
 //
@@ -611,6 +611,7 @@ public:
     void setIndex(long);
 private:
     bool GetFileId(std::string&, long, bool);
+    friend class GET_PHOTO;
 };
 
 class FILE_UNIQUE_ID_PHOTO{
@@ -626,6 +627,7 @@ public:
     void setIndex(long);
 private:
     bool GetFileUniqueId(std::string&, long, bool);
+    friend class GET_PHOTO;
 };
 
 class FILE_SIZE_PHOTO{
@@ -641,6 +643,7 @@ public:
     void setIndex(long);
 private:
     bool GetFileSize(long&, long, bool);
+    friend class GET_PHOTO;
 };
 
 class WIDTH_PHOTO{
@@ -656,6 +659,7 @@ public:
     void setIndex(long);
 private:
     bool GetWidth(long&, long, bool);
+    friend class GET_PHOTO;
 };
 
 class HEIGHT_PHOTO{
@@ -671,6 +675,7 @@ public:
     void setIndex(long);
 private:
     bool GetHeight(long&, long, bool);
+    friend class GET_PHOTO;
 };
 
 class GET_PHOTO{
@@ -685,11 +690,11 @@ class GET_PHOTO{
 public:
     GET_PHOTO();
     GET_PHOTO(VARIABLE&, METHOD&);
-    FILE_ID_PHOTO &file_id();
-    FILE_UNIQUE_ID_PHOTO &file_unique_id();
-    FILE_SIZE_PHOTO &file_size();
-    WIDTH_PHOTO &width();
-    HEIGHT_PHOTO &height();
+    FILE_ID_PHOTO &file_id(long index = -1);
+    FILE_UNIQUE_ID_PHOTO &file_unique_id(long index = -1);
+    FILE_SIZE_PHOTO &file_size(long index = -1);
+    WIDTH_PHOTO &width(long index = -1);
+    HEIGHT_PHOTO &height(long index = -1);
 };
 
 class PHOTO{
@@ -701,6 +706,7 @@ public:
     PHOTO(VARIABLE&, METHOD&);
     GET_PHOTO &get();
     bool is();
+    long items();
 };
 // PHOTO
 
@@ -1457,7 +1463,7 @@ public:
     RESULT(VARIABLE&, METHOD&);
     GET_RESULT &get();
     MESSAGE &Message();
-    long getAllItems();
+    long items();
     void setIndex(size_t);
 };
 // RESULT
@@ -1473,7 +1479,7 @@ class TGbot{
 public:
     TGbot();
     TGbot(const char*);
-    RESULT &Result();
+    RESULT &Result(long index = -1);
     EVENT &Event();
     void getStatusBot();
     bool getIsStatusBot();
