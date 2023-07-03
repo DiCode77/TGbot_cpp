@@ -444,7 +444,7 @@ bool TGBOT::ENTITIES_MESSAGE::is(){
     return false;
 }
 
-long TGBOT::ENTITIES_MESSAGE::getAllItems(){
+long TGBOT::ENTITIES_MESSAGE::items(){
     if (this->method->getIsStatusBot() && this->method->getSizeResult()){
         JsonHpp js = JsonHpp::parse(this->var->updates);
         return js["result"][this->var->index]["message"]["entities"].size();
@@ -1537,23 +1537,33 @@ height_photo(var, met){
     this->met = &met;
 }
 
-TGBOT::FILE_ID_PHOTO &TGBOT::GET_PHOTO::file_id(){
+TGBOT::FILE_ID_PHOTO &TGBOT::GET_PHOTO::file_id(long index){
+    if (index > -1)
+        this->file_id_photo.index = index;
     return this->file_id_photo;
 }
 
-TGBOT::FILE_UNIQUE_ID_PHOTO &TGBOT::GET_PHOTO::file_unique_id(){
+TGBOT::FILE_UNIQUE_ID_PHOTO &TGBOT::GET_PHOTO::file_unique_id(long index){
+    if (index > -1)
+        this->file_unique_id_photo.index = index;
     return this->file_unique_id_photo;
 }
 
-TGBOT::FILE_SIZE_PHOTO &TGBOT::GET_PHOTO::file_size(){
+TGBOT::FILE_SIZE_PHOTO &TGBOT::GET_PHOTO::file_size(long index){
+    if (index > -1)
+        this->file_size_photo.index = index;
     return this->file_size_photo;
 }
 
-TGBOT::WIDTH_PHOTO &TGBOT::GET_PHOTO::width(){
+TGBOT::WIDTH_PHOTO &TGBOT::GET_PHOTO::width(long index){
+    if (index > -1)
+        this->width_photo.index = index;
     return this->width_photo;
 }
 
-TGBOT::HEIGHT_PHOTO &TGBOT::GET_PHOTO::height(){
+TGBOT::HEIGHT_PHOTO &TGBOT::GET_PHOTO::height(long index){
+    if (index > -1)
+        this->height_photo.index = index;
     return this->height_photo;
 }
 
@@ -1575,6 +1585,14 @@ bool TGBOT::PHOTO::is(){
         }
     }
     return false;
+}
+
+long TGBOT::PHOTO::items(){
+    if (this->met->getIsStatusBot() && this->met->getSizeResult()){
+        JsonHpp js = JsonHpp::parse(this->var->updates);
+        return js["result"][this->var->index]["message"]["photo"].size();
+    }
+    return 0;
 }
 
 // PHOTO
@@ -3203,7 +3221,7 @@ TGBOT::MESSAGE &TGBOT::RESULT::Message(){
     return this->message;
 }
 
-long TGBOT::RESULT::getAllItems(){
+long TGBOT::RESULT::items(){
     return this->method->getSizeResult();
 }
 
@@ -3219,7 +3237,9 @@ TGBOT::TGbot::TGbot(const char *token) : result(this->var, this->method), event(
     this->var.token.append(token);
 }
 
-TGBOT::RESULT &TGBOT::TGbot::Result(){
+TGBOT::RESULT &TGBOT::TGbot::Result(long index){
+    if (index > -1)
+        this->var.index = index;
     return this->result;
 }
 
