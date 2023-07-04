@@ -25,6 +25,7 @@
 #define OFFSET "?offset="
 #define SEND_PHOTO "/sendPhoto?"
 #define SEND_DOCUMENT "/sendDocument"
+#define SEND_VIDEO "/sendVideo"
 
 namespace TGBOT{
 
