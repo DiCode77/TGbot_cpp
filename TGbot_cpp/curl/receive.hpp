@@ -24,6 +24,7 @@ public:
     CURLcode getCurlUpdates(std::string, std::string&);
     CURLcode sendHttpMessage(std::string, std::string, std::string&);
     CURLcode getCurlEvent(std::string, std::string&);
+    CURLcode sendFile(std::string, std::string, std::string, std::string&, std::string, std::string);
 
 private:
     static size_t getResponsetoString(void*, size_t, size_t, void*);

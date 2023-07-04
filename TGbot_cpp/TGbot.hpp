@@ -23,6 +23,8 @@
 #define TEXTS "&text="
 #define REPLY_MESSAGE_ID "&reply_to_message_id="
 #define OFFSET "?offset="
+#define SEND_PHOTO "/sendPhoto?"
+#define SEND_DOCUMENT "/sendDocument"
 
 namespace TGBOT{
 
@@ -75,8 +77,9 @@ public:
     SEND_EVENT();
     SEND_EVENT(VARIABLE&, METHOD&, CURL_UPDATES&);
     
-    bool sendMessage(long chat_id, std::string text);
-    bool sendReplyMessage(long chat_id, long message_id, std::string text);
+    bool message(long chat_id, std::string text);
+    bool replyMessage(long chat_id, long message_id, std::string text);
+    bool file(std::string chatId, std::string path, std::string type, std::string caption = "");
 };
 
 class CLEAR_UPDATE_EVENT{

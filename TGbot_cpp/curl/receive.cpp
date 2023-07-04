@@ -96,6 +96,35 @@ CURLcode CURL_UPDATES::getCurlEvent(std::string url, std::string &data){
     return response;
 }
 
+CURLcode CURL_UPDATES::sendFile(std::string url, std::string chatId, std::string path, std::string &update, std::string type, std::string caption){
+    CURLcode res_curl;
+    std::string result;
+    CURL *curl = curl_easy_init();
+
+    curl_httppost* formpost = NULL;
+    curl_httppost* lastptr = NULL;
+
+    curl_formadd(&formpost, &lastptr, CURLFORM_COPYNAME, "chat_id", CURLFORM_COPYCONTENTS, chatId.c_str(), CURLFORM_END);
+    curl_formadd(&formpost, &lastptr, CURLFORM_COPYNAME, "caption", CURLFORM_COPYCONTENTS, caption.c_str(), CURLFORM_END);
+    curl_formadd(&formpost, &lastptr, CURLFORM_COPYNAME, type.c_str() , CURLFORM_FILE, path.c_str(), CURLFORM_END);
+
+    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, getResponsetoString);
+    curl_easy_setopt(curl, CURLOPT_TIMEOUT, this->timeOutHttp);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
+
+    res_curl = curl_easy_perform(curl);
+    if (res_curl == CURLE_OK) {
+        update = result;
+    }
+
+    curl_formfree(formpost);
+    curl_easy_cleanup(curl);
+    
+    return res_curl;
+}
+
 void CURL_UPDATES::Sleep_for(int sleep){
     std::this_thread::sleep_for(std::chrono::milliseconds(sleep));
 }
