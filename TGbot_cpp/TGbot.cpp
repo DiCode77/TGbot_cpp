@@ -185,6 +185,9 @@ bool TGBOT::SEND_EVENT::file(std::string chatId, std::string path, std::string t
     else if (type == "document"){
         url.append(SEND_DOCUMENT);
     }
+    else if (type == "video"){
+        url.append(SEND_VIDEO);
+    }
     else{
         url.append(SEND_DOCUMENT);
         type = "document";
