@@ -114,7 +114,7 @@ TGBOT::SEND_EVENT::SEND_EVENT(VARIABLE &var, METHOD &met,  CURL_UPDATES &curl_up
     this->curl_update = &curl_upd;
 }
 
-bool TGBOT::SEND_EVENT::sendMessage(long chat_id, std::string text){
+bool TGBOT::SEND_EVENT::message(long chat_id, std::string text){
     std::string url;
     url.append(PROTOCOL);
     url.append(DOMIN_NAME);
@@ -142,7 +142,7 @@ bool TGBOT::SEND_EVENT::sendMessage(long chat_id, std::string text){
     return true;
 }
 
-bool TGBOT::SEND_EVENT::sendReplyMessage(long chat_id, long message_id, std::string text){
+bool TGBOT::SEND_EVENT::replyMessage(long chat_id, long message_id, std::string text){
     std::string url;
     url.append(PROTOCOL);
     url.append(DOMIN_NAME);
@@ -161,6 +161,37 @@ bool TGBOT::SEND_EVENT::sendReplyMessage(long chat_id, long message_id, std::str
     
     std::string upd;
     CURLcode err = this->curl_update->sendHttpMessage(url, txt, upd);
+    if (err == CURLE_OK){
+        return this->method->getUpdateStatus(upd);
+    }
+    else{
+        std::cerr << "curl failed: " << curl_easy_strerror(err) << std::endl;
+        return false;
+    }
+    
+    return false;
+}
+
+bool TGBOT::SEND_EVENT::file(std::string chatId, std::string path, std::string type, std::string caption){
+    std::string url;
+    url.append(PROTOCOL);
+    url.append(DOMIN_NAME);
+    url.append(PATH);
+    url.append(this->var->token);
+    
+    if (type == "photo"){
+        url.append(SEND_PHOTO);
+    }
+    else if (type == "document"){
+        url.append(SEND_DOCUMENT);
+    }
+    else{
+        url.append(SEND_DOCUMENT);
+        type = "document";
+    }
+    
+    std::string upd;
+    CURLcode err = this->curl_update->sendFile(url, chatId, path, upd, type, caption);
     if (err == CURLE_OK){
         return this->method->getUpdateStatus(upd);
     }
