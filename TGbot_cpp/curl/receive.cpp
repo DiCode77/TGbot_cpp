@@ -108,6 +108,10 @@ void CURL_UPDATES::addFileToForm(curl_httppost **formpost, curl_httppost **lastp
     curl_formadd(formpost, lastptr, CURLFORM_COPYNAME, identifier, arg, info, CURLFORM_END);
 }
 
+bool CURL_UPDATES::verifyType(std::string type){
+    return (type == "photo" || type == "document" || type == "audio");
+}
+
 CURLcode CURL_UPDATES::sendFile(std::string url, std::string chatId, std::string path, std::string &update, std::string type, std::string caption){
     CURLcode res_curl;
     std::string result;
@@ -116,7 +120,7 @@ CURLcode CURL_UPDATES::sendFile(std::string url, std::string chatId, std::string
     curl_httppost *formpost = NULL;
     curl_httppost *lastptr = NULL;
     
-    if (type == "photo" || type == "document"){
+    if (verifyType(type)){
         addFileToForm(&formpost, &lastptr, "chat_id", CURLFORM_COPYCONTENTS, chatId.c_str());
         addFileToForm(&formpost, &lastptr, "caption", CURLFORM_COPYCONTENTS, caption.c_str());
         addFileToForm(&formpost, &lastptr, type.c_str(), CURLFORM_FILE, path.c_str());
@@ -149,10 +153,10 @@ CURLcode CURL_UPDATES::sendReplyFile(std::string url, std::string chatId, std::s
     curl_httppost *formpost = NULL;
     curl_httppost *lastptr = NULL;
 
-    if (type == "photo" || type == "document"){
+    if (verifyType(type)){
         addFileToForm(&formpost, &lastptr, "chat_id", CURLFORM_COPYCONTENTS, chatId.c_str());
         addFileToForm(&formpost, &lastptr, "caption", CURLFORM_COPYCONTENTS, caption.c_str());
-        addFileToForm(&formpost, &lastptr, "reply_to_message_id", CURLFORM_COPYCONTENTS, caption.c_str());
+        addFileToForm(&formpost, &lastptr, "reply_to_message_id", CURLFORM_COPYCONTENTS, messId.c_str());
         addFileToForm(&formpost, &lastptr, type.c_str(), CURLFORM_FILE, path.c_str());
     }
     else if (type == "video"){

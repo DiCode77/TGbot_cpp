@@ -40,6 +40,7 @@ private:
     void Sleep_for(int);
     void addParameterCurl(CURL*, curl_httppost*, std::string, std::string&);
     void addFileToForm(curl_httppost**, curl_httppost**, const char*, int, const char*);
+    bool verifyType(std::string);
 };
 
 #endif /* updates_hpp */
