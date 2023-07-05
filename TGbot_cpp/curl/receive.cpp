@@ -96,24 +96,40 @@ CURLcode CURL_UPDATES::getCurlEvent(std::string url, std::string &data){
     return response;
 }
 
+void CURL_UPDATES::addParameterCurl(CURL *curl, curl_httppost *formpost, std::string url, std::string &res){
+    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, getResponsetoString);
+    curl_easy_setopt(curl, CURLOPT_TIMEOUT, this->timeOutHttp);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &res);
+}
+
+void CURL_UPDATES::addFileToForm(curl_httppost **formpost, curl_httppost **lastptr, const char *identifier, int arg, const char *info){
+    curl_formadd(formpost, lastptr, CURLFORM_COPYNAME, identifier, arg, info, CURLFORM_END);
+}
+
 CURLcode CURL_UPDATES::sendFile(std::string url, std::string chatId, std::string path, std::string &update, std::string type, std::string caption){
     CURLcode res_curl;
     std::string result;
     CURL *curl = curl_easy_init();
 
-    curl_httppost* formpost = NULL;
-    curl_httppost* lastptr = NULL;
-
-    curl_formadd(&formpost, &lastptr, CURLFORM_COPYNAME, "chat_id", CURLFORM_COPYCONTENTS, chatId.c_str(), CURLFORM_END);
-    curl_formadd(&formpost, &lastptr, CURLFORM_COPYNAME, "caption", CURLFORM_COPYCONTENTS, caption.c_str(), CURLFORM_END);
-    curl_formadd(&formpost, &lastptr, CURLFORM_COPYNAME, type.c_str() , CURLFORM_FILE, path.c_str(), CURLFORM_END);
-
-    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-    curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, getResponsetoString);
-    curl_easy_setopt(curl, CURLOPT_TIMEOUT, this->timeOutHttp);
-    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
-
+    curl_httppost *formpost = NULL;
+    curl_httppost *lastptr = NULL;
+    
+    if (type == "photo" || type == "document"){
+        addFileToForm(&formpost, &lastptr, "chat_id", CURLFORM_COPYCONTENTS, chatId.c_str());
+        addFileToForm(&formpost, &lastptr, "caption", CURLFORM_COPYCONTENTS, caption.c_str());
+        addFileToForm(&formpost, &lastptr, type.c_str(), CURLFORM_FILE, path.c_str());
+    }
+    else if (type == "video"){
+        addFileToForm(&formpost, &lastptr, "chat_id", CURLFORM_COPYCONTENTS, chatId.c_str());
+        addFileToForm(&formpost, &lastptr, "caption", CURLFORM_COPYCONTENTS, caption.c_str());
+        addFileToForm(&formpost, &lastptr, "width",   CURLFORM_COPYCONTENTS, std::to_string(this->size_video.width).c_str());
+        addFileToForm(&formpost, &lastptr, "height",  CURLFORM_COPYCONTENTS, std::to_string(this->size_video.height).c_str());
+        addFileToForm(&formpost, &lastptr, type.c_str(), CURLFORM_FILE, path.c_str());
+    }
+    
+    addParameterCurl(curl, formpost, url, result);
     res_curl = curl_easy_perform(curl);
     if (res_curl == CURLE_OK) {
         update = result;
@@ -123,6 +139,46 @@ CURLcode CURL_UPDATES::sendFile(std::string url, std::string chatId, std::string
     curl_easy_cleanup(curl);
     
     return res_curl;
+}
+
+CURLcode CURL_UPDATES::sendReplyFile(std::string url, std::string chatId, std::string messId, std::string path, std::string &update, std::string type, std::string caption){
+    CURLcode res_curl;
+    std::string result;
+    CURL *curl = curl_easy_init();
+
+    curl_httppost *formpost = NULL;
+    curl_httppost *lastptr = NULL;
+
+    if (type == "photo" || type == "document"){
+        addFileToForm(&formpost, &lastptr, "chat_id", CURLFORM_COPYCONTENTS, chatId.c_str());
+        addFileToForm(&formpost, &lastptr, "caption", CURLFORM_COPYCONTENTS, caption.c_str());
+        addFileToForm(&formpost, &lastptr, "reply_to_message_id", CURLFORM_COPYCONTENTS, caption.c_str());
+        addFileToForm(&formpost, &lastptr, type.c_str(), CURLFORM_FILE, path.c_str());
+    }
+    else if (type == "video"){
+        addFileToForm(&formpost, &lastptr, "chat_id", CURLFORM_COPYCONTENTS, chatId.c_str());
+        addFileToForm(&formpost, &lastptr, "caption", CURLFORM_COPYCONTENTS, caption.c_str());
+        addFileToForm(&formpost, &lastptr, "width",   CURLFORM_COPYCONTENTS, std::to_string(this->size_video.width).c_str());
+        addFileToForm(&formpost, &lastptr, "height",  CURLFORM_COPYCONTENTS, std::to_string(this->size_video.height).c_str());
+        addFileToForm(&formpost, &lastptr, "reply_to_message_id", CURLFORM_COPYCONTENTS, messId.c_str());
+        addFileToForm(&formpost, &lastptr, type.c_str(), CURLFORM_FILE, path.c_str());
+    }
+
+    addParameterCurl(curl, formpost, url, result);
+    res_curl = curl_easy_perform(curl);
+    if (res_curl == CURLE_OK) {
+        update = result;
+    }
+
+    curl_formfree(formpost);
+    curl_easy_cleanup(curl);
+    
+    return res_curl;
+}
+
+void CURL_UPDATES::videoSize(long x, long y){
+    this->size_video.width = x;
+    this->size_video.height = y;
 }
 
 void CURL_UPDATES::Sleep_for(int sleep){

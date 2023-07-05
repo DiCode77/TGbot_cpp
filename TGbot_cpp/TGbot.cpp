@@ -172,7 +172,7 @@ bool TGBOT::SEND_EVENT::replyMessage(long chat_id, long message_id, std::string 
     return false;
 }
 
-bool TGBOT::SEND_EVENT::file(std::string chatId, std::string path, std::string type, std::string caption){
+std::string TGBOT::SEND_EVENT::getUrlForSendFile(std::string &type){
     std::string url;
     url.append(PROTOCOL);
     url.append(DOMIN_NAME);
@@ -192,9 +192,12 @@ bool TGBOT::SEND_EVENT::file(std::string chatId, std::string path, std::string t
         url.append(SEND_DOCUMENT);
         type = "document";
     }
-    
+    return url;
+}
+
+bool TGBOT::SEND_EVENT::file(long chatId, std::string path, std::string type, std::string caption){
     std::string upd;
-    CURLcode err = this->curl_update->sendFile(url, chatId, path, upd, type, caption);
+    CURLcode err = this->curl_update->sendFile(getUrlForSendFile(type), std::to_string(chatId), path, upd, type, caption);
     if (err == CURLE_OK){
         return this->method->getUpdateStatus(upd);
     }
@@ -204,6 +207,24 @@ bool TGBOT::SEND_EVENT::file(std::string chatId, std::string path, std::string t
     }
     
     return false;
+}
+
+bool TGBOT::SEND_EVENT::replyFile(long chatId, long messId, std::string path, std::string type, std::string caption){
+    std::string upd;
+    CURLcode err = this->curl_update->sendReplyFile(getUrlForSendFile(type), std::to_string(chatId), std::to_string(messId), path, upd, type, caption);
+    if (err == CURLE_OK){
+        return this->method->getUpdateStatus(upd);
+    }
+    else{
+        std::cerr << "curl failed: " << curl_easy_strerror(err) << std::endl;
+        return false;
+    }
+    
+    return false;
+}
+
+void TGBOT::SEND_EVENT::videoResolution(long width, long height){
+    this->curl_update->videoSize(width, height);
 }
 
 TGBOT::CLEAR_UPDATE_EVENT::CLEAR_UPDATE_EVENT(){};
