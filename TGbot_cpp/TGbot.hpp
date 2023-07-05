@@ -26,6 +26,7 @@
 #define SEND_PHOTO "/sendPhoto?"
 #define SEND_DOCUMENT "/sendDocument"
 #define SEND_VIDEO "/sendVideo"
+#define SEND_AUDIO "/sendAudio"
 
 namespace TGBOT{
 

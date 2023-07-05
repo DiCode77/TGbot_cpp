@@ -188,6 +188,9 @@ std::string TGBOT::SEND_EVENT::getUrlForSendFile(std::string &type){
     else if (type == "video"){
         url.append(SEND_VIDEO);
     }
+    else if (type == "audio"){
+        url.append(SEND_AUDIO);
+    }
     else{
         url.append(SEND_DOCUMENT);
         type = "document";
