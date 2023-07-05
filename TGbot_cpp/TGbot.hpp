@@ -80,7 +80,12 @@ public:
     
     bool message(long chat_id, std::string text);
     bool replyMessage(long chat_id, long message_id, std::string text);
-    bool file(std::string chatId, std::string path, std::string type, std::string caption = "");
+    bool file(long chatId, std::string path, std::string type, std::string caption = "");
+    bool replyFile(long chatId, long messId, std::string path, std::string type, std::string caption = "");
+    void videoResolution(long width, long height);
+    
+private:
+    std::string getUrlForSendFile(std::string&);
 };
 
 class CLEAR_UPDATE_EVENT{
