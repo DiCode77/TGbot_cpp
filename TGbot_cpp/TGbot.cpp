@@ -230,6 +230,40 @@ void TGBOT::SEND_EVENT::videoResolution(long width, long height){
     this->curl_update->videoSize(width, height);
 }
 
+TGBOT::CLEAR_MESSAGE_EVENT::CLEAR_MESSAGE_EVENT(){};
+TGBOT::CLEAR_MESSAGE_EVENT::CLEAR_MESSAGE_EVENT(VARIABLE &var, METHOD &met, CURL_UPDATES &curl_update){
+    this->var = &var;
+    this->method = &met;
+    this->curl_update = &curl_update;
+}
+
+bool TGBOT::CLEAR_MESSAGE_EVENT::remove(long chat_id, long message_id){
+    if (chat_id && message_id && this->method->getSizeResult()){
+        std::string url;
+        url.append(PROTOCOL);
+        url.append(DOMIN_NAME);
+        url.append(PATH);
+        url.append(this->var->token);
+        url.append(DELETE_MESSAGE);
+        url.append(CHAT_ID);
+        url.append(std::to_string(chat_id));
+        url.append(MESSAGE_ID);
+        url.append(std::to_string(message_id));
+        
+        std::string upd;
+        CURLcode err = this->curl_update->getCurlEvent(url, upd);
+        if (err == CURLE_OK){
+            return this->method->getUpdateStatus(upd);
+        }
+        else{
+            std::cerr << "curl failed: " << curl_easy_strerror(err) << std::endl;
+            return false;
+        }
+    }
+    return false;
+}
+
+
 TGBOT::CLEAR_UPDATE_EVENT::CLEAR_UPDATE_EVENT(){};
 TGBOT::CLEAR_UPDATE_EVENT::CLEAR_UPDATE_EVENT(VARIABLE &var, METHOD &met, CURL_UPDATES &curl_update){
     this->var = &var;
@@ -288,7 +322,9 @@ bool TGBOT::CLEAR_UPDATE_EVENT::All(long data){
 }
 
 TGBOT::CLEAR_EVENT::CLEAR_EVENT(){};
-TGBOT::CLEAR_EVENT::CLEAR_EVENT(VARIABLE &var, METHOD &met,  CURL_UPDATES &curl_update) : clear_update_event(var, met, curl_update){
+TGBOT::CLEAR_EVENT::CLEAR_EVENT(VARIABLE &var, METHOD &met,  CURL_UPDATES &curl_update) :
+clear_update_event(var, met, curl_update),
+clear_message_event(var, met, curl_update){
     this->var = &var;
     this->method = &met;
     this->curl_update = &curl_update;
@@ -296,6 +332,10 @@ TGBOT::CLEAR_EVENT::CLEAR_EVENT(VARIABLE &var, METHOD &met,  CURL_UPDATES &curl_
 
 TGBOT::CLEAR_UPDATE_EVENT &TGBOT::CLEAR_EVENT::updates(){
     return this->clear_update_event;
+}
+
+TGBOT::CLEAR_MESSAGE_EVENT &TGBOT::CLEAR_EVENT::message(){
+    return this->clear_message_event;
 }
 
 TGBOT::EVENT::EVENT(){};
