@@ -27,6 +27,8 @@
 #define SEND_DOCUMENT "/sendDocument"
 #define SEND_VIDEO "/sendVideo"
 #define SEND_AUDIO "/sendAudio"
+#define DELETE_MESSAGE "/deleteMessage?"
+#define MESSAGE_ID "&message_id="
 
 namespace TGBOT{
 
@@ -89,6 +91,17 @@ private:
     std::string getUrlForSendFile(std::string&);
 };
 
+class CLEAR_MESSAGE_EVENT{
+    VARIABLE *var;
+    METHOD *method;
+    CURL_UPDATES *curl_update;
+    
+public:
+    CLEAR_MESSAGE_EVENT();
+    CLEAR_MESSAGE_EVENT(VARIABLE&, METHOD&, CURL_UPDATES&);
+    bool remove(long chat_id, long message_id);
+};
+
 class CLEAR_UPDATE_EVENT{
     VARIABLE *var;
     METHOD *method;
@@ -106,11 +119,13 @@ class CLEAR_EVENT{
     METHOD *method;
     CURL_UPDATES *curl_update;
     CLEAR_UPDATE_EVENT clear_update_event;
+    CLEAR_MESSAGE_EVENT clear_message_event;
     
 public:
     CLEAR_EVENT();
     CLEAR_EVENT(VARIABLE&, METHOD&, CURL_UPDATES&);
     CLEAR_UPDATE_EVENT &updates();
+    CLEAR_MESSAGE_EVENT &message();
 };
 
 class EVENT{
