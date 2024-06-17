@@ -30,6 +30,8 @@
 #define DELETE_MESSAGE "/deleteMessage?"
 #define MESSAGE_ID "&message_id="
 
+#define TGbot_versin "0.0.1"
+
 namespace TGBOT{
 
 using JsonHpp = nlohmann::json;
