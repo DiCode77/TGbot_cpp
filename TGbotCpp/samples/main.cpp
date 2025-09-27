@@ -23,7 +23,7 @@ int main(){
             bot.Result().get().id().isNum(mess_id);
             if (bot.Result().Message().get().text().isCommand("/start")){
                 if (bot.Result().Message().Chat().get().id().isNum(chat_id)){
-                    bot.Event().send().sendMessage(chat_id, "Hi, I'm a bot.");
+                    bot.Event().send().message(chat_id, "Hi, I'm a bot");
                     bot.Event().clear().updates().First(mess_id);
                 }
             }
