@@ -1,7 +1,7 @@
 #!/bin/bash
 
 TBOT_REPO_URL="https://github.com/DiCode77/TGbot_cpp.git"
-JSON_REPO_URL = "https://github.com/nlohmann/json/releases/latest/download/json.hpp"
+JSON_REPO_URL="https://github.com/nlohmann/json/releases/latest/download/json.hpp"
 
 DIR_NAME_REPO="TGbot_cpp"
 DIR_NAME_PRJ="TGbotCpp"
@@ -19,8 +19,8 @@ fi
 
 if [ ! -d "$DIR_NAME_RES" ]; then
    mkdir "$DIR_NAME_RES"
-   cd Resources
-   curl -L "$JSON_REPO_URL" -o json.hpp
+   cd "$DIR_NAME_RES"
+   curl -fsSL "$JSON_REPO_URL" -o json.hpp
    cd ..
 fi
 
