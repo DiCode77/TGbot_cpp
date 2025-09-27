@@ -179,21 +179,21 @@ std::string TGBOT::SEND_EVENT::getUrlForSendFile(std::string &type){
     url.append(PATH);
     url.append(this->var->token);
     
-    if (type == "photo"){
+    if (type == ARG_PHHOTO_MESSAGE){
         url.append(SEND_PHOTO);
     }
-    else if (type == "document"){
+    else if (type == ARG_DOCUMENT_MESSAGE){
         url.append(SEND_DOCUMENT);
     }
-    else if (type == "video"){
+    else if (type == ARG_VIDEO_MESSAGE){
         url.append(SEND_VIDEO);
     }
-    else if (type == "audio"){
+    else if (type == ARG_AUDIO_MESSAGE){
         url.append(SEND_AUDIO);
     }
     else{
         url.append(SEND_DOCUMENT);
-        type = "document";
+        type = ARG_DOCUMENT_MESSAGE;
     }
     return url;
 }
