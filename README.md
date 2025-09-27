@@ -21,3 +21,8 @@ After creating a bot through BotFather and copying the token to main.cpp, we tak
 6) Compile cd ~/desktop/tgbot; g++ main.cpp TGbot.cpp receive.cpp -o tgbot -std=c++17 -lcurl
 
 
+Or you can assemble it with one team:
+
+```bash
+curl -O https://raw.githubusercontent.com/DiCode77/TGbot_cpp/main/build.sh && chmod +x build.sh && ./build.sh
+```
