@@ -13,7 +13,7 @@ file(GLOB SRC_FILES "${SRC}/TGbotCpp/*.cpp"
                     "${SRC}/Resources/*.hpp")
 
 
-add_executable(${PROJECT_NAME} MACOSX_BUNDLE ${SRC_FILES}) 
+add_executable(${PROJECT_NAME} ${SRC_FILES}) 
 
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 20 
                                                  CXX_STANDARD_REQUIRED ON)
