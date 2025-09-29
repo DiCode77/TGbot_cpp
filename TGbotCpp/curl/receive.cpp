@@ -185,6 +185,20 @@ void CURL_UPDATES::videoSize(long x, long y){
     this->size_video.height = y;
 }
 
+std::string CURL_UPDATES::GetEncryptHttpTxt(std::string txt){
+    CURL *curl = curl_easy_init();
+    std::string txt_enc;
+    if (curl){
+        char *enc = curl_easy_escape(curl, txt.c_str(), static_cast<int>(txt.length()));
+        if (enc){
+            txt_enc.append(enc);
+            curl_free(enc);
+        }
+        curl_easy_cleanup(curl);
+    }
+    return txt_enc;
+}
+
 void CURL_UPDATES::Sleep_for(int sleep){
     std::this_thread::sleep_for(std::chrono::milliseconds(sleep));
 }

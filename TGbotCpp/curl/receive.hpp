@@ -34,6 +34,7 @@ public:
     CURLcode sendFile(std::string, std::string, std::string, std::string&, std::string, std::string);
     CURLcode sendReplyFile(std::string, std::string, std::string, std::string, std::string&, std::string, std::string);
     void videoSize(long, long);
+    std::string GetEncryptHttpTxt(std::string);
 
 private:
     static size_t getResponsetoString(void*, size_t, size_t, void*);

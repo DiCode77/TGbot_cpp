@@ -96,6 +96,7 @@ public:
     
 private:
     std::string getUrlForSendFile(std::string&);
+    CURL_UPDATES *Curl();
 };
 
 class CLEAR_MESSAGE_EVENT{

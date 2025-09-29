@@ -126,7 +126,7 @@ bool TGBOT::SEND_EVENT::message(long chat_id, std::string text){
     
     std::string txt;
     txt.append(TEXTS);
-    txt.append(text);
+    txt.append(Curl()->GetEncryptHttpTxt(text));
     
     
     std::string upd;
@@ -156,7 +156,7 @@ bool TGBOT::SEND_EVENT::replyMessage(long chat_id, long message_id, std::string 
     
     std::string txt;
     txt.append(TEXTS);
-    txt.append(text);
+    txt.append(Curl()->GetEncryptHttpTxt(text));
     
     
     std::string upd;
@@ -196,6 +196,10 @@ std::string TGBOT::SEND_EVENT::getUrlForSendFile(std::string &type){
         type = ARG_DOCUMENT_MESSAGE;
     }
     return url;
+}
+
+CURL_UPDATES *TGBOT::SEND_EVENT::Curl(){
+    return this->curl_update;
 }
 
 bool TGBOT::SEND_EVENT::file(long chatId, std::string path, std::string type, std::string caption){
