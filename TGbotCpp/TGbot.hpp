@@ -9,7 +9,7 @@
 #define TGbot_hpp
 #include <iostream>
 #include <curl/curl.h>
-#include <json.hpp>
+#include <nlohmann/json.hpp>
 #include <thread>
 #include <chrono>
 #include "receive.hpp"
@@ -30,7 +30,7 @@
 #define DELETE_MESSAGE "/deleteMessage?"
 #define MESSAGE_ID "&message_id="
 
-#define TGbot_versin "0.0.2"
+#define TGbot_versin "0.0.3"
 
 constexpr const char *ARG_PHHOTO_MESSAGE   = "photo";
 constexpr const char *ARG_DOCUMENT_MESSAGE = "document";
