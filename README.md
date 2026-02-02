@@ -2,7 +2,7 @@
 
 This is a test version of the bot, written in c++, the idea is simplicity and functionality, now the bot can receive requests, send messages, and respond to messages.
 
-I would like to note that TGbot is tested only under macOS.
+I would like to note that TGbot is tested only under macOS. However, there should be support for other platforms as it has no dependencies on the operating system.
 
 To use the bot:
 
@@ -25,4 +25,18 @@ Or you can assemble it with one team:
 
 ```bash
 curl -O https://raw.githubusercontent.com/DiCode77/TGbot_cpp/main/build.sh && chmod +x build.sh && ./build.sh
+```
+
+
+Another build option has been added, using conan, which generates build files for a specific environment.
+
+```bash
+cd /TGbot_cpp/TGbotCpp
+mkdir build
+cd build
+
+conan install .. --output-folder=. --build=missing -s build_type=Release
+cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=release -DCMAKE_TOOLCHAIN_FILE=build/conan_toolchain.cmake 
+cmake  --build .
+./TGbotCpp
 ```
