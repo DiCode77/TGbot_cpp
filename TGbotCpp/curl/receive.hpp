@@ -20,14 +20,12 @@ typedef struct SVideo{
 } sizeVideo;
 
 class CURL_UPDATES{
-    int timeOutHttp;
-    int sleep_for;
+    int timeOutHttp = 10;
     SVideo size_video;
     
 public:
     CURL_UPDATES();
     void timeout(int);
-    void sleep(int);
     CURLcode getCurlUpdates(std::string, std::string&);
     CURLcode sendHttpMessage(std::string, std::string, std::string&);
     CURLcode getCurlEvent(std::string, std::string&);
@@ -35,12 +33,13 @@ public:
     CURLcode sendReplyFile(std::string, std::string, std::string, std::string, std::string&, std::string, std::string);
     void videoSize(long, long);
     std::string GetEncryptHttpTxt(std::string);
+    void NewSleep(long);
 
 private:
     static size_t getResponsetoString(void*, size_t, size_t, void*);
-    void Sleep_for(int);
+    void Sleep_for(long);
     void addParameterCurl(CURL*, curl_mime*, std::string, std::string&);
-    void addFileToForm(curl_mime*, const char*, const char*, bool);
+    void addFileToForm(curl_mime*, const char*, std::string, bool);
     bool verifyType(std::string);
 };
 
