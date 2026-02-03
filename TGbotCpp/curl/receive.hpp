@@ -39,8 +39,8 @@ public:
 private:
     static size_t getResponsetoString(void*, size_t, size_t, void*);
     void Sleep_for(int);
-    void addParameterCurl(CURL*, curl_httppost*, std::string, std::string&);
-    void addFileToForm(curl_httppost**, curl_httppost**, const char*, int, const char*);
+    void addParameterCurl(CURL*, curl_mime*, std::string, std::string&);
+    void addFileToForm(curl_mime*, const char*, const char*, bool);
     bool verifyType(std::string);
 };
 

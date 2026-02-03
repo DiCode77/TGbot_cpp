@@ -36,7 +36,7 @@ mkdir build
 cd build
 
 conan install .. --output-folder=. --build=missing -s build_type=Release
-cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=release -DCMAKE_TOOLCHAIN_FILE=build/conan_toolchain.cmake 
+cmake .. -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=build/conan_toolchain.cmake 
 cmake  --build .
 ./TGbotCpp
 ```
