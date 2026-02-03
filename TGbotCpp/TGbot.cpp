@@ -97,8 +97,22 @@ void TGBOT::EVENT_UPDATE::isUpdate(){
     url.append(PATH);
     url.append(this->var->token);
     url.append(GET_UPDATES);
+
+    int attempt = 0;
+    const int iter = 5;
+    CURLcode err = CURLE_FAILED_INIT;
     
-    CURLcode err = this->curl_update->getCurlUpdates(url, this->var->updates);
+    while (err != CURLE_OK && attempt < iter){
+        err = this->curl_update->getCurlUpdates(url, this->var->updates);
+        
+        if (err == CURLE_OK){
+            break;
+        }
+        
+        CURL_UPDATES().NewSleep((err == CURLE_OPERATION_TIMEDOUT) ? 2000 : 1000);
+        attempt++;
+    }
+    
     if (err == CURLE_OK && this->var->updates.length()){
         this->var->status[0] = true;
     }
@@ -353,10 +367,6 @@ clear_event(var, met, this->curl_update){
 
 void TGBOT::EVENT::timeOut(int time){
     this->curl_update.timeout(time);
-}
-
-void TGBOT::EVENT::sleep(int sleep){
-    this->curl_update.sleep(sleep);
 }
 
 TGBOT::EVENT_UPDATE &TGBOT::EVENT::getUpdate(){
