@@ -30,6 +30,9 @@ int main(){
             else{
                 bot.Event().clear().updates().First(mess_id);
             }
+
+            // It is important not to make too many requests to the Telegram server.
+            CURL_UPDATES().NewSleep(1000);
         }
     }
     
