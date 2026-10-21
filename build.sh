@@ -20,7 +20,7 @@ fi
 if [ ! -d "$DIR_NAME_RES" ]; then
    mkdir "$DIR_NAME_RES"
    cd "$DIR_NAME_RES"
-   curl -fsSL "$JSON_REPO_URL" -o json.hpp
+   curl -fsSL "$JSON_REPO_URL" -o /nlohmann/json.hpp
    cd ..
 fi
 
